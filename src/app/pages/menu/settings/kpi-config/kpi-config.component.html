@@ -1,0 +1,693 @@
+<!-- Start Breadcrumbs -->
+<app-breadcrumbs title="KPI Config" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+<!-- End Breadcrumbs -->
+
+<div class="container-fluid p-0">
+     <div class="row">
+          <div class="col-12 col-lg-12">
+               <div class="card">
+                    <div class="row align-items-center g-1 p-3">
+                         <div class="col-lg-3 me-auto">
+                              <!-- <h6 class="card-title mb-0">Publisher Master</h6> -->
+                         </div><!--end col-->
+                         <div class="col-xl-2 col-md-3">
+                              <div class="search-box">
+                                   <input type="text" class="form-control search" [(ngModel)]="searchTerm"
+                                        (keyup)="onSearchKeyUp(searchTerm)"
+                                        placeholder="Search for publisher acronym ,publisher name or something...">
+                                   <i class="ri-search-line search-icon"></i>
+                              </div>
+                         </div><!--end col-->
+                         <div class="col-md-auto">
+                              <div class="hstack gap-2">
+                                   <a (click)="add(null)" [hidden]="!menuAccess.canAdd" class="btn btn-secondary">
+                                        <i class="bi bi-plus-circle align-baseline me-1"></i> Add New KPI Config
+                                   </a>
+                              </div>
+                         </div><!--end col-->
+                         <div class="col-md-auto">
+                              <div class="hstack gap-2">
+                                   <div dropdown class="btn-group">
+                                        <button dropdownToggle class="btn btn-success me-1" type="button"
+                                             id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                             <i class="ph-cloud-arrow-up align-middle me-1"></i>
+                                             Export
+                                        </button>
+                                        <ul *dropdownMenu class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start"
+                                             aria-labelledby="dropdownMenuButton">
+                                             <li>
+                                                  <button class="dropdown-item btn-link" type="button"
+                                                       (click)="exportExcel()">
+                                                       <i class="bi bi-filetype-xls fs-4 me-1"></i>
+                                                       <span>Excel</span>
+                                                  </button>
+                                             </li>
+                                             <li class="mt-1">
+                                                  <button class="dropdown-item btn-link" type="button"
+                                                       (click)="exportCsv()">
+                                                       <i class="bi bi-filetype-csv fs-4 me-1"></i>
+                                                       <span>CSV</span>
+                                                  </button>
+                                             </li>
+                                             <li class="mt-1">
+                                                  <button class="dropdown-item btn-link" type="button"
+                                                       (click)="exportPdf()">
+                                                       <i class="bi bi-filetype-pdf fs-4 me-1"></i>
+                                                       <span>PDF</span>
+                                                  </button>
+                                             </li>
+
+                                             <li>
+                                                  <button class="dropdown-item btn-link" type="button"
+                                                       (click)="exportExcelAll()">
+                                                       <i class="bi bi-filetype-xls fs-4 me-1"></i>
+                                                       <span>Excel (All)</span>
+                                                  </button>
+                                             </li>
+                                             <li class="mt-1">
+                                                  <button class="dropdown-item btn-link" type="button"
+                                                       (click)="exportCsvAll()">
+                                                       <i class="bi bi-filetype-csv fs-4 me-1"></i>
+                                                       <span>CSV (All)</span>
+                                                  </button>
+                                             </li>
+                                             <li class="mt-1">
+                                                  <button class="dropdown-item btn-link" type="button"
+                                                       (click)="exportPdfAll()">
+                                                       <i class="bi bi-filetype-pdf fs-4 me-1"></i>
+                                                       <span>PDF (All)</span>
+                                                  </button>
+                                             </li>
+
+
+                                        </ul>
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+
+                    <div class="row">
+                         <div class="col-lg-6" *ngFor="let kpiConfig of filteredItems()">
+                              <div class=" card " style="margin: 10px;">
+                                   <div class=" card-body rounded ">
+
+                                        <table class="table table-striped">
+                                             <thead>
+                                                  <tr class="theader">
+                                                       <th colspan="3">
+                                                            <h6>{{kpiConfig.publisherName}}</h6>
+                                                       </th>
+                                                       <th>
+                                                            <ul class="d-flex gap-2 list-unstyled mb-0">
+
+                                                                 <li> <a [hidden]="!menuAccess.canUpdate"
+                                                                           class="btn btn-subtle-success btn-icon btn-sm"
+                                                                           (click)="edit(kpiConfig.publisherId,kpiConfig.id)">
+                                                                           <i class="ph-pencil" tooltip="Edit"></i></a>
+                                                                 </li>
+                                                                 <li> <a (click)="showdeletePopUp(kpiConfig.id)"
+                                                                           [hidden]="!menuAccess.canDelete"
+                                                                           class="btn btn-subtle-danger btn-icon btn-sm remove-item-btn">
+                                                                           <i class="ph-trash" tooltip="Delete"></i>
+                                                                           </a>
+                                                                 </li>
+                                                            </ul>
+                                                       </th>
+                                                       <!-- <th>
+                                                            <a (click)="edit(kpiConfig.publisherId,kpiConfig.id)"
+                                                                 [hidden]="!menuAccess.canUpdate"
+                                                                 class="btn btn-subtle-success btn-icon btn-sm">
+                                                                 <i class="ph-pencil text-success"></i>
+                                                            </a>
+                                                            &nbsp; &nbsp;
+                                                            <a (click)="showdeletePopUp(kpiConfig.id)"
+                                                                 [hidden]="!menuAccess.canDelete"
+                                                                 class="btn btn-subtle-danger btn-icon btn-sm remove-item-btn">
+                                                                 <i class="ph-trash text-danger"></i>
+                                                            </a>
+                                                       </th> -->
+                                                  </tr>
+                                                  <tr>
+                                                       <th>KPI data</th>
+                                                       <th>Required</th>
+                                                       <th>Metrics %</th>
+                                                       <th>Action</th>
+                                                  </tr>
+                                             </thead>
+                                             <tbody>
+                                                  <tr>
+                                                       <td>Overall Performance</td>
+                                                       <td>
+                                                            <div class="form-check">
+                                                                 <input style="border: none;" type="checkbox"
+                                                                      [checked]="kpiConfig.overallPerfomanceRequired"
+                                                                      disabled>
+                                                            </div>
+                                                       </td>
+                                                       <td>
+                                                            {{kpiConfig.overallPerfomanceMetrics ==0?'':
+                                                            kpiConfig.overallPerfomanceMetrics}}
+                                                       </td>
+                                                       <td>
+                                                            {{ kpiConfig.overallPerfomanceAction === 'more' ? '>' :
+                                                            kpiConfig.overallPerfomanceAction === 'less' ? '<' : '' }}
+                                                                 </td>
+                                                  </tr>
+                                                  <tr>
+                                                       <td>Schedule</td>
+                                                       <td>
+                                                            <div class="form-check">
+                                                                 <input style="border: none;" type="checkbox"
+                                                                      [checked]="kpiConfig.scheduleRequired" disabled>
+                                                            </div>
+                                                       </td>
+                                                       <td>
+                                                            {{kpiConfig.scheduleMetrics ==0?'':
+                                                            kpiConfig.scheduleMetrics}}
+                                                       </td>
+                                                       <td>
+                                                            {{ kpiConfig.scheduleAction === 'more' ? '>' :
+                                                            kpiConfig.scheduleAction === 'less' ? '<' : '' }} </td>
+                                                  </tr>
+                                                  <tr>
+                                                       <td>Quality</td>
+                                                       <td>
+                                                            <div class="form-check">
+                                                                 <input style="border: none;" type="checkbox"
+                                                                      [checked]="kpiConfig.qualityRequired" disabled>
+                                                            </div>
+                                                       </td>
+                                                       <td>
+                                                            {{kpiConfig.qualityMetrics ==0?'':
+                                                            kpiConfig.qualityMetrics}}
+                                                       </td>
+                                                       <td>
+                                                            {{ kpiConfig.qualityAction === 'more' ? '>' :
+                                                            kpiConfig.qualityAction === 'less' ? '<' : '' }} </td>
+                                                  </tr>
+                                                  <tr>
+                                                       <td>Communication</td>
+                                                       <td>
+                                                            <div class="form-check">
+                                                                 <input style="border: none;" type="checkbox"
+                                                                      [checked]="kpiConfig.communicationRequired"
+                                                                      disabled>
+                                                            </div>
+                                                       </td>
+                                                       <td>
+                                                            {{kpiConfig.communicationMetrics ==0?'':
+                                                            kpiConfig.communicationMetrics}}
+                                                       </td>
+                                                       <td>
+                                                            {{ kpiConfig.communicationAction === 'more' ? '>' :
+                                                            kpiConfig.communicationAction === 'less' ? '<' : '' }} </td>
+                                                  </tr>
+                                                  <tr>
+                                                       <td>Customer Satisfaction</td>
+                                                       <td>
+                                                            <div class="form-check">
+                                                                 <input style="border: none;" type="checkbox"
+                                                                      [checked]="kpiConfig.customerSatisfactionRequired"
+                                                                      disabled>
+                                                            </div>
+                                                       </td>
+                                                       <td>
+                                                            {{kpiConfig.customerSatisfactionMetrics ==0?'':
+                                                            kpiConfig.customerSatisfactionMetrics}}
+                                                       </td>
+                                                       <td>
+                                                            {{ kpiConfig.customerSatisfactionAction === 'more' ?
+                                                            '>' :
+                                                            kpiConfig.customerSatisfactionAction === 'less' ? '<' : ''
+                                                                 }} </td>
+                                                  </tr>
+                                                  <tr>
+                                                       <td>Account Management</td>
+                                                       <td>
+                                                            <div class="form-check">
+                                                                 <input style="border: none;" type="checkbox"
+                                                                      [checked]="kpiConfig.accountManagementRequired"
+                                                                      disabled>
+                                                            </div>
+                                                       </td>
+                                                       <td>
+                                                            {{kpiConfig.accountManagementMetrics ==0?'':
+                                                            kpiConfig.accountManagementMetrics}}
+                                                       </td>
+                                                       <td>
+                                                            {{ kpiConfig.accountManagementAction === 'more' ? '>' :
+                                                            kpiConfig.accountManagementAction === 'less' ? '<' : '' }}
+                                                                 </td>
+                                                  </tr>
+                                                  <tr>
+                                                       <td>RFT</td>
+                                                       <td>
+                                                            <div class="form-check">
+                                                                 <input style="border: none;" type="checkbox"
+                                                                      [checked]="kpiConfig.rftRequired" disabled>
+                                                            </div>
+                                                       </td>
+                                                       <td>
+                                                            {{kpiConfig.rftMetrics ==0?'':
+                                                            kpiConfig.rftMetrics}}
+                                                       </td>
+                                                       <td>
+                                                            {{ kpiConfig.rftAction === 'more' ? '>' :
+                                                            kpiConfig.rftAction === 'less' ? '<' : '' }} </td>
+                                                  </tr>
+                                                  <tr>
+                                                       <td>Publication Speed</td>
+                                                       <td>
+                                                            <div class="form-check">
+                                                                 <input style="border: none;" type="checkbox"
+                                                                      [checked]="kpiConfig.publicationSpeedRequired"
+                                                                      disabled>
+                                                            </div>
+                                                       </td>
+                                                       <td>
+                                                            {{kpiConfig.publicationSpeedMetrics ==0?'':
+                                                            kpiConfig.publicationSpeedMetrics}}
+                                                       </td>
+                                                       <td>
+                                                            {{ kpiConfig.publicationSpeedAction === 'more' ? '>' :
+                                                            kpiConfig.publicationSpeedAction === 'less' ? '<' : '' }}
+                                                                 </td>
+                                                  </tr>
+                                                  <tr>
+                                                       <td>Feedback</td>
+                                                       <td>
+                                                            <div class="form-check">
+                                                                 <input style="border: none;" type="checkbox"
+                                                                      [checked]="kpiConfig.feedbackRequired" disabled>
+                                                            </div>
+                                                       </td>
+                                                       <td>
+                                                            {{kpiConfig.feedbackMetrics ==0?'':
+                                                            kpiConfig.feedbackMetrics}}
+                                                       </td>
+                                                       <td>
+                                                            {{ kpiConfig.feedbackAction === 'more' ? '>' :
+                                                            kpiConfig.feedbackAction === 'less' ? '<' : '' }} </td>
+                                                  </tr>
+                                                  <tr>
+                                                       <td>Author Satisfication</td>
+                                                       <td>
+                                                            <div class="form-check">
+                                                                 <input style="border: none;" type="checkbox"
+                                                                      [checked]="kpiConfig.authorsatisficationRequired"
+                                                                      disabled>
+                                                            </div>
+                                                       </td>
+                                                       <td>
+                                                            {{kpiConfig.authorsatisficationMetrics ==0?'':
+                                                            kpiConfig.authorsatisficationMetrics}}
+                                                       </td>
+                                                       <td>
+                                                            {{ kpiConfig.authorsatisficationAction === 'more' ? '>'
+                                                            :
+                                                            kpiConfig.authorsatisficationAction === 'less' ? '<' : '' }}
+                                                                 </td>
+                                                  </tr>
+                                             </tbody>
+                                        </table>
+                                   </div>
+                              </div>
+                         </div>
+                         
+                         <div class="noresult" [ngClass]="filteredItems().length != 0 ? 'd-none' : ''">
+                              <div class="text-center py-4">
+                                <i class="ph-magnifying-glass fs-1 text-primary"></i>
+                                <h5 class="mt-2">Sorry! No Result Found</h5>
+                                <p class="text-muted mb-0">
+                                  We've searched {{ kpiConfigList.length }} Records, We
+                                  did not find any Records for you search.
+                                </p>
+                              </div>
+                         </div>
+
+                         <div id="pagination-element" class="row align-items-center mt-4 pt-2">
+                              <div class="col-sm-auto">
+                                   <div class="text-muted text-center text-sm-start pe-auto">
+                                        &nbsp; &nbsp; Per Page:
+                                   </div>
+                              </div>
+                              <div class="col-sm-auto">
+                                   <select id="perPage" (change)="onPageSizeChange()"
+                                        class="form-select w-auto ng-untouched ng-pristine ng-valid"
+                                        [(ngModel)]="pageSize">
+                                        <option *ngFor="let size of pageSizeOptions" [value]="size">
+                                             {{ size === -1 ? 'All' : size }}
+                                        </option>
+                                   </select>
+                              </div>
+                              <div class="col-sm">
+                                   <div class="text-muted text-center text-sm-start"> Showing
+                                        <span class="fw-semibold">{{startIndex}} - {{endIndex}}</span> of <span
+                                             class="fw-semibold">{{kpiConfigList.length}}</span> Results
+                                   </div>
+                              </div>
+                              <div class="col-sm-auto mt-3 mt-sm-0">
+                                   <div name="currentPage"
+                                        class="pagination-wrap hstack gap-2 justify-content-center ng-untouched ng-valid ng-dirty">
+                                        <ul class="pagination pagination-wrap hstack gap-2 justify-content-center">
+                                             <li class="pagination-page page-item ng-star-inserted ">
+                                                  <a id="firstPage" (click)="firstPage()" class="page-link">
+                                                       First
+                                                  </a>
+                                             </li>
+
+                                             <li class="pagination-page page-item ng-star-inserted ">
+                                                  <a id="previousPage" (click)="previousPage()" class="page-link">
+                                                       Previous
+                                                  </a>
+                                             </li>
+
+                                             <li *ngFor="let page of pages" [class.active]="page === currentPage"
+                                                  class="pagination-page page-item ng-star-inserted">
+                                                  <a class="page-link" (click)="onPageChange(page)">
+                                                       {{page}}
+                                                  </a>
+                                             </li>
+
+                                             <li class="pagination-page page-item ng-star-inserted ">
+                                                  <a id="nextPage" (click)="nextPage()" class="page-link">
+                                                       Next
+                                                  </a>
+                                             </li>
+
+                                             <li class="pagination-page page-item ng-star-inserted ">
+                                                  <a id="lastPage" (click)="lastPage()" class="page-link">
+                                                       Last
+                                                  </a>
+                                             </li>
+                                             &nbsp;
+                                        </ul>
+                                   </div>
+                              </div>
+                         </div>
+                         <div style="height:5px; width:100%;"></div>
+
+                    </div>
+
+               </div>
+
+          </div>
+     </div>
+
+
+</div>
+
+
+<div class="modal fade" id="addUpdatePopUp" tabindex="-1" aria-labelledby="Add_KPI_ConfigLabel" aria-hidden="true">
+     <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+               <div class="modal-header">
+                    <h1 class="modal-title" id="Add_KPI_ConfigLabel">KPI Configuration</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               </div>
+               <div class="modal-body">
+                    <div class="d-flex justify-content-end">
+                         <select (change)="onChangePublisher()" id="publisher"
+                              class="form-select form-select-sm  form-control" aria-label=".form-select-sm example"
+                              style="width:200px;">
+                              <option value="" selected disabled>Select Publisher</option>
+                              <option *ngFor="let option of publisherList" [value]="option.id">
+                                   {{ option.acronym }}
+                              </option>
+                         </select>
+                    </div>
+
+                    <div *ngIf="isDuplicate" class="d-flex justify-content-end ">
+                         <p class="text-danger">This publisher is already exist in KPI Config, try another.</p>
+                    </div>
+                    <div *ngIf="isPublisherSelected" class="d-flex justify-content-end ">
+                         <p class="text-danger">Please select publisher </p>
+                    </div>
+                    <!-- <div *ngIf="anyChBoxChecked" class="d-flex justify-content-end ">
+                         <p class="text-danger">Must any check box</p>
+                    </div> -->
+
+                    <div class="table_card card mb-0 mt-4">
+                         <table class="table table-striped">
+                              <thead>
+                                   <tr>
+                                        <th>KPI data</th>
+                                        <th>Required</th>
+                                        <th>Metrics %</th>
+                                        <th>Action</th>
+                                   </tr>
+                              </thead>
+                              <tbody>
+                                   <tr *ngFor="let field of kpiConfigFormField">
+                                        <td>{{field.title}}</td>
+                                        <td>
+                                             <div class="form-check">
+                                                  <input class="form-check-input" (change)="onChangeChkBox(field.id)"
+                                                       type="checkbox" value="" id="{{field.id}}Required">
+                                             </div>
+                                        </td>
+                                        <td>
+                                             <input type="number" id="{{field.id}}Metrics"
+                                                  (change)="metricsKeyUp(field.id)" (focus)="metricsFocus(field.id)"
+                                                  class="form-control" name="name" min="1" max="100" />
+                                             <p id="{{field.id}}MetricsMsg" class="text-danger">
+                                                  * Required
+                                             </p>
+                                             <p id="{{field.id}}MetricsWrgInpMsg" class="text-danger">
+                                                  * Numbers only
+                                             </p>
+                                        </td>
+                                        <td>
+                                             <div class="form-group">
+                                                  <select class="form-select" id="{{field.id}}Action"
+                                                       (change)="actionChange(field.id)"
+                                                       aria-label="Default select example">
+                                                       <option disabled selected>Select</option>
+                                                       <option value="more">More Than</option>
+                                                       <option value="less">Less Than</option>
+                                                  </select>
+                                             </div>
+                                             <p id="{{field.id}}ActionMsg" class="text-danger">
+                                                  * Required
+                                             </p>
+                                        </td>
+                                   </tr>
+                              </tbody>
+                         </table>
+                    </div>
+               </div>
+               <div class="modal-footer">
+                    <button type="button" class="btn btn_v3" data-bs-dismiss="modal">Reset</button>
+                    <button type="button" id="submitBtn" (click)="submit(Id)" class="btn btn-primary">Submit</button>
+               </div>
+          </div>
+     </div>
+</div>
+
+<!-- deleteRecordModal -->
+<div id="deletePopUp" class="modal fade zoomIn" tabindex="-1" aria-hidden="true">
+     <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+               <div class="modal-header">
+                    <button type="button" (click)="hidedeletePopUp()" class="btn-close"></button>
+               </div>
+               <div class="modal-body p-md-5">
+                    <div class="text-center">
+                         <div class="text-danger">
+                              <i class="bi bi-trash display-5"></i>
+                         </div>
+                         <div class="mt-4">
+                              <h4 class="mb-2">Are you sure ?</h4>
+                              <p class="text-muted mx-3 mb-0">Are you sure you want to remove this record ?</p>
+                         </div>
+                    </div>
+                    <div class="d-flex gap-2 justify-content-center mt-4 pt-2 mb-2">
+                         <button type="button" (click)="hidedeletePopUp()"
+                              class="btn w-sm btn-light btn-hover">Close</button>
+                         <button type="button" (click)="deleteKpiConfig(Id)" class="btn w-sm btn-danger btn-hover"
+                              id="delete-record">Yes, Delete
+                              It!</button>
+                    </div>
+               </div>
+          </div><!-- /.modal-content -->
+     </div><!-- /.modal-dialog -->
+</div><!-- /deleteRecordModal -->
+
+<!-- <table id="ExportTable" class="table table-hover" style="display: none;">
+     <thead class="table-header">
+          <tr>
+               <th rowspan="2" class="sticky-column">Publisher</th>
+               <th *ngFor="let thead of kpiConfigFormField" class="field-td"
+                    style="word-wrap: break-word; max-width: 150px;" colspan="3">{{thead.title}}
+               </th>
+
+          </tr>
+          <tr>
+
+               <th> Required </th>
+               <th> Metrics </th>
+               <th class="field-td"> Action </th>
+               <th> Required </th>
+               <th> Metrics </th>
+               <th class="field-td"> Action </th>
+               <th> Required </th>
+               <th> Metrics </th>
+               <th class="field-td"> Action </th>
+               <th> Required </th>
+               <th> Metrics </th>
+               <th class="field-td"> Action </th>
+               <th> Required </th>
+               <th> Metrics </th>
+               <th class="field-td"> Action </th>
+               <th> Required </th>
+               <th> Metrics </th>
+               <th class="field-td"> Action </th>
+               <th> Required </th>
+               <th> Metrics </th>
+               <th class="field-td"> Action </th>
+               <th> Required </th>
+               <th> Metrics </th>
+               <th class="field-td"> Action </th>
+               <th> Required </th>
+               <th> Metrics </th>
+               <th class="field-td"> Action </th>
+               <th> Required </th>
+               <th> Metrics </th>
+               <th class="field-td"> Action </th>
+
+          </tr>
+     </thead>
+     <tbody>
+          <tr *ngFor="let kpiConfig of kpiConfigList">
+               <td class="sticky-column">{{kpiConfig.publisherName}}</td>
+               <td>
+                    {{kpiConfig.overallPerfomanceRequired}}
+               </td>
+               <td>
+                    {{kpiConfig.overallPerfomanceMetrics}}
+               </td>
+               <td class="field-td">
+                    {{ kpiConfig.overallPerfomanceAction === 'more' ? '>' :
+                    kpiConfig.overallPerfomanceAction === 'less' ? '<' : '' }} </td>
+
+               <td>
+                    {{kpiConfig.scheduleRequired}}
+               </td>
+               <td>
+                    {{kpiConfig.scheduleMetrics}}
+               </td>
+               <td class="field-td">
+                    {{ kpiConfig.scheduleAction === 'more' ? '>' :
+                    kpiConfig.scheduleAction === 'less' ? '<' : '' }} </td>
+               <td>
+                    {{kpiConfig.qualityRequired}}
+               </td>
+               <td>
+                    {{kpiConfig.qualityMetrics}}
+               </td>
+               <td class="field-td">
+                    {{ kpiConfig.qualityAction === 'more' ? '>' :
+                    kpiConfig.qualityAction === 'less' ? '<' : '' }} </td>
+               <td>
+                    {{kpiConfig.communicationRequired}}
+               </td>
+               <td>
+                    {{kpiConfig.communicationMetrics}}
+               </td>
+               <td class="field-td">
+                    {{ kpiConfig.communicationAction === 'more' ? '>' :
+                    kpiConfig.communicationAction === 'less' ? '<' : '' }} </td>
+               <td>
+                    {{kpiConfig.customerSatisfactionRequired}}
+
+               </td>
+               <td>
+                    {{kpiConfig.customerSatisfactionMetrics}}
+               </td>
+               <td class="field-td">
+                    {{ kpiConfig.customerSatisfactionAction === 'more' ? '>' :
+                    kpiConfig.customerSatisfactionAction === 'less' ? '<' : '' }} </td>
+               <td>
+                    {{kpiConfig.accountManagementRequired}}
+               </td>
+               <td>
+                    {{kpiConfig.accountManagementMetrics}}
+               </td>
+               <td class="field-td">
+                    {{ kpiConfig.accountManagementAction === 'more' ? '>' :
+                    kpiConfig.accountManagementAction === 'less' ? '<' : '' }} </td>
+               <td>
+                    {{kpiConfig.rftRequired}}
+               </td>
+               <td>
+                    {{kpiConfig.rftMetrics}}
+               </td>
+               <td class="field-td">
+                    {{ kpiConfig.rftAction === 'more' ? '>' :
+                    kpiConfig.rftAction === 'less' ? '<' : '' }} </td>
+               <td>
+                    {{kpiConfig.publicationSpeedRequired}}
+               </td>
+               <td>
+                    {{kpiConfig.publicationSpeedMetrics}}
+               </td>
+               <td class="field-td">
+                    {{ kpiConfig.publicationSpeedAction === 'more' ? '>' :
+                    kpiConfig.publicationSpeedAction === 'less' ? '<' : '' }} </td>
+               <td>
+                    {{kpiConfig.feedbackRequired}}
+               </td>
+               <td>
+                    {{kpiConfig.feedbackMetrics}}
+               </td>
+               <td class="field-td">
+                    {{ kpiConfig.feedbackAction === 'more' ? '>' :
+                    kpiConfig.feedbackAction === 'less' ? '<' : '' }} </td>
+               <td>
+                    {{kpiConfig.authorsatisficationRequired}}
+               </td>
+               <td>
+                    {{kpiConfig.authorsatisficationMetrics}}
+               </td>
+               <td class="field-td">
+                    {{ kpiConfig.authorsatisficationAction === 'more' ? '>' :
+                    kpiConfig.authorsatisficationAction === 'less' ? '<' : '' }} </td>
+
+          </tr>
+     </tbody>
+</table> -->
+
+<div class="modal fade" id="loaderAnimation">
+     <div class="modal-dialog" role="document" style=" display: flex; justify-content: center; align-items: center;">
+          <div class="modal-content card" style="background-color: transparent !important;">
+
+               <div class="h-100 p-4  d-flex justify-content-center align-items-center flex-column">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                         style="margin: auto; background: rgba(255, 255, 255, 0); display: block;" width="203px"
+                         height="203px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                         <circle cx="50" cy="50" r="0" fill="none" stroke="#e90c59" stroke-width="4">
+                              <animate attributeName="r" repeatCount="indefinite" dur="3.571428571428571s" values="0;40"
+                                   keyTimes="0;1" keySplines="0 0.2 0.8 1" calcMode="spline" begin="0s"></animate>
+                              <animate attributeName="opacity" repeatCount="indefinite" dur="3.571428571428571s"
+                                   values="1;0" keyTimes="0;1" keySplines="0.2 0 0.8 1" calcMode="spline" begin="0s">
+                              </animate>
+                         </circle>
+                         <circle cx="50" cy="50" r="0" fill="none" stroke="#46dff0" stroke-width="4">
+                              <animate attributeName="r" repeatCount="indefinite" dur="3.571428571428571s" values="0;40"
+                                   keyTimes="0;1" keySplines="0 0.2 0.8 1" calcMode="spline"
+                                   begin="-1.7857142857142856s">
+                              </animate>
+                              <animate attributeName="opacity" repeatCount="indefinite" dur="3.571428571428571s"
+                                   values="1;0" keyTimes="0;1" keySplines="0.2 0 0.8 1" calcMode="spline"
+                                   begin="-1.7857142857142856s">
+                              </animate>
+                         </circle>
+                    </svg>
+
+                    <h3>Loading</h3>
+
+               </div>
+          </div>
+     </div>
+</div>

@@ -1,0 +1,51 @@
+/* Remove modal backdrop */
+.modal-backdrop.show {
+    opacity: 0 !important;
+    /* Make backdrop transparent */
+}
+
+/* Customize modal dialog for transparent background and no border */
+.modal-content {
+    background-color: transparent !important;
+    /* Make background transparent */
+    border: none !important;
+    /* Remove border */
+    box-shadow: none !important;
+    /* Remove shadow */
+}
+
+/* Optional: Customize the loader itself if needed */
+.spinner-border {
+    color: #fff;
+    /* Example: Change spinner color */
+}
+
+/* Ensure the modal is centered using Flexbox */
+
+
+// .modal-dialog {
+//     display: flex;
+//     align-items: center;
+//     /* This centers the modal vertically in the viewport */
+//     justify-content: center;
+//     /* This centers the modal horizontally in the viewport */
+//     min-height: calc(100% - (1.75rem * 2));
+//     /* Adjust based on your needs */
+// }
+
+// .modal {
+//     display: flex;
+//     align-items: center;
+//     /* Ensures vertical centering */
+// }
+
+.modal{
+    margin-top: 10%;
+}
+
+.container {
+    height: 100%;
+}
+.row {
+    height: 100%;
+}

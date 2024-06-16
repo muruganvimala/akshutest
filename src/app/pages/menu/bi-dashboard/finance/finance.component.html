@@ -1,0 +1,470 @@
+<div class="row row-cols-xxl-5 row-cols-lg-3 row-cols-md-2 row-cols-1">
+        <div class="col">
+            <div class="card border-bottom-success border-3 card-animate">
+                <div class="card-body">
+                    <span class="badge bg-success-subtle text-success float-end"><i class="ph-trend-up align-middle me-1"></i> 3.8%</span>
+                    <h4 class="mb-4"><span class="counter-value" [countUp]="21438">0</span></h4>
+    
+                    <p class="text-muted fw-medium text-uppercase mb-0">Content Composition</p>
+                </div>
+            </div>
+        </div><!--end col-->
+        <div class="col">
+                <div class="card border-bottom-secondary border-3 card-animate">
+                    <div class="card-body">
+                        <span class="badge bg-success-subtle text-success float-end"><i class="ph-trend-up align-middle me-1"></i> 18.7%</span>
+                        <h4 class="mb-4"><span class="counter-value" [countUp]="8541">0</span></h4>
+        
+                        <p class="text-muted fw-medium text-uppercase mb-0">Multimedia Solutions</p>
+                    </div>
+                </div>
+            </div><!--end col-->
+        <div class="col">
+            <div class="card border-bottom-warning border-3 card-animate">
+                <div class="card-body">
+                    <span class="badge bg-success-subtle text-success float-end"><i class="ph-trend-up align-middle me-1"></i> 12.6%</span>
+                    <h4 class="mb-4"><span class="counter-value" [countUp]="4620">0</span></h4>
+    
+                    <p class="text-muted fw-medium text-uppercase mb-0">Digital Transformation</p>
+                </div>
+            </div>
+        </div><!--end col-->
+        <div class="col">
+            <div class="card border-bottom-success border-3 card-animate">
+                <div class="card-body">
+                    <span class="badge bg-success-subtle text-success float-end"><i class="ph-trend-up align-middle me-1"></i> 18.7%</span>
+                    <h4 class="mb-4"><span class="counter-value" [countUp]="8541">0</span></h4>
+    
+                    <p class="text-muted fw-medium text-uppercase mb-0">Editorial Solutions</p>
+                </div>
+            </div>
+        </div><!--end col-->
+        <div class="col">
+            <div class="card border-bottom-danger border-3 card-animate">
+                <div class="card-body">
+                    <span class="badge bg-danger-subtle text-danger float-end"><i class="ph-trend-down align-middle me-1"></i> 7.1%</span>
+                    <h4 class="mb-4"><span class="counter-value" [countUp]="2314">0</span></h4>
+    
+                    <p class="text-muted fw-medium text-uppercase mb-0">Project Management</p>
+                </div>
+            </div>
+        </div><!--end col-->
+    </div><!---end row-->
+    
+
+    <div class="row">
+        <form [formGroup]="form" class="col-12">
+                <div class="row">
+                        <div class="col-2">
+                                <mat-form-field appearance="outline" class="form-field-spacing custom-form-field">
+                                        <mat-label>Headers</mat-label>
+                                        <mat-select [formControl]="selectedHeaders" multiple (selectionChange)="onSelectionChange1($event)">
+                                          <mat-select-trigger>
+                                            {{ selectedHeaders.value?.[0] || '' }}
+                                            <ng-container *ngIf="(selectedHeaders.value?.length || 0) > 1">
+                                              <span class="example-additional-selection">
+                                                (+{{ (selectedHeaders.value?.length || 0) - 1 }} {{selectedHeaders.value?.length === 2 ? 'other' : 'others' }})
+                                              </span>
+                                            </ng-container>
+                                          </mat-select-trigger>
+                                          <mat-option *ngFor="let header of headerList" [value]="header">
+                                            <mat-checkbox [checked]="isHeaderChecked(header)">
+                                              {{ header }}
+                                            </mat-checkbox>
+                                          </mat-option>
+                                        </mat-select>
+                                </mat-form-field>
+                        </div>
+                        <div class="col-2">
+                                <mat-form-field appearance="outline" class="form-field-spacing">
+                                        <mat-label>Service Line</mat-label>
+                                        <mat-select [formControl]="selectedServiceLines" multiple
+                                                (selectionChange)="onSelectionChange2($event)">
+                                                <mat-select-trigger>
+                                                        {{ selectedServiceLines.value?.[0] || '' }}
+                                                        <ng-container
+                                                                *ngIf="(selectedServiceLines.value?.length || 0) > 1">
+                                                                <span class="example-additional-selection">
+                                                                        (+{{ (selectedServiceLines.value?.length
+                                                                        || 0) - 1 }}
+                                                                        {{selectedServiceLines.value?.length ===
+                                                                        2 ? 'other' : 'others' }})
+                                                                </span>
+                                                        </ng-container>
+                                                </mat-select-trigger>
+                                                <!-- [disabled]="isOptionDisabled(serviceLine,selectedServiceLines)" -->
+                                                <mat-option *ngFor="let serviceLine of serviceLineList"
+                                                        [value]="serviceLine">
+                                                        {{ serviceLine }}
+                                                </mat-option>
+                                        </mat-select>
+                                </mat-form-field>
+                        </div>
+                        <div class="col-2">
+                                <mat-form-field appearance="outline" class="form-field-spacing">
+                                        <mat-label>Customers</mat-label>
+                                        <mat-select [formControl]="selectedCustomers" multiple
+                                                (selectionChange)="onSelectionChange3($event)">
+                                                <mat-select-trigger>
+                                                        {{ selectedCustomers.value?.[0] || '' }}
+                                                        <ng-container
+                                                                *ngIf="(selectedCustomers.value?.length || 0) > 1">
+                                                                <span class="example-additional-selection">
+                                                                        (+{{ (selectedCustomers.value?.length ||
+                                                                        0) - 1 }}
+                                                                        {{selectedCustomers.value?.length === 2
+                                                                        ? 'other' : 'others' }})
+                                                                </span>
+                                                        </ng-container>
+                                                </mat-select-trigger>
+                                                <mat-option *ngFor="let customer of customerList" [value]="customer">
+                                                        {{ customer }}
+                                                </mat-option>
+                                        </mat-select>
+                                </mat-form-field>
+                        </div>
+                        <div class="col-2">
+                                <mat-form-field appearance="outline" class="form-field-spacing">
+                                        <mat-label>Value Type</mat-label>
+                                        <mat-select [formControl]="selectedValueTypes" multiple
+                                                (selectionChange)="onSelectionChange4($event)">
+                                                <mat-select-trigger>
+                                                        {{ selectedValueTypes.value?.[0] || '' }}
+                                                        <ng-container
+                                                                *ngIf="(selectedValueTypes.value?.length || 0) > 1">
+                                                                <span class="example-additional-selection">
+                                                                        (+{{ (selectedValueTypes.value?.length ||
+                                                                        0) - 1 }}
+                                                                        {{selectedValueTypes.value?.length === 2
+                                                                        ? 'other' : 'others' }})
+                                                                </span>
+                                                        </ng-container>
+                                                </mat-select-trigger>
+                                                <mat-option *ngFor="let valueType of valueTypesList"
+                                                        [value]="valueType">
+                                                        {{ valueType }}
+                                                </mat-option>
+                                        </mat-select>
+                                </mat-form-field>
+                        </div>                                
+                        <div class="col-2 form-field-spacing range-container">
+                                <mat-form-field appearance="outline">
+                                        <mat-label>Range</mat-label>
+                                        <input matInput (focus)="onFocus()" (click)="onInputClick($event)" placeholder="select Range"
+                                                [value]="selectedRange">
+                                </mat-form-field>
+                                <div class="outerCard" (click)="onDivClick($event)" *ngIf="calendarVisible">
+                                        <div class="topPanel">
+                                                <button class="prevYearButton" (click)="decrementYear()">
+                                                        <i class="arrow left">
+                                                                &lt;
+                                                        </i>
+                                                </button>
+                                                <span class="yearLabel">
+                                                        {{ years[currentYearIndex-1]}}
+                                                </span>
+                                                <button class="nextYearButton" (click)="incrementYear()">
+                                                        <i class="arrow right">
+                                                                &gt;
+                                                        </i>
+                                                </button>
+                                        </div>
+                                        <div class="contentPanel">
+                                                <div (click)="onClick(i)" class="monthItem"
+                                                        *ngFor="let month of monthDataSlice; let i = index"
+                                                        [ngClass]="{ isEdge: rangeIndexes[0] === globalIndexOffset + i || rangeIndexes[1] === globalIndexOffset + i, notCurrentYear: currentYearIndex === 0 ? i > 11 : (i < 6 || i > 17) }">
+                                                        <div class="monthItemHighlight"
+                                                                [ngClass]="{ inRange: month.isInRange, isLowerEdge: month.isLowerEdge, isUpperEdge: month.isUpperEdge }">
+                                                                {{ month.monthName }}
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
+                </div>                
+        </form>
+</div>
+
+<div class="row">
+        <div class="col-lg-6">
+                <div class="card" id="revenueCard">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h4 class="card-title mb-0">Revenue by Service Line</h4>
+                            <div class="nav nav-pills flex-shrink-0 d-flex justify-content-center align-items-center">
+                                <i>
+                                    <div dropdown class="dropdown float-end" tooltip="Chart type" style="padding-top: 0px;">
+                                        <a dropdownToggle class="text-reset dropdown-btn" href="javascript:void(0);">
+                                            <span class="text-muted fs-lg">
+                                                <i class="mdi mdi-dots-vertical align-middle"></i>
+                                            </span>
+                                        </a>
+                                        <div *dropdownMenu class="dropdown-menu dropdown-menu-end">
+                                            <a class="dropdown-item" href="javascript:void(0);" (click)="onChartTypeChange1('pie')">Pie</a>
+                                            <a class="dropdown-item" href="javascript:void(0);" (click)="onChartTypeChange1('area')">Area</a>
+                                            <a class="dropdown-item" href="javascript:void(0);" (click)="onChartTypeChange1('bar')">Bar</a>
+                                            <a class="dropdown-item" href="javascript:void(0);" (click)="onChartTypeChange1('line')">Line</a>
+                                            <a class="dropdown-item" href="javascript:void(0);" (click)="onChartTypeChange1('pyramid')">Pyramid</a>
+                                            <a class="dropdown-item" href="javascript:void(0);" (click)="onChartTypeChange1('radar')">Radar</a>
+                                        </div>
+                                    </div>
+                                </i>
+                                <i class="bi bi-arrows-fullscreen myfullscreen" data-toggle="fullscreen"
+                                   (click)="fullscreen('revenueCardchart', 'Revenue by Service Line')"></i>
+                            </div>
+                        </div>
+                        <div class="card-body chart-container apex-charts effect-chart" #revenueChart id="revenueCardchart">
+                                <apx-chart [series]="chartOptions1.series" [chart]="chartOptions1.chart"
+                                [dataLabels]="chartOptions1.dataLabels" [plotOptions]="chartOptions1.plotOptions"
+                                [responsive]="chartOptions1.responsive" [xaxis]="chartOptions1.xaxis"
+                                [legend]="chartOptions1.legend" [fill]="chartOptions1.fill"
+                                [labels]="chartOptions1.labels" dir="ltr"></apx-chart>               
+                        </div>
+                    </div>                   
+
+        </div>
+
+        <div class="col-lg-6">
+                <div class="card" id="costandmargin">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                                <h4 class="card-title mb-0">Cost & Margin Service Line wise</h4>
+                                <div class="nav nav-pills flex-shrink-0 d-flex justify-content-center align-items-center">
+                                        <i>
+                                                <div dropdown class="dropdown float-end" tooltip="Chart type"
+                                                        style="padding-top: 0px; ">
+                                                        <a dropdownToggle class="text-reset dropdown-btn"
+                                                                href="javascript:void(0);">
+                                                                <span class="text-muted fs-lg"><i
+                                                                                class="mdi mdi-dots-vertical align-middle"></i></span>
+                                                        </a>
+                                                        <div *dropdownMenu class="dropdown-menu dropdown-menu-end">
+                                                                <a class="dropdown-item" href="javascript:void(0);"
+                                                                        (click)="onChartTypeChange2('pie')">Pie</a>
+                                                                <a class="dropdown-item" href="javascript:void(0);"
+                                                                        (click)="onChartTypeChange2('area')">Area</a>
+                                                                <a class="dropdown-item" href="javascript:void(0);"
+                                                                        (click)="onChartTypeChange2('bar')">Bar</a>
+                                                                <a class="dropdown-item" href="javascript:void(0);"
+                                                                        (click)="onChartTypeChange2('line')">Line</a>
+                                                                <a class="dropdown-item" href="javascript:void(0);"
+                                                                        (click)="onChartTypeChange2('pyramid')">Pyramid</a>
+                                                                <a class="dropdown-item" href="javascript:void(0);"
+                                                                        (click)="onChartTypeChange2('radar')">Radar</a>
+                                                        </div>
+                                                </div>
+
+                                        </i>
+                                        <i class="bi bi-arrows-fullscreen myfullscreen" data-toggle="fullscreen"
+                                                (click)="fullscreen('costandmarginchart','Cost & Margin Service Line wise')"></i>
+                                </div>
+                        </div>
+                        <div class="card-body chart-container apex-charts effect-chart" id="costandmarginchart">
+                                <apx-chart [series]="chartOptions2.series" [chart]="chartOptions2.chart"
+                                        [dataLabels]="chartOptions2.dataLabels"
+                                        [plotOptions]="chartOptions2.plotOptions"
+                                        [responsive]="chartOptions2.responsive" [xaxis]="chartOptions2.xaxis"
+                                        [legend]="chartOptions2.legend" [fill]="chartOptions2.fill"
+                                        [labels]="chartOptions2.labels"></apx-chart>
+                        </div>
+                </div>
+
+        </div>
+</div>
+<!-- row end>-->
+<div class="row">
+        <div class="col-lg-6">
+                <div class="card" id="top10">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                                <h4 class="card-title mb-0">Top 10 Customer</h4>
+                                <div class="nav nav-pills flex-shrink-0 d-flex justify-content-center align-items-center">
+                                        <i>
+                                                <div dropdown class="dropdown float-end" tooltip="Chart type"
+                                                        style="padding-top: 0px; ">
+                                                        <a dropdownToggle class="text-reset dropdown-btn"
+                                                                href="javascript:void(0);">
+                                                                <span class="text-muted fs-lg"><i
+                                                                                class="mdi mdi-dots-vertical align-middle"></i></span>
+                                                        </a>
+                                                        <div *dropdownMenu class="dropdown-menu dropdown-menu-end">
+                                                                <a class="dropdown-item" href="javascript:void(0);"
+                                                                        (click)="onChartTypeChange3('pie')">Pie</a>
+                                                                <a class="dropdown-item" href="javascript:void(0);"
+                                                                        (click)="onChartTypeChange3('area')">Area</a>
+                                                                <a class="dropdown-item" href="javascript:void(0);"
+                                                                        (click)="onChartTypeChange3('bar')">Bar</a>
+                                                                <a class="dropdown-item" href="javascript:void(0);"
+                                                                        (click)="onChartTypeChange3('line')">Line</a>
+                                                                <a class="dropdown-item" href="javascript:void(0);"
+                                                                        (click)="onChartTypeChange3('pyramid')">Pyramid</a>
+                                                                <a class="dropdown-item" href="javascript:void(0);"
+                                                                        (click)="onChartTypeChange3('radar')">Radar</a>
+                                                        </div>
+                                                </div>
+
+                                        </i>
+                                        <i class="bi bi-arrows-fullscreen myfullscreen" data-toggle="fullscreen"
+                                                (click)="fullscreen('top10chart','Top 10 Customer')"></i>
+                                </div>
+                        </div>
+                        <div class="card-body chart-container" id="top10chart">
+                                <apx-chart [series]="chartOptions3.series" [chart]="chartOptions3.chart"
+                                        [dataLabels]="chartOptions3.dataLabels"
+                                        [plotOptions]="chartOptions3.plotOptions"
+                                        [responsive]="chartOptions3.responsive" [xaxis]="chartOptions3.xaxis"
+                                        [legend]="chartOptions3.legend" [fill]="chartOptions3.fill"
+                                        [labels]="chartOptions3.labels"></apx-chart>
+                        </div>
+                </div>
+
+        </div>
+        <div class="col-lg-6">
+                <div class="card" id="existingvsnew">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                                <h4 class="card-title mb-0">Existing Vs New</h4>
+                                <div class="nav nav-pills flex-shrink-0 d-flex justify-content-center align-items-center">
+                                        <i>
+                                                <div dropdown class="dropdown float-end" tooltip="Chart type"
+                                                        style="padding-top: 0px; ">
+                                                        <a dropdownToggle class="text-reset dropdown-btn"
+                                                                href="javascript:void(0);">
+                                                                <span class="text-muted fs-lg"><i
+                                                                                class="mdi mdi-dots-vertical align-middle"></i></span>
+                                                        </a>
+                                                        <div *dropdownMenu class="dropdown-menu dropdown-menu-end">
+                                                                <a class="dropdown-item" href="javascript:void(0);"
+                                                                        (click)="onChartTypeChange4('pie')">Pie</a>
+                                                                <a class="dropdown-item" href="javascript:void(0);"
+                                                                        (click)="onChartTypeChange4('area')">Area</a>
+                                                                <a class="dropdown-item" href="javascript:void(0);"
+                                                                        (click)="onChartTypeChange4('bar')">Bar</a>
+                                                                <a class="dropdown-item" href="javascript:void(0);"
+                                                                        (click)="onChartTypeChange4('line')">Line</a>
+                                                                <a class="dropdown-item" href="javascript:void(0);"
+                                                                        (click)="onChartTypeChange4('pyramid')">Pyramid</a>
+                                                                <a class="dropdown-item" href="javascript:void(0);"
+                                                                        (click)="onChartTypeChange4('treemap')">Treemap</a>
+                                                        </div>
+                                                </div>
+
+                                        </i>
+                                        <i class="bi bi-arrows-fullscreen myfullscreen" data-toggle="fullscreen"
+                                                (click)="fullscreen('existingvsnewchart','Existing Vs New')"></i>
+                                </div>
+                        </div>
+                        <div class="card-body chart-container" id="existingvsnewchart">
+                                <apx-chart [series]="chartOptions4.series" [chart]="chartOptions4.chart"
+                                        [dataLabels]="chartOptions4.dataLabels"
+                                        [plotOptions]="chartOptions4.plotOptions"
+                                        [responsive]="chartOptions4.responsive" [xaxis]="chartOptions4.xaxis"
+                                        [legend]="chartOptions4.legend" [fill]="chartOptions4.fill"
+                                        [labels]="chartOptions4.labels"></apx-chart>
+                        </div>
+                </div>
+        </div>
+</div>
+<!-- row end>-->
+<div class="row">
+        <div class="col-lg-6">
+                <div class="card" id="businessandselling">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                                <h4 class="card-title mb-0">New Business and Selling Cost</h4>
+                                <div class="nav nav-pills flex-shrink-0 d-flex justify-content-center align-items-center">
+                                        <i>
+                                                <div dropdown class="dropdown float-end" tooltip="Chart type"
+                                                        style="padding-top: 0px; ">
+                                                        <a dropdownToggle class="text-reset dropdown-btn"
+                                                                href="javascript:void(0);">
+                                                                <span class="text-muted fs-lg"><i
+                                                                                class="mdi mdi-dots-vertical align-middle"></i></span>
+                                                        </a>
+                                                        <div *dropdownMenu class="dropdown-menu dropdown-menu-end">
+                                                                <a class="dropdown-item" href="javascript:void(0);"
+                                                                        (click)="onChartTypeChange5('bar')">Bar</a>
+                                                                <a class="dropdown-item" href="javascript:void(0);"
+                                                                        (click)="onChartTypeChange5('multiple')">Multiple</a>
+                                                                <a class="dropdown-item" href="javascript:void(0);"
+                                                                        (click)="onChartTypeChange5('linearea')">Line Area</a>
+                                                        </div>
+                                                </div>
+
+                                        </i>
+                                        <i class="bi bi-arrows-fullscreen myfullscreen" data-toggle="fullscreen"
+                                                (click)="fullscreen('businessandsellingchart','New Business and Selling Cost')"></i>
+                                </div>
+                        </div>
+                        <div class="card-body chart-container" id="businessandsellingchart">
+                                <apx-chart [series]="chartOptions5.series" [chart]="chartOptions5.chart"
+                                        [dataLabels]="chartOptions5.dataLabels"
+                                        [plotOptions]="chartOptions5.plotOptions"
+                                        [responsive]="chartOptions5.responsive" [xaxis]="chartOptions5.xaxis"
+                                        [legend]="chartOptions5.legend" [fill]="chartOptions5.fill"
+                                        [labels]="chartOptions5.labels"></apx-chart>
+                        </div>
+                </div>
+        </div>
+        <div class="col-lg-6">
+                <div class="card" id="targetvsproductivity">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                                <h4 class="card-title mb-0">Target V/s Productivity</h4>
+                                <div class="nav nav-pills flex-shrink-0 d-flex justify-content-center align-items-center">
+                                        <!-- <i>
+                                                <div dropdown class="dropdown float-end" tooltip="Chart type"
+                                                        style="padding-top: 0px; ">
+                                                        <a dropdownToggle class="text-reset dropdown-btn"
+                                                                href="javascript:void(0);">
+                                                                <span class="text-muted fs-lg"><i
+                                                                                class="mdi mdi-dots-vertical align-middle"></i></span>
+                                                        </a>
+                                                        <div *dropdownMenu class="dropdown-menu dropdown-menu-end">
+                                                                <a class="dropdown-item" href="javascript:void(0);"
+                                                                        (click)="onChartTypeChange6('linewithdata')">line With Data</a>
+                                                                <a class="dropdown-item" href="javascript:void(0);"
+                                                                        (click)="onChartTypeChange6('linewitharea')">Line With Area</a>
+                                                                <a class="dropdown-item" href="javascript:void(0);"
+                                                                        (click)="onChartTypeChange6('rangearea')">Range Area</a>
+                                                        </div>
+                                                </div>
+
+                                        </i> -->
+                                        <i class="bi bi-arrows-fullscreen myfullscreen" data-toggle="fullscreen"
+                                                (click)="fullscreen('targetvsproductivitychart','Target V/s Productivity')"></i>
+                                                <!-- <i class="bi bi-arrows-fullscreen myfullscreen" data-toggle="fullscreen"
+                                                (click)="showmodel('targetvsproductivitychart','Target V/s Productivity')"></i> -->
+                                </div>
+                        </div>
+                        <div class="card-body chart-container" id="targetvsproductivitychart">
+                                <apx-chart [title]="chartOptions6.title" [series]="chartOptions6.series"
+                                        [chart]="chartOptions6.chart" [dataLabels]="chartOptions6.dataLabels"
+                                        [plotOptions]="chartOptions6.plotOptions"
+                                        [responsive]="chartOptions6.responsive" [xaxis]="chartOptions6.xaxis"
+                                        [legend]="chartOptions6.legend" [fill]="chartOptions6.fill"
+                                        [labels]="chartOptions6.labels"></apx-chart>
+                        </div>
+                </div>
+        </div>
+</div>
+
+<!-- Default Modals -->
+<!-- Vertically Centered -->
+<div>       
+        <div bsModal #zoommodal="bs-modal" id="zoomInModal" class="modal fade zoomIn" tabindex="-1"
+        aria-labelledby="zoomInModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="zoomInModalLabel">{{modalTitle}}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalChartContainer">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light"
+                    (click)="zoommodal.hide()">Close</button>
+                </div>
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>
+      

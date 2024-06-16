@@ -1,0 +1,461 @@
+<!-- Start Breadcrumbs -->
+<app-breadcrumbs title="Publisher Master" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+<!-- End Breadcrumbs -->
+
+<div *ngIf="menuAccess.canView">
+
+    <div class="row" id="invoiceList">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row align-items-center g-2">
+                        <div class="col-lg-3 me-auto">
+                            <!-- <h6 class="card-title mb-0">Publisher Master</h6> -->
+                        </div><!--end col-->
+                        <div class="col-xl-2 col-md-3">
+                            <div class="search-box">
+                                <input type="text" class="form-control search" [(ngModel)]="searchTerm"
+                                    (keyup)="onSearchKeyUp(searchTerm)"
+                                    placeholder="Search for publisher acronym ,publisher name or something...">
+                                <i class="ri-search-line search-icon"></i>
+                            </div>
+                        </div><!--end col-->
+                        <div class="col-md-auto">
+                            <div class="hstack gap-2">
+                                <button class="btn btn-subtle-danger d-none" id="remove-actions"><i
+                                        class="ri-delete-bin-2-line"></i></button>
+                                <a (click)="add(null)" [hidden]="!menuAccess.canAdd" class="btn btn-secondary"><i
+                                        class="bi bi-plus-circle align-baseline me-1"></i> Add New Publisher</a>
+                            </div>
+                        </div><!--end col-->
+                        <div class="col-md-auto">
+                            <div class="hstack gap-2">
+                                <div dropdown class="btn-group">
+                                    <button dropdownToggle class="btn btn-success me-1" type="button"
+                                        (click)="exportExcel()" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                        <i class="ph-cloud-arrow-up align-middle me-1"></i>
+                                        Export
+                                    </button>
+                                    <ul *dropdownMenu class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start"
+                                        aria-labelledby="dropdownMenuButton">
+                                        <li>
+                                            <button class="dropdown-item btn-link" type="button">
+                                                <i class="bi bi-filetype-xls fs-4 me-1"></i>
+                                                <span>Excel</span>
+                                            </button>
+                                        </li>
+                                        <li class="mt-1">
+                                            <button class="dropdown-item btn-link" type="button">
+                                                <i class="bi bi-filetype-csv fs-4 me-1"></i>
+                                                <span>CSV</span>
+                                            </button>
+                                        </li>
+                                        <li class="mt-1">
+                                            <button class="dropdown-item btn-link" type="button">
+                                                <i class="bi bi-filetype-pdf fs-4 me-1"></i>
+                                                <span>PDF</span>
+                                            </button>
+                                        </li>
+
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!--end row-->
+
+                </div>
+                <div class="card-body mt-3">
+                    <div class="table-responsive table-card">
+                        <table class="table table-centered align-middle table-custom-effect table-nowrap mb-0">
+                            <thead class="table-light">
+                                <tr>
+
+                                    <th scope="col">S.No</th>
+                                    <!-- <th scope="col" class="sort cursor-pointer">Publisher ID</th> -->
+                                    <th scope="col" (click)="sort('acronym')" class="sort cursor-pointer">Publisher
+                                        Acronym
+                                    </th>
+                                    <th scope="col" (click)="sort('publisherName')" class="sort cursor-pointer">
+                                        Publisher
+                                        Name</th>
+
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="list form-check-all" id="invoice-list-data">
+                                <tr *ngFor="let pub of filteredItems();let i=index">
+
+                                    <td class="invoice_id">
+                                        {{ ((currentPage - 1) * pageSize) + i + 1 }}
+                                    </td>
+                                    <!-- <td>{{pub.id}}</td> -->
+                                    <td>{{pub.acronym}}</td>
+                                    <td>{{pub.publisherName}}</td>
+
+                                    <td>
+                                        <ul class="d-flex gap-2 list-unstyled mb-0">
+                                            <li> <a href="javascript:void(0);" [hidden]="!menuAccess.canView"
+                                                    tooltip="View" class="btn btn-subtle-primary btn-icon btn-sm"
+                                                    data-view-id="24301901" (click)="viewItem(pub.id)"><i
+                                                        class="ph-eye"></i></a> </li>
+                                            <li> <a href="javascript:void(0);" [hidden]="!menuAccess.canUpdate"
+                                                    tooltip="Edit" class="btn btn-subtle-secondary btn-icon btn-sm"
+                                                    data-edit-id="24301901" (click)="edit(pub.id)"><i
+                                                        class="ph-pencil"></i></a> </li>
+                                            <li> <a href="javascript:void(0);" [hidden]="!menuAccess.canDelete"
+                                                    tooltip="Delete"
+                                                    class="btn btn-subtle-danger btn-icon btn-sm remove-item-btn"
+                                                    (click)="deleteItem(pub.id)"><i class="ph-trash"></i></a> </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </tbody><!-- end tbody -->
+                        </table><!-- end table -->
+
+                    </div>
+
+
+                    <div style="height: 5px; width: 100%;"></div>
+                    <div id="pagination-element" class="row align-items-center mt-4 pt-2">
+                        <div class="col-sm-auto">
+                            <div class="text-muted text-center text-sm-start pe-auto">
+                                &nbsp; &nbsp; Per Page:
+                            </div>
+                        </div>
+                        <div class="col-sm-auto">
+                            <!-- <select id="perPage" (change)="onPageSizeChange()"
+                                class="form-select w-auto ng-untouched ng-pristine ng-valid">
+                                <option value="" disabled>Select</option>
+                                <option *ngFor="let size of pageSizeOptions" [value]="size">
+                                    {{ size === -1 ? 'All' : size }}
+                                </option>
+                            </select> -->
+                            <select id="perPage" (change)="onPageSizeChange()"
+                                class="form-select w-auto ng-untouched ng-pristine ng-valid">
+                                <option *ngFor="let size of pageSizeOptions" style="padding:0px;" [value]="size">
+                                    {{ size === -1 ? 'All' : size }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-sm">
+                            <div class="text-muted text-center text-sm-start"> Showing
+                                <span class="fw-semibold">{{startIndex}} - {{endIndex}}</span> of <span
+                                    class="fw-semibold">{{publisherList.length}}</span> Results
+                            </div>
+                        </div>
+                        <div class="col-sm-auto mt-3 mt-sm-0">
+                            <div name="currentPage"
+                                class="pagination-wrap hstack gap-2 justify-content-center ng-untouched ng-valid ng-dirty">
+                                <ul class="pagination pagination-wrap hstack gap-2 justify-content-center">
+                                    <li class="pagination-page page-item ng-star-inserted ">
+                                        <a href="javascript:void(0)" (click)="firstPage()" class="page-link">
+                                            First
+                                        </a>
+                                    </li>
+
+                                    <li class="pagination-page page-item ng-star-inserted ">
+                                        <a href="javascript:void(0)" (click)="previousPage()" class="page-link">
+                                            Previous
+                                        </a>
+                                    </li>
+
+                                    <li *ngFor="let page of pages" [class.active]="page === currentPage"
+                                        class="pagination-page page-item ng-star-inserted">
+                                        <a href="javascript:void(0)" class="page-link" (click)="onPageChange(page)">
+                                            {{page}}
+                                        </a>
+                                    </li>
+
+                                    <li class="pagination-page page-item ng-star-inserted ">
+                                        <a href="javascript:void(0)" (click)="nextPage()" class="page-link">
+                                            Next
+                                        </a>
+                                    </li>
+
+                                    <li class="pagination-page page-item ng-star-inserted ">
+                                        <a href="javascript:void(0)" (click)="lastPage()" class="page-link">
+                                            Last
+                                        </a>
+                                    </li>
+                                    &nbsp;
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="height:5px; width:100%;"></div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- showModal -->
+    <div class="modal fade" id="addUpdatePopUp">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-light p-3">
+                    <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-user-circle"></i>&nbsp;Publisher
+                        Details
+                    </h5>
+                    <button type="button" class="btn-close" (click)="closeForm()"></button>
+                </div>
+                <form (ngSubmit)="submitPubData(Id)" [formGroup]="publisherForm" class="tablelist-form" novalidate
+                    autocomplete="off">
+                    <div class="modal-body">
+                        <div id="alert-error-msg" class="d-none alert alert-danger py-2"></div>
+                        <!-- Input field for ID -->
+                        <input type="hidden" formControlName="id">
+                        <div class="row g-3">
+                            <!-- <div class="col-sm-6">
+                            <label for="pubcode" class="form-label">Publisher Code</label>
+                            <input type="text" id="pubcode" class="form-control" formControlName="pubcode">
+                        </div> -->
+                            <div class="col-sm-6">
+                                <label for="acronym" class="form-label">Publisher Acronym</label>
+                                <input type="text" id="acronym" class="form-control" formControlName="acronym"
+                                    value="{{acronym}}" [class.is-invalid]="isInvalid('acronym')"
+                                    (keyup)="ValidateControlData($event,'acronym',true,true,true,false)" required>
+                                <div *ngIf="isInvalid('acronym')" class="invalid-feedback">
+                                    <div *ngIf="publisherForm.get('acronym')?.errors?.['required']">
+                                        Publisher Acronym is required.
+                                    </div>
+                                    <div *ngIf="publisherForm.get('acronym')?.errors?.['duplicate']">
+                                        Publisher Acronym already exists.
+                                    </div>
+                                    <div *ngIf="publisherForm.get('acronym')?.errors?.['invalidData']">
+                                        Special characters not allowed.
+                                    </div>
+                                    <div *ngIf="publisherForm.get('acronym')?.errors?.['invalidNumber']">
+                                        Number not allowed.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="publisherName" class="form-label">Publisher Name<span
+                                        class="text-danger">*</span></label>
+                                <input type="text" id="publisherName" class="form-control"
+                                    formControlName="publisherName" value="{{publisherName}}"
+                                    [class.is-invalid]="isInvalid('publisherName')"
+                                    (keyup)="ValidateControlData($event,'publisherName',true,true,true,false)" required>
+
+                                <div *ngIf="isInvalid('publisherName')" class="invalid-feedback">
+                                    <div *ngIf="publisherForm.get('publisherName')?.errors?.['required']">
+                                        Publisher Name is required.
+                                    </div>
+                                    <div *ngIf="publisherForm.get('publisherName')?.errors?.['duplicate']">
+                                        Publisher Name already exists.
+                                    </div>
+                                    <div *ngIf="publisherForm.get('publisherName')?.errors?.['invalidData']">
+                                        Special characters not allowed.
+                                    </div>
+                                    <div *ngIf="publisherForm.get('publisherName')?.errors?.['invalidNumber']">
+                                        Number not allowed.
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="col-sm-6">
+                            <label for="contactno" class="form-label">Contact No<span
+                                    class="text-danger">*</span></label>
+                            <input type="text" id="contactno" class="form-control" formControlName="contactno">
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="emailid" class="form-label">Email Id<span class="text-danger">*</span></label>
+                            <input type="text" id="emailid" class="form-control" formControlName="emailid">
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="country" class="form-label">Country<span class="text-danger">*</span></label>
+                            <input type="text" id="country" class="form-control" formControlName="country">
+                        </div> -->
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="hstack gap-2 justify-content-end">
+                            <button type="button" class="btn btn-light" (click)="closeForm()">Close</button>
+                            <button type="submit" class="btn btn-success" id="add-btn">{{ !Id ? 'Submit' :
+                                'Update'}}</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- end showModal -->
+
+
+    <!-- deleteRecordModal -->
+    <div id="deletePopUp" class="modal fade zoomIn" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" (click)="closeDeletePopUp()"></button>
+                </div>
+                <div class="modal-body p-md-5">
+                    <div class="text-center">
+                        <div class="text-danger">
+                            <i class="bi bi-trash display-5"></i>
+                        </div>
+                        <div class="mt-4">
+                            <h4 class="mb-2">Are you sure ?</h4>
+                            <p class="text-muted mx-3 mb-0">Are you sure you want to remove this record ?</p>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-2 justify-content-center mt-4 pt-2 mb-2">
+                        <button type="button" class="btn w-sm btn-light btn-hover"
+                            (click)="closeDeletePopUp()">Close</button>
+                        <button type="button" class="btn w-sm btn-danger btn-hover" id="delete-record"
+                            (click)="deleteRoleData(Id)">Yes, Delete
+                            It!</button>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /deleteRecordModal -->
+
+    <!-- view popup -->
+
+    <!-- <div class="modal fade" id="viewPopUp">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content d-flex justify-content-center align-items-center">
+                <div class="bg-light h-100 p-4" style="width: 70vw;">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="mb-4"><i class="fa fa-user-circle"></i>&nbsp;Publisher
+                            Details</h4>
+                        <button type="button" class="btn btn-outline-close" (click)="closeForm()">X</button>
+                    </div>
+                    <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col-lg-8" style="align-items: center; display: flex;justify-content: center;">
+                            <table id="sortable-table-1" class="table table-hover table-bordered viewTable ">
+                                <thead class="table-header" style="background-color: rgb(222, 226, 226); ">
+                                    <tr class="theader">
+
+                                        <th>Title</th>
+                                        <th>Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Pub Id</td>
+                                        <td>{{Id}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Publisher Name</td>
+                                        <td>{{publisherName}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Publisher Acronym</td>
+                                        <td>{{acronym}}</td>
+                                    </tr>
+
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <div class="p-2 d-flex justify-content-end">
+                            <button type="button" *ngIf="Id" class="btn btn-outline-danger"
+                                (click)="closeForm()">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <div class="modal fade" id="viewPopUp">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-light p-3">
+                    <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-user-circle"></i>&nbsp;Publisher
+                        Details
+                    </h5>
+                    <button type="button" class="btn-close" (click)="closeForm()"></button>
+                </div>
+                <form [formGroup]="publisherForm" class="tablelist-form" novalidate autocomplete="off">
+                    <table id="sortable-table-1" class="table table-hover table-bordered viewTable ">
+                        <thead class="table-header" style="background-color: rgb(222, 226, 226); ">
+                            <tr class="theader">
+                                <th>Title</th>
+                                <th>Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Pub Id</td>
+                                <td>{{Id}}</td>
+                            </tr>
+                            <tr>
+                                <td>Publisher Name</td>
+                                <td>{{publisherName}}</td>
+                            </tr>
+                            <tr>
+                                <td>Publisher Acronym</td>
+                                <td>{{acronym}}</td>
+                            </tr>    
+                        </tbody>
+                    </table>
+    
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <table id="ExportTable" class="table" style="display: none;">
+        <thead class="table-header">
+            <tr>
+                <th class="freeze-column">S.No</th>
+                <th>Publisher ID</th>
+                <th>Publisher Acronym</th>
+                <th>Publisher Name</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let pub of publisherList;let i=index">
+                <td class="freeze-column">{{ ((currentPage - 1) * pageSize) + i + 1 }}</td>
+                <td>{{pub.id}}</td>
+                <td>{{pub.acronym}}</td>
+                <td>{{pub.publisherName}}</td>
+
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="modal " id="loaderAnimation">
+    <div class="modal-dialog" role="document" style=" display: flex; justify-content: center; align-items: center;">
+        <div class="modal-content card" style="background-color: transparent !important;">
+
+            <div class="h-100 p-4  d-flex justify-content-center align-items-center flex-column">
+
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    style="margin: auto; background: rgba(255, 255, 255, 0); display: block;" width="203px"
+                    height="203px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                    <circle cx="50" cy="50" r="0" fill="none" stroke="#e90c59" stroke-width="4">
+                        <animate attributeName="r" repeatCount="indefinite" dur="3.571428571428571s" values="0;40"
+                            keyTimes="0;1" keySplines="0 0.2 0.8 1" calcMode="spline" begin="0s"></animate>
+                        <animate attributeName="opacity" repeatCount="indefinite" dur="3.571428571428571s" values="1;0"
+                            keyTimes="0;1" keySplines="0.2 0 0.8 1" calcMode="spline" begin="0s"></animate>
+                    </circle>
+                    <circle cx="50" cy="50" r="0" fill="none" stroke="#46dff0" stroke-width="4">
+                        <animate attributeName="r" repeatCount="indefinite" dur="3.571428571428571s" values="0;40"
+                            keyTimes="0;1" keySplines="0 0.2 0.8 1" calcMode="spline" begin="-1.7857142857142856s">
+                        </animate>
+                        <animate attributeName="opacity" repeatCount="indefinite" dur="3.571428571428571s" values="1;0"
+                            keyTimes="0;1" keySplines="0.2 0 0.8 1" calcMode="spline" begin="-1.7857142857142856s">
+                        </animate>
+                    </circle>
+                </svg>
+
+                <h3>Loading</h3>
+
+            </div>
+        </div>
+    </div>
+    <!-- <app-no-access *ngIf="!menuAccess.canView" ></app-no-access> -->

@@ -1,0 +1,13 @@
+<!-- Start Breadcrumbs -->
+<app-breadcrumbs title="Forex" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+<!-- End Breadcrumbs -->
+<mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+    <mat-button-toggle routerLink="data" >Data</mat-button-toggle>
+    <mat-button-toggle routerLink="feedback">Feedback</mat-button-toggle>
+</mat-button-toggle-group>
+
+<div class="row">
+    <div class="col-lg-12">
+        <router-outlet></router-outlet>
+    </div>
+</div>

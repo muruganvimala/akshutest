@@ -1,0 +1,203 @@
+
+<!-- <div class="row">
+    <div class="col-lg-12">
+       
+        <iframe title="KPI" width="980" height="636" src="https://app.powerbi.com/view?r=eyJrIjoiMjg5MzVlMzUtN2ZiYi00NjAwLWJhOTEtYjVhMzFjOGVkODY1IiwidCI6ImEwM2E3ZjZjLWZiYzgtNGI1Zi1iMTZiLWY2MzRkYmUxYTg2MiIsImMiOjN9" frameborder="0" allowFullScreen="true"></iframe>
+    </div>
+</div> -->
+<div class="row">
+   <div class="col-lg-3">
+    <div class="card shadow-none border-end-md border-bottom rounded-0 mb-0">
+        <div class="card-body">
+           
+            <div class="avatar-sm">
+                <span class="avatar-title bg-primary-subtle text-primary rounded-circle fs-3">
+                    <i class="ph-wallet"></i>
+                </span>
+            </div>
+            <div class="mt-4">
+                <p class="text-uppercase fw-medium text-muted text-truncate fs-sm">Quality</p>
+                <h4 class="fw-semibold mb-3"><span class="counter-value" [countUp]="750.36">0</span>K</h4>
+                <div class="d-flex align-items-center gap-2">
+                    <h5 class="text-success fs-xs mb-0">
+                        <i class="ri-arrow-right-up-line fs-sm align-middle"></i> +19.07 %
+                    </h5>
+                    <p class="text-muted mb-0">than last week</p>
+                </div>
+            </div>
+        </div><!-- end card body -->
+    </div><!-- end card -->
+   </div>
+   <div class="col-lg-3">
+    <div class="card shadow-none border-bottom rounded-0 mb-0">
+        <div class="card-body">
+           
+            <div class="avatar-sm">
+                <span class="avatar-title bg-dark-subtle text-dark rounded-circle fs-3">
+                    <i class="ph-bag"></i>
+                </span>
+            </div>
+            <div class="mt-4">
+                <p class="text-uppercase fw-medium text-muted text-truncate fs-sm">PUblication Speed</p>
+                <h4 class="fw-semibold mb-3"><span class="counter-value" [countUp]="684">0</span>
+                </h4>
+                <div class="d-flex align-items-center gap-2">
+                    <h5 class="text-success fs-xs mb-0">
+                        <i class="ri-arrow-right-up-line fs-sm align-middle"></i> +8.13 %
+                    </h5>
+                    <p class="text-muted mb-0">than last week</p>
+                </div>
+            </div>
+        </div><!-- end card body -->
+    </div><!-- end card -->
+   </div>
+   <div class="col-lg-3">
+    <div class="card shadow-none border-end-md rounded-0 mb-0">
+        <div class="card-body">
+            
+            <div class="avatar-sm">
+                <span class="avatar-title bg-light text-body rounded-circle fs-3">
+                    <i class="ph-eye"></i>
+                </span>
+            </div>
+            <div class="mt-4">
+                <p class="text-uppercase fw-medium text-muted text-truncate fs-sm">Feedback</p>
+                <h4 class="fw-semibold mb-3"><span class="counter-value" [countUp]="5">0</span>
+                </h4>
+                <div class="d-flex align-items-center gap-2">
+                    <h5 class="text-danger fs-xs mb-0">
+                        <i class="ri-arrow-right-down-line fs-sm align-middle"></i> +2.01 %
+                    </h5>
+                    <p class="text-muted mb-0">than last week</p>
+                </div>
+            </div>
+        </div><!-- end card body -->
+    </div><!-- end card -->
+   </div>
+   <div class="col-lg-3">
+    <div class="card shadow-none border-top border-top-md-0 rounded-0 mb-0">
+        <div class="card-body">
+           
+            <div class="avatar-sm">
+                <span class="avatar-title bg-info-subtle text-info rounded-circle fs-3">
+                    <i class="ph-users-three"></i>
+                </span>
+            </div>
+            <div class="mt-4">
+                <p class="text-uppercase fw-medium text-muted text-truncate fs-sm">Overall Performance</p>
+                <h4 class="fw-semibold mb-3"><span class="counter-value" [countUp]="2500">0</span>k
+                </h4>
+                <div class="d-flex align-items-center gap-2">
+                    <h5 class="text-success fs-xs mb-0">
+                        <i class="ri-arrow-right-up-line fs-sm align-middle"></i> +10.42 %
+                    </h5>
+                    <p class="text-muted mb-0">than last week</p>
+                </div>
+            </div>
+        </div><!-- end card body -->
+    </div><!-- end card -->
+   </div>
+</div>
+
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card card-height-100">
+            <div class="card-header align-items-center d-flex">
+                <h4 class="card-title mb-0 flex-grow-1">Publisher Overview</h4>
+                <div>
+                    <button type="button" class="btn btn-subtle-secondary btn-sm me-1">
+                        ALL
+                    </button>
+                    <button type="button" class="btn btn-subtle-secondary btn-sm me-1">
+                        1M
+                    </button>
+                    <button type="button" class="btn btn-subtle-secondary btn-sm me-1">
+                        6M
+                    </button>
+                    <button type="button" class="btn btn-subtle-primary btn-sm">
+                        1Y
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div id="area_chart_spline" class="apex-charts ms-n3" dir="ltr">
+                    <apx-chart [series]="areasplineChart.series" [chart]="areasplineChart.chart" [markers]="areasplineChart.markers" [grid]="areasplineChart.grid" [fill]="areasplineChart.fill" [legend]="areasplineChart.legend" [dataLabels]="areasplineChart.dataLabels" [xaxis]="areasplineChart.xaxis" [colors]="areasplineChart.colors" [stroke]="areasplineChart.stroke" dir="ltr"></apx-chart>
+                </div>
+            </div>
+        </div>
+    </div><!--end col-->
+    <div class="col-lg-4">
+        <div class="card card-height-100">
+            <div class="card-header d-flex align-items-center">
+                <h6 class="card-title mb-0 flex-grow-1">Top of 5 Publisher</h6>
+                <!-- <div class="flex-shrink-0">
+                    <a routerLink="/learning/instructors-list" class="icon-link icon-link-hover">View All <i class="bi bi-arrow-right"></i></a>
+                </div> -->
+            </div>
+            <div class="card-body px-0">
+                <ngx-simplebar class="card-body py-0" style="max-height: 330px;">
+                    <div class="table-responsive table-card mt-0">
+                        <table class="table mb-0">
+                            <tbody>
+                                <tr *ngFor="let data of instructordata;">
+                                    <td>
+                                        <div class="d-flex align-items-center gap-1">
+                                            <!-- <div class="flex-shrink-0">
+                                                <img src="{{data.img}}" alt="" class="avatar-sm rounded-circle p-1">
+                                            </div> -->
+                                            <div class="flex-grow-1">
+                                                <h6 class="fs-md mb-1"><a routerLink="/learning/instructors-overview" class="text-reset">{{data.name}}</a></h6>
+                                                <p class="text-muted mb-0">{{data.course}} Courses</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-end">
+                                        <span class="badge bg-warning-subtle text-warning"><i class="bi bi-star-fill"></i> {{data.rate}}</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </ngx-simplebar>
+            </div>
+        </div>
+    </div><!--end col-->
+</div><!--end row-->
+
+
+<div class="row">
+    <div class="col-xl-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title mb-0">UnderPerforming Services</h4>
+            </div><!-- end card header -->
+
+            <div class="card-body">
+                <apx-chart [series]="UnderPerformingServicesPieChart.series" [chart]="UnderPerformingServicesPieChart.chart"
+                    [labels]="UnderPerformingServicesPieChart.labels" [legend]="UnderPerformingServicesPieChart.legend"
+                    [dataLabels]="UnderPerformingServicesPieChart.dataLabels" [responsive]="UnderPerformingServicesPieChart.responsive"
+                    [colors]="UnderPerformingServicesPieChart.colors" dir="ltr"></apx-chart>
+            </div><!-- end card-body -->
+        </div><!-- end card -->
+    </div>
+    <!-- end col -->
+
+    <div class="col-xl-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title mb-0">Underperforming Publishers</h4>
+            </div><!-- end card header -->
+
+            <div class="card-body">
+                <apx-chart [series]="UnderperformingPublishersPieChart.series" [chart]="UnderperformingPublishersPieChart.chart"
+                    [labels]="UnderperformingPublishersPieChart.labels" [legend]="UnderperformingPublishersPieChart.legend"
+                    [dataLabels]="UnderperformingPublishersPieChart.dataLabels" [responsive]="UnderperformingPublishersPieChart.responsive"
+                    [colors]="UnderperformingPublishersPieChart.colors" dir="ltr"></apx-chart>
+            </div><!-- end card-body -->
+        </div><!-- end card -->
+    </div>
+    <!-- end col -->
+</div>
+
+

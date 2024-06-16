@@ -1,0 +1,206 @@
+<section class="auth-page-wrapper position-relative d-flex align-items-center justify-content-center min-vh-100">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-11">
+                <div class="card mb-0">
+                    <div class="row g-0 align-items-center">
+                        <div class="w-50">
+                            <div class="card auth-card bg-dark border-0 shadow-none d-none d-sm-block mb-0">
+                                <div class="card-body d-flex justify-content-between flex-column">
+                                    <div class="text-center">
+                                        <h3 class="text-white">Start your journey with us.</h3>
+                                        <p class="text-white opacity-75 fs-base">It brings together your tasks,
+                                            projects, timelines, files and more</p>
+                                    </div>
+                                    <div
+                                        class="auth-effect-main my-5 position-relative rounded-circle d-flex align-items-center justify-content-center mx-auto">
+                                        <div
+                                            class="effect-circle-1 position-relative mx-auto rounded-circle d-flex align-items-center justify-content-center">
+                                            <div
+                                                class="effect-circle-2 position-relative mx-auto rounded-circle d-flex align-items-center justify-content-center">
+                                                <div
+                                                    class="effect-circle-3 mx-auto rounded-circle position-relative text-white fs-4xl d-flex align-items-center justify-content-center">
+                                                   <img style="height: 50px;width:50px;"
+                                                        src="assets/NT_Img/loginPage/NTLogo.png"
+                                                        alt="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <ul class="auth-user-list list-unstyled">
+                                            <li>
+                                                <div class="avatar-sm d-inline-block">
+                                                    <div
+                                                        class="avatar-title bg-white shadow-lg overflow-hidden rounded-circle">
+                                                        <img src="assets/NT_Img/loginPage/creativity.png" alt=""
+                                                            class="img-fluid">
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="avatar-sm d-inline-block">
+                                                    <div
+                                                        class="avatar-title bg-white shadow-lg overflow-hidden rounded-circle">
+                                                        <img src="assets/NT_Img/loginPage/customer-focus.png" alt=""
+                                                            class="img-fluid">
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="avatar-sm d-inline-block">
+                                                    <div
+                                                        class="avatar-title bg-white shadow-lg overflow-hidden rounded-circle">
+                                                        <img src="assets/NT_Img/loginPage/empathy.png" alt=""
+                                                            class="img-fluid">
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="avatar-sm d-inline-block">
+                                                    <div
+                                                        class="avatar-title bg-white shadow-lg overflow-hidden rounded-circle">
+                                                        <img src="assets/NT_Img/loginPage/integrity.png" alt=""
+                                                            class="img-fluid">
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="avatar-sm d-inline-block">
+                                                    <div
+                                                        class="avatar-title bg-white shadow-lg overflow-hidden rounded-circle">
+                                                        <img src="assets/NT_Img/loginPage/empowerment.png" alt=""
+                                                            class="img-fluid">
+
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="text-center">
+                                        <p class="text-white opacity-75 mb-0 mt-3">
+                                            Copyright &copy; {{year}} nSight.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end col-->
+                        <div class="w-50">
+                            <div class="card mb-0 border-0 shadow-none mb-0">
+                                <div class="card-body p-sm-5 m-lg-4">
+                                    <div class="text-center mt-5">
+                                        <img style="height: 50px;"
+                                            src="assets/NT_Img/loginPage/nSightFinal-Logo_lightMode.png" alt="">
+                                        <h5 class="fs-3xl">Welcome Back</h5>
+                                        <!-- <p class="text-muted">Sign in to continue to nSight.</p> -->
+                                    </div>
+                                    <div class="p-2 mt-5">
+                                        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" action="index.html">
+
+                                            <div class="mb-3">
+                                                <label for="username" class="form-label">Username <span
+                                                        class="text-danger">*</span></label>
+                                                <div class="position-relative ">
+                                                    <input type="text" class="form-control  password-input"
+                                                        formControlName="username" id="username"
+                                                        [ngClass]="{ 'is-invalid': submitted && f['username'].errors }"
+                                                        placeholder="Enter username" required>
+                                                    <div *ngIf="submitted && f['username'].errors"
+                                                        class="invalid-feedback">
+                                                        <div *ngIf="f['username'].errors['required']">Username is
+                                                            required</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <div class="float-end">
+                                                    <a routerLink="/auth/pass-reset" class="text-muted">Forgot
+                                                        password?</a>
+                                                </div>
+                                                <label class="form-label" for="password-input">Password <span
+                                                        class="text-danger">*</span></label>
+                                                <div class="position-relative auth-pass-inputgroup mb-3">
+                                                    <input [type]="fieldTextType ? 'text' : 'password'"
+                                                        formControlName="password"
+                                                        [ngClass]="{ 'is-invalid': submitted && f['password'].errors }"
+                                                        type="password" class="form-control pe-5 password-input "
+                                                        placeholder="Enter password" id="password-input" required>
+                                                    <button
+                                                        class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon"
+                                                        type="button" id="password-addon"><i
+                                                            class="ri-eye-fill align-middle" [ngClass]="{'mdi-eye-off-outline': !fieldTextType, 'mdi-eye-outline': fieldTextType
+                                                    }" (click)="toggleFieldTextType()"></i></button>
+                                                    <div *ngIf="submitted && f['password'].errors"
+                                                        class="invalid-feedback">
+                                                        <span *ngIf="f['password'].errors['required']">Password is
+                                                            required</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value=""
+                                                    id="auth-remember-check">
+                                                <label class="form-check-label" for="auth-remember-check">Remember
+                                                    me</label>
+                                            </div>
+
+                                            <div class="mt-4">
+                                                <button class="btn btn-primary w-100" type="submit">Sign In</button>
+                                            </div>
+
+
+
+                                        </form>
+
+                                        <!-- <div class="text-center mt-5">
+                                            <p class="mb-0">Don't have an account ? <a routerLink="/auth/register" class="fw-semibold text-secondary text-decoration-underline"> SignUp</a> </p>
+                                        </div> -->
+                                    </div>
+                                </div><!-- end card body -->
+                            </div><!-- end card -->
+                        </div>
+                        <!--end col-->
+                    </div>
+                    <!--end row-->
+                </div>
+            </div>
+            <!--end col-->
+        </div>
+        <!--end row-->
+    </div>
+    <!--end container-->
+</section>
+
+    <div class="modal " id="loaderAnimation">
+    <div class="modal-dialog" role="document" style=" display: flex; justify-content: center; align-items: center;">
+        <div class="modal-content card" style="background-color: transparent !important;">
+
+            <div class="h-100 p-4  d-flex justify-content-center align-items-center flex-column">
+
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    style="margin: auto; background: rgba(255, 255, 255, 0); display: block;" width="203px"
+                    height="203px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                    <circle cx="50" cy="50" r="0" fill="none" stroke="#e90c59" stroke-width="4">
+                        <animate attributeName="r" repeatCount="indefinite" dur="3.571428571428571s" values="0;40"
+                            keyTimes="0;1" keySplines="0 0.2 0.8 1" calcMode="spline" begin="0s"></animate>
+                        <animate attributeName="opacity" repeatCount="indefinite" dur="3.571428571428571s" values="1;0"
+                            keyTimes="0;1" keySplines="0.2 0 0.8 1" calcMode="spline" begin="0s"></animate>
+                    </circle>
+                    <circle cx="50" cy="50" r="0" fill="none" stroke="#46dff0" stroke-width="4">
+                        <animate attributeName="r" repeatCount="indefinite" dur="3.571428571428571s" values="0;40"
+                            keyTimes="0;1" keySplines="0 0.2 0.8 1" calcMode="spline" begin="-1.7857142857142856s">
+                        </animate>
+                        <animate attributeName="opacity" repeatCount="indefinite" dur="3.571428571428571s" values="1;0"
+                            keyTimes="0;1" keySplines="0.2 0 0.8 1" calcMode="spline" begin="-1.7857142857142856s">
+                        </animate>
+                    </circle>
+                </svg>
+
+                <h3>Loading</h3>
+
+            </div>
+        </div>
+    </div>
+</div> 

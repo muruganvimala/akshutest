@@ -1,0 +1,620 @@
+<!-- Start Breadcrumbs -->
+<app-breadcrumbs title="User Master" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+<!-- End Breadcrumbs -->
+
+<div class="row" id="invoiceList">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="row align-items-center g-2">
+                    <div class="col-lg-3 me-auto">
+                        <!-- <h6 class="card-title mb-0">User Master</h6> -->
+                    </div><!--end col-->
+                    <div class="col-xl-2 col-md-3">
+                        <div class="search-box">
+                            <input type="text" class="form-control search" [(ngModel)]="searchTerm"
+                                placeholder="Search for username,displayname,userrole">
+                            <i class="ri-search-line search-icon"></i>
+                        </div>
+                    </div><!--end col-->
+                    <div class="col-md-auto">
+                        <div class="hstack gap-2">
+                            <button class="btn btn-subtle-danger d-none" id="remove-actions"><i
+                                    class="ri-delete-bin-2-line"></i></button>
+                            <a (click)="add(null)" [hidden]="!menuAccess.canAdd" class="btn btn-secondary"><i
+                                    class="bi bi-plus-circle align-baseline me-1"></i> Add New User</a>
+                            <!-- <button type="button" class="btn btn-info me-1" (click)="openEnd()"><i
+                                    class="bi bi-funnel align-baseline me-1"></i> Filter</button> -->
+                            <div dropdown class="btn-group">
+                                <button dropdownToggle class="btn btn-success me-1" type="button"
+                                    tooltip="exportasExcel" (click)="exportExcel()" id="dropdownMenuButton"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="ph-cloud-arrow-up align-middle me-1"></i>
+                                    Export
+                                </button>
+                                <ul *dropdownMenu class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start"
+                                    aria-labelledby="dropdownMenuButton">
+                                    <li>
+                                        <button class="dropdown-item btn-link" type="button" (click)="exportExcel()">
+                                            <i class="bi bi-filetype-xls fs-4 me-1"></i>
+                                            <span>Excel</span>
+                                        </button>
+                                    </li>
+                                    <li class="mt-1">
+                                        <button class="dropdown-item btn-link" type="button">
+                                            <i class="bi bi-filetype-csv fs-4 me-1"></i>
+                                            <span>CSV</span>
+                                        </button>
+                                    </li>
+                                    <li class="mt-1">
+                                        <button class="dropdown-item btn-link" type="button" click="exportToPDF()">
+                                            <i class="bi bi-filetype-pdf fs-4 me-1"></i>
+                                            <span>PDF</span>
+                                        </button>
+                                    </li>
+
+
+                                </ul>
+
+                            </div>
+                            <!-- <div dropdown class="btn-group me-1" (click)="onDropdownClick($event)">
+                                <button dropdownToggle type="button" class="btn btn-subtle-danger"
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="mdi mdi-cog-outline text-muted fs-lg align-middle me-1"></i>
+                                </button>
+                                <div *dropdownMenu class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start p-2"
+                                    (click)="onDropdownMenuClick($event)">
+                                    <label *ngFor="let item of columnDefinitions" class="dropdown-item">
+                                        <input type="checkbox" [(ngModel)]="item.visible"
+                                            (click)="onColumnToggleChange(item)" [disabled]="item.disableHide" />
+                                        {{ item.label }}
+                                    </label>
+                                </div>
+                            </div> -->
+                            <!-- <div dropdown class="btn-group me-1">
+                                <button dropdownToggle type="button" class="btn btn-subtle-danger"
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="mdi mdi-cog-outline text-muted fs-lg align-middle me-1"></i>
+                                </button>
+                                <div *dropdownMenu class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start p-2">
+                                    <label class="dropdown-item">
+                                        <input type="checkbox">
+
+                                    </label>
+                                </div>
+                            </div> -->
+                        </div>
+
+                    </div><!--end col-->
+                </div><!--end row-->
+
+            </div>
+            <div class="card-body mt-3">
+                <div class="table-responsive table-card">
+                    <table class="table table-centered align-middle table-custom-effect table-nowrap mb-0">
+                        <thead class="table-light">
+                            <tr>
+
+                                <th>
+                                    S.No
+                                </th>
+                                <th scope="col" class="sort cursor-pointer" Ilistsortable="username"
+                                    (click)="sort('username')">User Name
+                                </th>
+                                <th scope="col" class="sort cursor-pointer" Ilistsortable="displayname"
+                                    (click)="sort('displayname')">Display
+                                    Name</th>
+                                <th scope="col" class="sort cursor-pointer" Ilistsortable="emailid"
+                                    (click)="sort('emailid')">Email Id
+                                </th>
+                                <th scope="col">Active Status</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="list form-check-all" id="invoice-list-data">
+                            <tr *ngFor="let user of filteredItems();let i=index">
+
+                                <td>
+                                    {{ ((currentPage - 1) * pageSize) + i + 1 }}
+                                </td>
+                                <td class="customer_name">{{user.username}}</td>
+                                <td class="email">{{user.displayname}}</td>
+                                <td class="create_date">{{user.emailid}}</td>
+                                <td>
+
+                                    <i *ngIf="user.activestatus" class="bi bi-check-circle-fill"
+                                        style="color: rgb(121, 206, 121); font-size:15px"></i>
+
+                                    <i *ngIf="!user.activestatus" class="bi bi-x-circle-fill"
+                                        style="color: rgb(215, 104, 104); font-size: 15px;"></i>
+
+                                </td>
+                                <td>
+                                    <ul class="d-flex gap-2 list-unstyled mb-0">
+                                        <li> <a [hidden]="!menuAccess.canView" href="javascript:void(0);" tooltip="View"
+                                                class="btn btn-subtle-primary btn-icon btn-sm" data-view-id="24301901"
+                                                (click)="viewItem(user.id)"><i class="ph-eye"></i></a> </li>
+                                        <li> <a [hidden]="!menuAccess.canUpdate" href="javascript:void(0);"
+                                                tooltip="Edit" class="btn btn-subtle-secondary btn-icon btn-sm"
+                                                data-edit-id="24301901" (click)="edit(user.id)"><i
+                                                    class="ph-pencil"></i></a> </li>
+                                        <li> <a [hidden]="!menuAccess.canDelete" href="javascript:void(0);"
+                                                tooltip="Delete"
+                                                class="btn btn-subtle-danger btn-icon btn-sm remove-item-btn"
+                                                (click)="deleteItem(user.id)"><i class="ph-trash"></i></a> </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- <div id="elmLoader">
+                        <div class="spinner-border text-primary avatar-sm" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div> -->
+
+                    <div class="noresult" [ngClass]="(userList.length != 0)?'d-none':''">
+                        <div class="text-center py-4">
+                            <i class="ph-magnifying-glass fs-1 text-primary"></i>
+                            <h5 class="mt-2">Sorry! No Result Found</h5>
+                            <p class="text-muted mb-0">We've searched more than 10+ userlist We did not find any name
+                                for you search.</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="height:5px; width:100%;"></div>
+                <div id="pagination-element" class="row align-items-center mt-4 pt-2">
+                    <div class="col-sm-auto">
+                        <div class="text-muted text-center text-sm-start pe-auto">
+                            &nbsp; &nbsp; Per Page:
+                        </div>
+                    </div>
+                    <div class="col-sm-auto">
+                        <select id="perPage" (change)="onPageSizeChange()"
+                            class="form-select w-auto ng-untouched ng-pristine ng-valid">
+                            <option *ngFor="let size of pageSizeOptions" style="padding:0px;" [value]="size">
+                                {{ size === -1 ? 'All' : size }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-sm">
+                        <div class="text-muted text-center text-sm-start"> Showing
+                            <span class="fw-semibold">{{startIndex}} - {{endIndex}}</span> of <span
+                                class="fw-semibold">{{userList.length}}</span> Results
+                        </div>
+                    </div>
+                    <div class="col-sm-auto mt-3 mt-sm-0">
+                        <div name="currentPage"
+                            class="pagination-wrap hstack gap-2 justify-content-center ng-untouched ng-valid ng-dirty">
+                            <ul class="pagination pagination-wrap hstack gap-2 justify-content-center">
+                                <li class="pagination-page page-item ng-star-inserted ">
+                                    <a href="javascript:void(0)" (click)="firstPage()" class="page-link">
+                                        First
+                                    </a>
+                                </li>
+
+                                <li class="pagination-page page-item ng-star-inserted ">
+                                    <a href="javascript:void(0)" (click)="previousPage()" class="page-link">
+                                        Previous
+                                    </a>
+                                </li>
+
+                                <li *ngFor="let page of pages" [class.active]="page === currentPage"
+                                    class="pagination-page page-item ng-star-inserted">
+                                    <a href="javascript:void(0)" class="page-link" (click)="onPageChange(page)">
+                                        {{page}}
+                                    </a>
+                                </li>
+
+                                <li class="pagination-page page-item ng-star-inserted ">
+                                    <a href="javascript:void(0)" (click)="nextPage()" class="page-link">
+                                        Next
+                                    </a>
+                                </li>
+
+                                <li class="pagination-page page-item ng-star-inserted ">
+                                    <a href="javascript:void(0)" (click)="lastPage()" class="page-link">
+                                        Last
+                                    </a>
+                                </li>
+                                &nbsp;
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div style="height:5px; width:100%;"></div>
+                <!--end row-->
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- showModal -->
+<div class="modal fade" id="addUpdatePopUp">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-user-circle"></i>&nbsp;User
+                    Details
+                </h5>
+                <button type="button" class="btn-close" (click)="closeForm()"></button>
+            </div>
+            <form (ngSubmit)="submitUserData(Id)" [formGroup]="userForm" class="tablelist-form" novalidate
+                autocomplete="off">
+                <div class="modal-body">
+                    <div id="alert-error-msg" class="d-none alert alert-danger py-2"></div>
+                    <input type="hidden" formControlName="Id">
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <label for="firstname" class="form-label">First Name<span
+                                    class="text-danger">*</span></label>
+                            <input type="text" id="firstname" class="form-control" formControlName="firstname"
+                                value="{{firstname}}" [class.is-invalid]="isInvalid('firstname')"
+                                (keyup)="ValidateControlData($event,'firstname',false,true,true,false)" required>
+                            <div *ngIf="isInvalid('firstname')" class="invalid-feedback">
+                                <div *ngIf="userForm.get('firstname')?.errors?.['required']">
+                                    First Name is required.
+                                </div>
+                                <div *ngIf="userForm.get('firstname')?.errors?.['invalidData']">
+                                    Special characters not allowed.
+                                </div>
+                                <div *ngIf="userForm.get('firstname')?.errors?.['invalidNumber']">
+                                    Number not allowed.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label for="lastname" class="form-label">Last Name</label>
+                            <input type="text" id="lastname" class="form-control" formControlName="lastname"
+                                value="{{lastname}}" [class.is-invalid]="isInvalid('lastname')"
+                                (keyup)="ValidateControlData($event,'lastname',false,true,true,false)">
+                            <div *ngIf="isInvalid('lastname')" class="invalid-feedback">
+                                <div *ngIf="userForm.get('lastname')?.errors?.['required']">
+                                    lastname is required.
+                                </div>
+                                <div *ngIf="userForm.get('lastname')?.errors?.['invalidData']">
+                                    Special characters not allowed.
+                                </div>
+                                <div *ngIf="userForm.get('lastname')?.errors?.['invalidNumber']">
+                                    Number not allowed.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="username" class="form-label">User Name<span class="text-danger">*</span></label>
+                            <!-- <input type="text" id="username" class="form-control" formControlName="username"
+                                [class.is-invalid]="isInvalid('username')" required
+                                (keyup)="checkUserNameExistence($event)"> -->
+                            <input type="text" id="username" class="form-control" formControlName="username"
+                                [class.is-invalid]="isInvalid('username')" value="{{username}}" required
+                                (keyup)="ValidateControlData($event,'username',true,false,true,false)">
+                            <div *ngIf="isInvalid('username')" class="invalid-feedback">
+                                <div *ngIf="userForm.get('username')?.errors?.['required']">
+                                    User name is required.
+                                </div>
+                                <div *ngIf="userForm.get('username')?.errors?.['duplicate']">
+                                    User name already exists.
+                                </div>
+                                <div *ngIf="userForm.get('username')?.errors?.['invalidData']">
+                                    Special characters not allowed.
+                                </div>
+                                <div *ngIf="userForm.get('username')?.errors?.['invalidNumber']">
+                                    Number not allowed.
+                                </div>
+                            </div>
+                            <!-- <div *ngIf="isInvalid('username')" class="invalid-feedback">
+                                <div *ngIf="userForm.get('username')?.errors?.['required']">
+                                    User Name is required.
+                                </div>
+                                <div *ngIf="userForm.get('username')?.errors?.['duplicate']">
+                                    User Name already exists.
+                                </div>
+                            </div> -->
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label for="displayname" class="form-label">Display Name<span
+                                    class="text-danger">*</span></label>
+                            <input type="text" id="displayname" class="form-control" formControlName="displayname"
+                                value="{{displayname}}" [class.is-invalid]="isInvalid('displayname')"
+                                (keyup)="ValidateControlData($event,'displayname',false,true,true,false)" required>
+                            <div *ngIf="isInvalid('displayname')" class="invalid-feedback">
+                                <div *ngIf="userForm.get('displayname')?.errors?.['required']">
+                                    Display Name is required.
+                                </div>
+                                <div *ngIf="userForm.get('displayname')?.errors?.['invalidData']">
+                                    Special characters not allowed.
+                                </div>
+                                <div *ngIf="userForm.get('displayname')?.errors?.['invalidNumber']">
+                                    Number not allowed.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="signature" class="form-label">Signature</label>
+                            <input type="text" id="signature" class="form-control" formControlName="signature"
+                                [class.is-invalid]="isInvalid('signature')" value="{{signature}}"
+                                (keyup)="ValidateControlData($event,'signature',false,true,true,false)" />
+                            <div *ngIf="isInvalid('signature')" class="invalid-feedback">
+                                <div *ngIf="userForm.get('signature')?.errors?.['required']">
+                                    Signature is required.
+                                </div>
+                                <div *ngIf="userForm.get('signature')?.errors?.['invalidData']">
+                                    Special characters not allowed.
+                                </div>
+                                <div *ngIf="userForm.get('signature')?.errors?.['invalidNumber']">
+                                    Number not allowed.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="emailid" class="form-label">Email Id</label>
+                            <input type="email" id="emailid" class="form-control" formControlName="emailid"
+                                [class.is-invalid]="isInvalid('emailid')" value="{{emailid}}" required>
+
+                            <div *ngIf="isInvalid('emailid')" class="invalid-feedback">
+
+                                <div class="text-danger"
+                                    *ngIf="userForm.get('emailid')?.errors?.['required'] && userForm.get('emailid')?.touched">
+                                    Email is required.
+                                </div>
+
+                                <div class="text-danger"
+                                    *ngIf="userForm.get('emailid')?.errors?.['pattern'] && userForm.get('emailid')?.touched">
+                                    Invalid email format.
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="col-sm-6">
+                            <label for="password" class="form-label">Password<span class="text-danger">*</span></label>
+                            <input type="text" id="password" class="form-control" formControlName="password"
+                                value="{{password}}" [class.is-invalid]="isInvalid('password')" required>
+                            <div *ngIf="isInvalid('password')" class="invalid-feedback">
+                                Password is required.
+                            </div>
+
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="userrole" class="form-label">User Role</label>
+                            <select id="userrole" class="form-select  form-control"
+                                [class.is-invalid]="isInvalid('userrole')" required formControlName="userrole"
+                                value="{{userrole}}">
+                                <option value="" selected>Select Role</option>
+                                <option *ngFor="let option of roleList" [value]="option.roleId">{{ option.roleName }}
+                                </option>
+                            </select>
+                            <div *ngIf="isInvalid('userrole')" class="invalid-feedback">
+                                Please Select Userrole.
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="activestatus"
+                                    formControlName="activestatus" [checked]="activestatus">
+                                <label class="form-check-label" for="activestatus">Active Status</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="hstack gap-2 justify-content-end">
+                        <button type="button" class="btn btn-light" (click)="closeForm()">Close</button>
+                        <button type="submit" class="btn btn-success" id="add-btn">{{ !Id ? 'Submit' : 'Update'
+                            }}</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- end showModal -->
+
+<div class="custom-offcanvas" id="courseFilters">
+    <div class="offcanvas-header border-bottom p-3">
+        <h5 class="offcanvas-title" id="courseFiltersLabel">User Filters</h5>
+        <button type="button" class="btn-close" (click)="closeoffcanvas()"></button>
+    </div>
+    <div class="offcanvas-body">
+        <form action="#!">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="mb-3">
+                        <label class="select-category-filter form-label fs-md mb-3 text-decoration-underline">User
+                            Role</label>
+                        <div class="formCost d-flex gap-2 align-items-center">
+                            <select class="form-select" id="roleFilter" aria-label="Default select example">
+                                <option value="" selected>Select userRole</option>
+                                <option *ngFor="let role of roleList" [value]="role.roleId">{{role.roleName}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="mb-3">
+                        <label class="select-category-filter form-label fs-md mb-3 text-decoration-underline">Active
+                            Status</label>
+                        <div class="formCost d-flex gap-2 align-items-center">
+                            <select class="form-select" id="PubFilter" aria-label="Default select example">
+                                <option value="" selected>Select Active Status</option>
+                                <option value="true">True</option>
+                                <option value="false">False</option>
+                            </select>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="offcanvas-header htsack gap-2 border-top p-3">
+        <button class="btn btn-subtle-danger w-100" (click)="resetFilters()"> Reset</button>
+        <button class="btn btn-secondary w-100" (click)="submitFilter()"><i
+                class="bi bi-funnel align-baseline me-1"></i> Filters</button>
+    </div>
+</div>
+
+<!-- deleteRecordModal -->
+<div id="deletePopUp" class="modal fade zoomIn" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" (click)="closeDeletePopUp()"></button>
+            </div>
+            <div class="modal-body p-md-5">
+                <div class="text-center">
+                    <div class="text-danger">
+                        <i class="bi bi-trash display-5"></i>
+                    </div>
+                    <div class="mt-4">
+                        <h4 class="mb-2">Are you sure ?</h4>
+                        <p class="text-muted mx-3 mb-0">Are you sure you want to remove this record ?</p>
+                    </div>
+                </div>
+                <div class="d-flex gap-2 justify-content-center mt-4 pt-2 mb-2">
+                    <button type="button" class="btn w-sm btn-light btn-hover"
+                        (click)="closeDeletePopUp()">Close</button>
+                    <button type="button" class="btn w-sm btn-danger btn-hover" id="delete-record"
+                        (click)="deleteRoleData(needToActionId)">Yes, Delete
+                        It!</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /deleteRecordModal -->
+
+
+<div class="modal fade" id="viewPopUp">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-user-circle"></i>&nbsp;User Details
+                </h5>
+                <button type="button" class="btn-close" (click)="closeForm()"></button>
+            </div>
+            <form [formGroup]="userForm" class="tablelist-form" novalidate autocomplete="off">
+                <table id="sortable-table-1" class="table table-hover table-bordered viewTable ">
+                    <thead class="table-header" style="background-color: rgb(222, 226, 226); ">
+                        <tr class="theader">
+                            <th>Title</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>First Name</td>
+                            <td>{{firstname}}</td>
+                        </tr>
+                        <tr>
+                            <td>Last Name</td>
+                            <td>{{lastname}}</td>
+                        </tr>
+                        <tr>
+                            <td>User Name</td>
+                            <td>{{username}}</td>
+                        </tr>
+                        <tr>
+                            <td>Display Name</td>
+                            <td>{{displayname}}</td>
+                        </tr>
+                        <tr>
+                            <td>Signature</td>
+                            <td>{{signature}}</td>
+                        </tr>
+                        <tr>
+                            <td>Email Id</td>
+                            <td>{{emailid}}</td>
+                        </tr>
+                        <tr>
+                            <td>User Role</td>
+                            <td>{{formrolename}}</td>
+                        </tr>
+                        <tr>
+                            <td>Password</td>
+                            <td>********</td>
+                        </tr>
+                        <tr>
+                            <td>Status</td>
+                            <td><span *ngIf="activestatus" class="badge bg-success">Active</span><span *ngIf="!activestatus" class="badge bg-danger">Inactive</span>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<table id="ExportTable" class="table" style="display: none;">
+    <thead class="table-header">
+        <tr>
+            <th class="freeze-column">Id</th>
+            <!-- <th>First Name</th>
+    <th>Last Name</th> -->
+            <th>User Name</th>
+            <!-- <th>User Role</th> -->
+            <th>Display Name</th>
+            <th>Email ID</th>
+            <th>Active Status</th>
+
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of  userList;let i=index">
+
+            <td class="freeze-column">{{ ((currentPage - 1) * pageSize) + i + 1 }}</td>
+
+            <!-- <td>{{user.firstname}}</td>
+    <td>{{user.lastname}}</td> -->
+            <td>{{user.username}}</td>
+            <!-- <td>{{user.userrole}}</td> -->
+            <td>{{user.displayname}}</td>
+            <td>{{user.emailid}}</td>
+            <td>{{user.activestatus}}</td>
+
+        </tr>
+    </tbody>
+</table>
+
+<div class="modal " id="loaderAnimation">
+    <div class="modal-dialog" role="document" style=" display: flex; justify-content: center; align-items: center;">
+        <div class="modal-content card" style="background-color: transparent !important;">
+
+            <div class="h-100 p-4  d-flex justify-content-center align-items-center flex-column">
+
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    style="margin: auto; background: rgba(255, 255, 255, 0); display: block;" width="203px"
+                    height="203px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                    <circle cx="50" cy="50" r="0" fill="none" stroke="#e90c59" stroke-width="4">
+                        <animate attributeName="r" repeatCount="indefinite" dur="3.571428571428571s" values="0;40"
+                            keyTimes="0;1" keySplines="0 0.2 0.8 1" calcMode="spline" begin="0s"></animate>
+                        <animate attributeName="opacity" repeatCount="indefinite" dur="3.571428571428571s" values="1;0"
+                            keyTimes="0;1" keySplines="0.2 0 0.8 1" calcMode="spline" begin="0s"></animate>
+                    </circle>
+                    <circle cx="50" cy="50" r="0" fill="none" stroke="#46dff0" stroke-width="4">
+                        <animate attributeName="r" repeatCount="indefinite" dur="3.571428571428571s" values="0;40"
+                            keyTimes="0;1" keySplines="0 0.2 0.8 1" calcMode="spline" begin="-1.7857142857142856s">
+                        </animate>
+                        <animate attributeName="opacity" repeatCount="indefinite" dur="3.571428571428571s" values="1;0"
+                            keyTimes="0;1" keySplines="0.2 0 0.8 1" calcMode="spline" begin="-1.7857142857142856s">
+                        </animate>
+                    </circle>
+                </svg>
+
+                <h3>Loading</h3>
+
+            </div>
+        </div>
+    </div>
+</div>

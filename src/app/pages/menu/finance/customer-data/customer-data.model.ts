@@ -1,0 +1,33 @@
+export interface customerDataModel {
+     id?: any;
+     UA: any;
+     Year: any;
+     InvoiceNo: any;
+     InvoiceDate: any;
+     CustomerName: any;
+     CustomerAcronym: any;
+     TSPage: any;
+     CCYType: any;
+     MajorHeadServiceLine: any;
+     MinorHead: any;
+     Quantity: any;
+     UOM: any;
+     Rate: any;
+     GrowssValueFc: any;
+     CollectionDate: any;
+     CollectionValueFC: any;
+     FXRate: any;
+     CollectionValueINR: any;
+     ForexGainLoss: any;
+     IRM: any;
+     STPISubmissionDate: any;
+     SoftexNo: any;
+     EDPMSUploadDate: any;
+     EDPMSRefNo: any;
+     EDPMSClosureYnp: any;
+     EBRCNo: any;
+     EBRCDate: any;
+     ADBank: any;
+     NewBusiness: any;
+     AgedDays: any;
+}

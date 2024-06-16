@@ -1,0 +1,115 @@
+@media (max-width: 991px) {}
+
+@media (max-width: 767px) {
+    .table_card .dataTables_wrapper .dataTables_filter input {
+        margin-left: 0;
+        margin-top: 7px;
+    }
+    div.dataTables_wrapper div.dataTables_filter label {
+        white-space: normal;
+    }
+    .login_form_content {
+        padding: 0px 34px 68px;
+        display: block;
+    }
+    .login_banner {
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+    .login_form_content h2 {
+        font-size: 36px;
+    }
+    .login_form_content .subtitle {
+        font-size: 19px;
+    }
+    .login_table {
+        height: 100%;
+    }
+    .navbar .search_input {
+        width: 40%;
+        margin-top: 0px;
+    }
+    .search_input {
+        width: 100%;
+        margin-top: 16px;
+    }
+    .top_right_nav .nav-icon {
+        padding: 3px 5px;
+    }
+    .navbar img.avatar {
+        width: 34px;
+        height: 34px;
+    }
+    .about_block h3 {
+        font-size: 25px;
+    }
+    .card.card_v2 {
+        padding: 30px 18px;
+    }
+    .reward_card {
+        padding: 24px 15px;
+    }
+    .dash_title_card_btn {
+        display: block;
+    }
+    .dash_title_card {
+        margin-bottom: 25px;
+    }
+    .get_report_btn {
+        margin-bottom: 22px;
+    }
+    .td_pagination {
+        justify-content: center;
+    }
+    .card_v1 {
+        padding: 30px 16px;
+    }
+    .faq_blk .accordion .accordion-item .accordion-button {
+        padding: 18px 10px;
+    }
+    .faq_blk .accordion .accordion-item .accordion-button p {
+        width: 220px;
+    }
+    .settings_line:before {
+        display: none;
+    }
+    .tab-vertical.settings_sidebar .nav-tabs .nav-link {
+        border-right: 0px;
+    }
+    .tab-vertical.settings_sidebar .nav-tabs {
+        padding-top: 22px;
+    }
+    .settings_profile {
+        display: flex;
+        gap: 14px;
+        align-items: start;
+        margin: 29px 0px 36px !important;
+    }
+    .settings_profile .pfl_img {
+        width: 88px;
+        height: 92px;
+    }
+    .tab.settings_sidebar .tab-content {
+        padding: 20px 18px;
+    }
+}
+
+@media (min-width: 576px) {
+    .modal-dialog {
+        max-width: 892px;
+    }
+}
+
+@media (min-width: 992px) {
+    .content {
+        padding: 21px 3rem 1.5rem;
+    }
+}
+
+@media (min-width: 1200px) {}
+
+@media (min-width: 1400px) {
+    .login_img img {
+        height: 869px;
+    }
+}

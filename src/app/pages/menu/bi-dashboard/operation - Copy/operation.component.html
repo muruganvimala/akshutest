@@ -1,0 +1,1303 @@
+<!-- 
+<iframe class="col-12" title="KPI" style="height: 75vh; width: 90%;" src="https://app.powerbi.com/view?r=eyJrIjoiMjg5MzVlMzUtN2ZiYi00NjAwLWJhOTEtYjVhMzFjOGVkODY1IiwidCI6ImEwM2E3ZjZjLWZiYzgtNGI1Zi1iMTZiLWY2MzRkYmUxYTg2MiIsImMiOjN9&pageName=ReportSection" frameborder="0" allowFullScreen="true">
+</iframe>  -->
+<div class="row">
+    <div class="col-lg-12">
+
+        <!-- 
+            <iframe title="KPI" style="height: 85vh; width: 100%;" 
+             src="https://app.powerbi.com/view?r=eyJrIjoiMjg5MzVlMzUtN2ZiYi00NjAwLWJhOTEtYjVhMzFjOGVkODY1IiwidCI6ImEwM2E3ZjZjLWZiYzgtNGI1Zi1iMTZiLWY2MzRkYmUxYTg2MiIsImMiOjN9"
+             frameborder="0" allowFullScreen="true">
+        </iframe> -->
+
+        <!-- <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [xaxis]="chartOptions.xaxis" [tooltip]="chartOptions.tooltip"></apx-chart> -->
+        
+        <!-- <div class="col-lg-6">
+            <div class="mt-3">
+                <label class="form-label mb-0">Range</label>
+                <input type="text" class="form-control" mwlFlatpickr  mode="range" altFormat="M Y" dateFormat="M Y">
+            </div>
+        </div> -->
+        
+    </div>
+</div>
+
+<!-- <div class="row">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title mb-0">KPI Overview</h4>
+            <ul class="nav nav-pills flex-shrink-0" role="tablist">
+              <li class="nav-item" role="presentation">
+                  <a class="nav-link active" data-bs-toggle="tab" href="javascript:void(0);" [class.active]="currentTab === 'pageViews'" (click)="changeTab('pageViews','1')" role="tab" aria-selected="true">
+                      Value
+                  </a>
+              </li>
+              <li class="nav-item" role="presentation">
+                  <a class="nav-link" data-bs-toggle="tab" href="javascript:void(0);" [class.active]="currentTab === 'Clicks'" (click)="changeTab('Clicks','2')" role="tab" aria-selected="false" tabindex="-1">
+                    Aggregate
+                  </a>
+              </li>
+             
+          </ul>
+            
+            
+            <div>
+              
+                <button type="button" (click)="sixmonth()" class="btn btn-subtle-secondary btn-sm me-1">
+                  Last 6M
+                </button>
+                <button type="button" (click)="twomonth()" class="btn btn-subtle-secondary btn-sm me-1">
+                   Last 2M
+                </button>
+                <button #Last1M   id="Last1M" (click)="oneyear()" class="btn btn-subtle-secondary btn-sm me-1" >
+                   Last 1M
+                </button>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <apx-chart [series]="lineColumnAreaChart.series" [chart]="lineColumnAreaChart.chart"
+                [yaxis]="lineColumnAreaChart.yaxis" [xaxis]="lineColumnAreaChart.xaxis"
+                [labels]="lineColumnAreaChart.labels" [stroke]="lineColumnAreaChart.stroke"
+                [plotOptions]="lineColumnAreaChart.plotOptions" [markers]="lineColumnAreaChart.markers"
+                [fill]="lineColumnAreaChart.fill" [tooltip]="lineColumnAreaChart.tooltip"
+                [colors]="lineColumnAreaChart.colors"></apx-chart>
+        </div>
+    </div>
+</div> -->
+
+
+<!-- <div class="row">
+    <div class="mb-3">
+        <label class="select-category-filter form-label fs-md mb-3 text-decoration-underline">Select Start - End Month year</label>
+        <div class="formCost d-flex gap-2 align-items-center">
+          <input [(ngModel)]="modelDate" autocomplete="off" class="form-control flatpickr-input"  
+          mwlFlatpickr [altInput]="true" [convertModelValue]="true" altFormat="M Y" dateFormat="M Y"
+          id="startDate" (onShown)="onOpenCalendar($event)" >
+          
+            <input  autocomplete="on"  id="startDate"    class="form-control flatpickr-input" name="startDate" bsDatepicker
+            [bsConfig]="{dateInputFormat: 'MMM YYYY', adaptivePosition: true}" (onShown)="onOpenCalendar($event)" [value]="previousMMYY" >
+            <button class="btn btn-secondary w-100" (click)="submitFilter()"><i class="bi bi-funnel align-baseline me-1"></i> Filters</button>
+            <input  autocomplete="on"  id="endDate"   class="form-control flatpickr-input" name="endDate" bsDatepicker
+            [bsConfig]="{dateInputFormat: 'MMM YYYY', adaptivePosition: true}" (onShown)="onOpenCalendar($event)">
+           
+           
+            <input type="text" class="form-control flatpickr-input"  id="endDate" 
+            mwlFlatpickr [altInput]="true" [convertModelValue]="true" altFormat="M Y" dateFormat="M Y"
+            >
+          
+          
+        </div>
+    </div>
+</div> -->
+
+
+
+
+
+<!-- 
+<div class="row">
+  <div class="col-lg-12">
+      <div class="card" id="kpiList">
+        <div class="card-body">
+          <div class="row align-items-center g-2">
+            <div class="col-lg-3 me-auto">
+              <div class="d-flex align-items-center">
+                <label>
+                  <h4>Summary by Publisher
+                  </h4>
+                </label>
+               
+                
+              </div>
+            </div>
+  
+            <div class="col-lg-auto">
+              <div class="hstack flex-wrap gap-1">
+               
+                <div _ngcontent-ng-c141272207="" class="">
+                  <div _ngcontent-ng-c141272207="" class="search-box">
+                    <input _ngcontent-ng-c141272207="" type="text" placeholder="Search for KPI" class="form-control search ng-pristine ng-valid ng-touched"
+                    [(ngModel)]="searchTerm" (keyup)="onSearchKeyUp(searchTerm)" >
+                    <i _ngcontent-ng-c141272207="" class="ri-search-line search-icon"></i>
+                  </div>
+                </div>
+                
+                <div>
+                 
+                 -i
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="table-responsive table-card table-container">
+            <table
+              class="table table-centered align-middle table-custom-effect table-nowrap mb-0"
+            >
+              <thead class="text-muted">
+                <tr>
+                 
+                  <ng-container *ngFor="let column of columnDefinitions">
+                    <th
+                      class="sort cursor-pointer"
+                      [ngClass]="{ 'sort cursor-pointer': column.sortable }"
+                      *ngIf="column.visible"
+                      (click)="sort(column.def)"
+                    >
+  
+                    <span class="col-sm-auto"> {{ column.label }} </span>
+                      
+                      <span *ngIf="column.sortable">
+                        
+                      </span>
+                      <div
+                        class="input-group input-group-sm"
+                        style="width: 100px"
+                        *ngIf="column.filterable"
+                      >
+                       
+                      </div>
+                    </th>
+                  </ng-container>
+                </tr>
+              </thead>
+              <tbody class="list form-check-all">
+                <tr
+                  *ngFor="let row of filteredItems()"
+                  [class.selected-row]="row.isSelected"
+                  (click)="handleRowClick($event, row)"
+                >
+                  
+        <td>
+                      {{row.acronym}}
+        </td>
+        <td>
+                    {{row.monthYear}}
+        </td>
+        <td [ngStyle]="{'background': row.overallPerformance == 99 ? '#1E81B0': row.overallPerformance > 99 ? '#E4D58D' : row.overallPerformance < 99 ? '#F6A8AE' : 'white' }">
+                  {{row.overallPerformance}}
+        </td>
+        <td [ngStyle]="{'background': row.overallPerformance == 99 ? '#1E81B0': row.overallPerformance > 99 ? '#E4D58D' : row.overallPerformance < 99 ? '#F6A8AE' : 'white' }">
+                {{row.schedule}}
+        </td>
+        <td [ngStyle]="{'background': row.overallPerformance == 99 ? '#1E81B0': row.overallPerformance > 99 ? '#E4D58D' : row.overallPerformance < 99 ? '#F6A8AE' : 'white' }">
+              {{row.quality}}
+        </td>
+        <td [ngStyle]="{'background': row.overallPerformance == 99 ? '#1E81B0': row.overallPerformance > 100 ? '#E4D58D' : row.overallPerformance < 100 ? '#F6A8AE' : 'white' }">
+            {{row.communication}}
+        </td>
+
+        <td [ngStyle]="{'background': row.overallPerformance == 99 ? '#1E81B0': row.overallPerformance > 100 ? '#E4D58D' : row.overallPerformance < 100 ? '#F6A8AE' : 'white' }">
+          {{row.customerSatisfaction}}
+        </td>
+        <td [ngStyle]="{'background': row.overallPerformance == 99 ? '#1E81B0': row.overallPerformance > 100 ? '#E4D58D' : row.overallPerformance < 100 ? '#F6A8AE' : 'white' }">
+        {{row.accountManagement}}
+        </td>
+        <td [ngStyle]="{'background': row.overallPerformance == 99 ? '#1E81B0': row.overallPerformance > 80 ? '#E4D58D' : row.overallPerformance < 80 ? '#F6A8AE' : 'white' }">
+         {{row.rft}}
+        </td>
+        <td [ngStyle]="{'background': row.overallPerformance == 99 ? '#1E81B0': row.overallPerformance > 18 ? '#E4D58D' : row.overallPerformance < 18 ? '#F6A8AE' : 'white' }">
+          {{row.publicationSpeed}}
+        </td>
+        <td [ngStyle]="{'background': row.overallPerformance == 99 ? '#1E81B0': row.overallPerformance > 2? '#E4D58D' : row.overallPerformance < 2 ? '#F6A8AE' : 'white' }">
+           {{row.feedback}}
+        </td>
+        <td [ngStyle]="{'background': row.overallPerformance == 99 ? '#1E81B0': row.overallPerformance > 9 ? '#E4D58D' : row.overallPerformance < 9 ? '#F6A8AE' : 'white' }">
+          {{row.authorSatisfaction}}
+        </td>
+            
+                </tr>
+              </tbody>
+            </table>
+            <div
+              class="noresult"
+              [ngClass]="dataSource?.length != 0 ? 'd-none' : ''"
+            >
+              <div class="text-center py-4">
+                <i class="ph-magnifying-glass fs-1 text-primary"></i>
+                <h5 class="mt-2">Sorry! No Result Found</h5>
+                <p class="text-muted mb-0">
+                  We've searched more than {{ dataSource?.length }}+ Records, We
+                  did not find any Records for you search.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div id="elmLoader" *ngIf="isLoading">
+            <div class="spinner-border text-primary avatar-sm" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+          <div
+            [ngClass]="dataSource?.length === 0 ? 'd-none' : ''"
+            class="row align-items-center mt-4 pt-2"
+            id="pagination-element"
+          >
+          <div class="col-sm-auto" style="padding-bottom: 13px;">
+            <div class="text-muted text-center text-sm-start pe-auto">
+              Per Page:
+            </div>
+          </div>
+          <div class="col-sm-auto" style="padding-bottom: 13px;">
+            <select
+                  class="form-select w-auto"
+                  id="perPage"
+                  [(ngModel)]="itemsPerPage"
+                  (change)="onPerPageChange($event)"
+                >
+                  <option *ngFor="let option of perPageOptions" [value]="option">
+                    {{ option }}
+                  </option>
+                </select>
+          </div>
+            <div class="col-sm" style="padding-bottom: 13px;">
+              <div class="text-muted text-center text-sm-start">
+                Showing <span class="fw-semibold">{{ endIndex }}</span> of
+                <span class="fw-semibold">{{ totalRecords }}</span> Results
+              </div>
+            </div>
+            <div class="col-sm-auto mt-3 mt-sm-0">
+              <pagination
+                class="pagination-wrap hstack gap-2 justify-content-center"
+                [totalItems]="totalRecords"
+                [itemsPerPage]="itemsPerPage"
+                [boundaryLinks]="true"
+                [directionLinks]="true"
+                [maxSize]="5"
+                [(ngModel)]="currentPage"
+                name="currentPage"
+                (pageChanged)="onPageChange(currentPage)"
+                
+              ></pagination>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div> -->
+
+
+
+
+
+
+
+ <!-- <div class="row">
+  <div class="col-xxl-8">
+    <div class="card">
+        <div class="card-header d-flex align-items-center">
+            <h5 class="card-title flex-grow-1 mb-0">KPI Overview</h5>
+            <div class="flex-shrink-0">
+              
+            </div>
+        </div>
+        <div class="card-body">
+          <div class="row align-items-center">
+              <div class="col-lg-12">
+                  <div class="real-estate-widgets">
+                      <tabset [vertical]="true" class="nav nav-light dashboard-nav nav-pills gap-3  d-block d-md-flex" id="v-pills-tab">
+                          <tab (selectTab)="renderCharts('1')">
+                              <ng-template tabHeading>
+                                  <a class="nav-link d-flex p-2 gap-3" id="revenue-tab" href="javascript:void(0);">
+                                      <div class="avatar-sm flex-shrink-0">
+                                          <div class="avatar-title rounded bg-warning-subtle text-warning fs-2xl">
+                                              <i class="bi bi-coin"></i>
+                                          </div>
+                                      </div>
+                                      <div class="flex-grow-1">
+                                        
+                                          <p class="mb-0">Actual</p>
+                                      </div>
+                                  </a>
+                              </ng-template>
+                              <div class="tab-content text-muted">
+                                  <div id="total_revenue" class="apex-charts effect-chart" dir="ltr">
+                                      <apx-chart [series]="totalrevenueChart.series" [chart]="totalrevenueChart.chart" [plotOptions]="totalrevenueChart.plotOptions" [grid]="totalrevenueChart.grid" [colors]="totalrevenueChart.colors" [fill]="totalrevenueChart.fill" [dataLabels]="totalrevenueChart.dataLabels" [yaxis]="totalrevenueChart.yaxis" [legend]="totalrevenueChart.legend" [xaxis]="totalrevenueChart.xaxis" dir="ltr"></apx-chart>
+                                  </div>
+                                 
+                              </div>
+                          </tab>
+                          <tab (selectTab)="renderCharts('2')">
+                              <ng-template tabHeading>
+                                  <a class="nav-link d-flex p-2 gap-3" id="income-tab" href="javascript:void(0);">
+                                      <div class="avatar-sm flex-shrink-0">
+                                          <div class="avatar-title rounded bg-success-subtle text-success fs-2xl">
+                                              <i class="bi bi-coin"></i>
+                                          </div>
+                                      </div>
+                                      <div class="flex-grow-1">
+                                         
+                                          <p class="mb-0">Aggregate</p>
+                                      </div>
+                                  </a>
+                              </ng-template>
+                              <div class="tab-content text-muted">
+                                  <div id="total_income" class="apex-charts" dir="ltr">
+                                      <apx-chart [series]="totalincomeChart.series" [chart]="totalincomeChart.chart" [plotOptions]="totalincomeChart.plotOptions" [grid]="totalincomeChart.grid" [colors]="totalincomeChart.colors" [fill]="totalincomeChart.fill" [dataLabels]="totalincomeChart.dataLabels" [yaxis]="totalincomeChart.yaxis" [legend]="totalincomeChart.legend" [xaxis]="totalincomeChart.xaxis" dir="ltr"></apx-chart>
+                                  </div>
+                              </div>
+                          </tab>
+                          <tab (selectTab)="renderCharts('3')">
+                              <ng-template tabHeading>
+                                  <a class="nav-link d-flex p-2 gap-3" id="property-sale-tab" href="javascript:void(0);">
+                                      <div class="avatar-sm flex-shrink-0">
+                                          <div class="avatar-title rounded bg-danger-subtle text-danger fs-2xl">
+                                              <i class="bi bi-coin"></i>
+                                          </div>
+                                      </div>
+                                      <div class="flex-grow-1">
+                                          
+                                          <p class="mb-0">Summary Report</p>
+                                      </div>
+                                  </a>
+                              </ng-template>
+                              <div id="total_income" class="apex-charts" dir="ltr">
+                                  <apx-chart [series]="propertysaleChart.series" [chart]="propertysaleChart.chart" [plotOptions]="propertysaleChart.plotOptions" [grid]="propertysaleChart.grid" [colors]="propertysaleChart.colors" [fill]="propertysaleChart.fill" [dataLabels]="propertysaleChart.dataLabels" [yaxis]="propertysaleChart.yaxis" [legend]="propertysaleChart.legend" [xaxis]="propertysaleChart.xaxis" dir="ltr"></apx-chart>
+                              </div>
+                          </tab>
+                          <tab (selectTab)="renderCharts('4')">
+                              <ng-template tabHeading>
+                                  <a class="nav-link d-flex p-2 gap-3" id="_-tab" href="javascript:void(0);">
+                                      <div class="avatar-sm flex-shrink-0">
+                                          <div class="avatar-title rounded bg-primary-subtle text-primary fs-2xl">
+                                              <i class="bi bi-coin"></i>
+                                          </div>
+                                      </div>
+                                      <div class="flex-grow-1">
+                                         
+                                          <p class="mb-0">Prevoius Month Report</p>
+                                      </div>
+                                  </a>
+                              </ng-template>
+                              <div class="tab-pane" id="income" role="tabpanel">
+                                  <div id="total_income" class="apex-charts" dir="ltr">
+                                    <div class="card">
+                                      <div class="card-header">
+                                          <h4 class="card-title mb-0">Last 1,2 and 6 Month Chart (Note: please click on month)</h4>
+                                          <div>
+                                             
+                                              <button type="button" (click)="sixmonth()" class="btn btn-subtle-secondary btn-sm me-1">
+                                                Last 6M
+                                              </button>
+                                              <button type="button" (click)="twomonth()" class="btn btn-subtle-secondary btn-sm me-1">
+                                                 Last 2M
+                                              </button>
+                                              <button #Last1M   id="Last1M" (click)="oneyear()" class="btn btn-subtle-secondary btn-sm me-1" >
+                                                 Last 1M
+                                              </button>
+                                          </div>
+                                      </div>
+                              
+                                      <div class="card-body">
+                                          <apx-chart [series]="lineColumnAreaChart.series" [chart]="lineColumnAreaChart.chart"
+                                              [yaxis]="lineColumnAreaChart.yaxis" [xaxis]="lineColumnAreaChart.xaxis"
+                                              [labels]="lineColumnAreaChart.labels" [stroke]="lineColumnAreaChart.stroke"
+                                              [plotOptions]="lineColumnAreaChart.plotOptions" [markers]="lineColumnAreaChart.markers"
+                                              [fill]="lineColumnAreaChart.fill" [tooltip]="lineColumnAreaChart.tooltip"
+                                              [colors]="lineColumnAreaChart.colors"></apx-chart>
+                                      </div>
+                                  </div>
+                                    
+                                    <apx-chart [series]="propetryrentChart.series" [chart]="propetryrentChart.chart" [plotOptions]="propetryrentChart.plotOptions" [grid]="propetryrentChart.grid" [colors]="propetryrentChart.colors" [fill]="propetryrentChart.fill" [dataLabels]="propetryrentChart.dataLabels" [yaxis]="propetryrentChart.yaxis" [legend]="propetryrentChart.legend" [xaxis]="propetryrentChart.xaxis" dir="ltr"></apx-chart>
+                                  </div>
+                              </div>
+                          </tab>
+                      </tabset>
+                  </div>
+
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="row">
+  <div  class="col-xl-3 col-sm-6">
+      <div class="card">
+          <div class="card-body">
+              <div dropdown class="dropdown float-end">
+                  <a dropdownToggle class="text-reset dropdown-btn" href="javascript:void(0);">
+                      <span class="text-muted fs-lg"><i class="mdi mdi-dots-vertical align-middle"></i></span>
+                  </a>
+                  <div *dropdownMenu class="dropdown-menu dropdown-menu-end">
+                      <a class="dropdown-item" href="javascript:void(0);" (click)="KPIonemonth()">Last Month</a>
+                      <a class="dropdown-item" href="javascript:void(0);" (click)="KPIthreemonth()" >Last Quarter</a>
+                      <a class="dropdown-item" href="javascript:void(0);" (click)="KPIsixmonth()" >Last Half Year</a>
+                      <a class="dropdown-item" href="javascript:void(0);" (click)="KPItwelvemonth()" >Last Year</a>
+                  </div>
+              </div>
+              <p class="fs-md text-muted mb-0">KPI</p>
+
+              <div class="row mt-4 align-items-end">
+                  <div class="col-lg-6">
+                      <h3 class="mb-4">{{titleValue}}</h3>
+                      <p class="text-{{titelarrowcolour}} mb-0"><i class="bi {{titelarrowdirection}} me-1"></i>{{aveg}}</p>
+                  </div>
+                  <div class="col-lg-6">
+                      <div id="session_chart" class="apex-charts m-n3 mt-n4" dir="ltr">
+                          <apx-chart [series]="titelblockchart.series" [chart]="titelblockchart.chart" [dataLabels]="titelblockchart.dataLabels" [stroke]="titelblockchart.stroke" [labels]="titelblockchart.labels" [grid]="titelblockchart.grid" [colors]="titelblockchart.colors" [xaxis]="titelblockchart.xaxis" [yaxis]="titelblockchart.yaxis" dir="ltr"></apx-chart>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+      <div  class="col-xl-3 col-sm-6">
+      <div class="card">
+        <div class="card-body">
+            <div dropdown class="dropdown float-end">
+                <a dropdownToggle class="text-reset dropdown-btn" href="javascript:void(0);">
+                    <span class="text-muted fs-lg"><i class="mdi mdi-dots-vertical align-middle"></i></span>
+                </a>
+                <div *dropdownMenu class="dropdown-menu dropdown-menu-end">
+                    <a class="dropdown-item" href="javascript:void(0);" (click)="KPIonemonth()">Last Month</a>
+                    <a class="dropdown-item" href="javascript:void(0);" (click)="KPIthreemonth()" >Last Quarter</a>
+                    <a class="dropdown-item" href="javascript:void(0);" (click)="KPIsixmonth()" >Last Half Year</a>
+                    <a class="dropdown-item" href="javascript:void(0);" (click)="KPItwelvemonth()" >Last Year</a>
+                </div>
+            </div>
+            <p class="fs-md text-muted mb-0">Opertion 2</p>
+
+            <div class="row mt-4 align-items-end">
+                <div class="col-lg-6">
+                    <h3 class="mb-4">0</h3>
+                    <p class="text-success mb-0"><i class="bi bi bi-arrow-up me-1"></i>06.41</p>
+                </div>
+                <div class="col-lg-6">
+                    <div id="session_chart" class="apex-charts m-n3 mt-n4" dir="ltr">
+                        <!-- <apx-chart [series]="data.chart.series" [chart]="data.chart.chart" [dataLabels]="data.chart.dataLabels" [stroke]="data.chart.stroke" [labels]="data.chart.labels" [grid]="data.chart.grid" [colors]="data.chart.colors" [xaxis]="data.chart.xaxis" [yaxis]="data.chart.yaxis" dir="ltr"></apx-chart> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <div  class="col-xl-3 col-sm-6">
+    <div class="card">
+      <div class="card-body">
+          <div dropdown class="dropdown float-end">
+              <a dropdownToggle class="text-reset dropdown-btn" href="javascript:void(0);">
+                  <span class="text-muted fs-lg"><i class="mdi mdi-dots-vertical align-middle"></i></span>
+              </a>
+              <div *dropdownMenu class="dropdown-menu dropdown-menu-end">
+                  <a class="dropdown-item" href="javascript:void(0);" (click)="KPIonemonth()">Last Month</a>
+                  <a class="dropdown-item" href="javascript:void(0);" (click)="KPIthreemonth()" >Last Quarter</a>
+                  <a class="dropdown-item" href="javascript:void(0);" (click)="KPIsixmonth()" >Last Half Year</a>
+                  <a class="dropdown-item" href="javascript:void(0);" (click)="KPItwelvemonth()" >Last Year</a>
+              </div>
+          </div>
+          <p class="fs-md text-muted mb-0">Opertion 3</p>
+
+          <div class="row mt-4 align-items-end">
+              <div class="col-lg-6">
+                  <h3 class="mb-4">0</h3>
+                  <p class="text-success mb-0"><i class="bi bi bi-arrow-up me-1"></i>06.41</p>
+              </div>
+              <div class="col-lg-6">
+                  <div id="session_chart" class="apex-charts m-n3 mt-n4" dir="ltr">
+                      <!-- <apx-chart [series]="data.chart.series" [chart]="data.chart.chart" [dataLabels]="data.chart.dataLabels" [stroke]="data.chart.stroke" [labels]="data.chart.labels" [grid]="data.chart.grid" [colors]="data.chart.colors" [xaxis]="data.chart.xaxis" [yaxis]="data.chart.yaxis" dir="ltr"></apx-chart> -->
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div  class="col-xl-3 col-sm-6">
+  <div class="card">
+    <div class="card-body">
+        <div dropdown class="dropdown float-end">
+            <a dropdownToggle class="text-reset dropdown-btn" href="javascript:void(0);">
+                <span class="text-muted fs-lg"><i class="mdi mdi-dots-vertical align-middle"></i></span>
+            </a>
+            <div *dropdownMenu class="dropdown-menu dropdown-menu-end">
+                <a class="dropdown-item" href="javascript:void(0);" (click)="KPIonemonth()">Last Month</a>
+                <a class="dropdown-item" href="javascript:void(0);" (click)="KPIthreemonth()" >Last Quarter</a>
+                <a class="dropdown-item" href="javascript:void(0);" (click)="KPIsixmonth()" >Last Half Year</a>
+                <a class="dropdown-item" href="javascript:void(0);" (click)="KPItwelvemonth()" >Last Year</a>
+            </div>
+        </div>
+        <p class="fs-md text-muted mb-0">Opertion 4</p>
+
+        <div class="row mt-4 align-items-end">
+            <div class="col-lg-6">
+                <h3 class="mb-4">0</h3>
+                <p class="text-success mb-0"><i class="bi bi bi-arrow-up me-1"></i>06.41</p>
+            </div>
+            <div class="col-lg-6">
+                <div id="session_chart" class="apex-charts m-n3 mt-n4" dir="ltr">
+                    <!-- <apx-chart [series]="data.chart.series" [chart]="data.chart.chart" [dataLabels]="data.chart.dataLabels" [stroke]="data.chart.stroke" [labels]="data.chart.labels" [grid]="data.chart.grid" [colors]="data.chart.colors" [xaxis]="data.chart.xaxis" [yaxis]="data.chart.yaxis" dir="ltr"></apx-chart> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+<div class="row">
+  <div class="col-xl-12">
+    <div class="card">
+        <div class="card-header d-flex align-items-center flex-wrap gap-3">
+            <!-- <h4 class="card-title mb-0 flex-grow-1">Key Performance Indicator </h4>
+             -->
+              <div _ngcontent-ng-c1653861012="" class="row">
+                <div _ngcontent-ng-c1653861012="" class="col-12"><div _ngcontent-ng-c1653861012="" class="page-title-box d-sm-flex align-items-center justify-content-between">
+                  <h4 _ngcontent-ng-c1653861012="" class="mb-sm-0 mb-0 flex-grow-1" style="padding-top: 20px;">Key Performance Indicators Overview </h4>
+                  <div _ngcontent-ng-c1653861012="" class="page-title-right">
+                    <ol _ngcontent-ng-c1653861012="" class="breadcrumb m-0">
+                      <!-- <li _ngcontent-ng-c1653861012="" class="breadcrumb-item active ng-star-inserted" ng-reflect-ng-class="[object Object]">Operation</li> -->
+                      <!--ng-container-->
+                      <!-- <li _ngcontent-ng-c1653861012="" class="breadcrumb-item active ng-star-inserted" ng-reflect-ng-class="[object Object]">KPI </li> -->
+                      <!--ng-container--><!--bindings={
+                "ng-reflect-ng-for-of": "[object Object],[object Object"
+              }--></ol></div></div></div></div>
+              <div class="w-xs">
+
+              </div>
+            <div [hidden]="currentTab !== 'Clicks'">
+              <div class="toolbar d-flex align-items-start justify-content-center flex-wrap gap-2" style="padding-right: 10px;">
+                <button type="button" [ngClass]="{ active: aggregatemonthselection === 1 }" (click)="onemonthaggregate()" class="btn btn-subtle-primary timeline-btn btn-sm" id="one_month">
+                    1M
+                </button>
+                <button type="button" [ngClass]="{ active: aggregatemonthselection === 2 }" (click)="threemonthvaaggregate()" class="btn btn-subtle-primary timeline-btn btn-sm" id="six_months">
+                  3M
+              </button>
+                <button type="button" [ngClass]="{ active: aggregatemonthselection === 3 }" (click)="sixmonthaggregate()" class="btn btn-subtle-primary timeline-btn btn-sm" id="six_months">
+                    6M
+                </button>
+                <button type="button" [ngClass]="{ active: aggregatemonthselection === 4 }" (click)="twelvemonthaggregate()" class="btn btn-subtle-primary timeline-btn btn-sm" id="one_year">
+                    1Y
+                </button>
+                <button type="button" [ngClass]="{ active: aggregatemonthselection === 5 }" (click)="allmonthaggregate()" class="btn btn-subtle-primary timeline-btn btn-sm" id="all">
+                    ALL
+                </button>
+            </div>
+            </div>
+             <div [hidden]="currentTab !== 'pageViews'">
+              <div id="pageviewbutton" class="toolbar d-flex align-items-start justify-content-center flex-wrap gap-2" style="padding-right: 10px;">
+                <button type="button" [ngClass]="{ active: valuemonthselection === 1 }" (click)="onemonth()" class="btn btn-subtle-primary timeline-btn btn-sm" id="one_month">
+                    1M
+                </button>
+                <button type="button" [ngClass]="{ active: valuemonthselection === 2 }" (click)="threemonthva()" class="btn btn-subtle-primary timeline-btn btn-sm" id="six_months">
+                  3M
+              </button>
+                <button type="button" [ngClass]="{ active: valuemonthselection === 3 }" (click)="sixmonthvalue()" class="btn btn-subtle-primary timeline-btn btn-sm" id="six_months">
+                    6M
+                </button>
+                <button type="button" [ngClass]="{ active: valuemonthselection === 4 }"  (click)="twelvemonthvalue()" class="btn btn-subtle-primary timeline-btn btn-sm" id="one_year">
+                    1Y
+                </button>
+                <button type="button" [ngClass]="{ active: valuemonthselection === 5 }"  (click)="allmonthvalue()" class="btn btn-subtle-primary timeline-btn btn-sm" id="all">
+                    ALL
+                </button>
+           
+            </div>
+        
+             </div>
+
+            
+            <ul class="nav nav-pills flex-shrink-0" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active" data-bs-toggle="tab" href="javascript:void(0);" [class.active]="currentTab === 'pageViews'" (click)="changeTab('pageViews','1')" role="tab" aria-selected="true" >
+                        Value
+                    </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" data-bs-toggle="tab" href="javascript:void(0);" [class.active]="currentTab === 'Clicks'" (click)="changeTab('Clicks','2')" role="tab" aria-selected="false" tabindex="-1" >
+                      Aggregate
+                    </a>
+                </li>
+                <!-- <li>
+                  <span class="badge">
+                    <input class="rounded-circle avatar-xxs" tooltip="Actual colour" [style.background]="color1" [(colorPicker)]="color1"   (cpInputChange)="onEventLog('cpInputChange', $event)" (cpSliderDragStart)="onEventLog('cpSliderDragStart', $event)" (cpSliderDragEnd)="onEventLog('cpSliderDragEnd', $event)"/>
+                  </span>
+                </li>
+                <li>
+                  <span class="badge">
+                    <input class="rounded-circle avatar-xxs" tooltip="Target colour" [style.background]="color2" [(colorPicker)]="color2"   (cpInputChange)="onEventLogTraget('cpInputChange', $event)" (cpSliderDragStart)="onEventLogTraget('cpSliderDragStart', $event)" (cpSliderDragEnd)="onEventLogTraget('cpSliderDragEnd', $event)"/>
+                  </span>
+                </li> -->
+                <li>
+                  <div  dropdown class="dropdown float-end" tooltip="Chart type" [hidden]="currentTab !== 'pageViews'"  style="padding-top: 5px; padding-right: 7px;">
+                    <a dropdownToggle class="text-reset dropdown-btn" href="javascript:void(0);">
+                        <span class="text-muted fs-lg"><i class="mdi mdi-dots-vertical align-middle"></i></span>
+                    </a>
+                    <div *dropdownMenu class="dropdown-menu dropdown-menu-end">
+                      <a class="dropdown-item" href="javascript:void(0);" (click)="Valuecharttype('area')">Area</a>  
+                      <a class="dropdown-item" href="javascript:void(0);" (click)="Valuecharttype('line')" >Line</a>
+                        <a class="dropdown-item" href="javascript:void(0);" (click)="Valuecharttype('bar')">Bar</a>
+                        <a class="dropdown-item" href="javascript:void(0);" (click)="Valuecharttype('scatter')">Scatter</a>
+                        <a class="dropdown-item" href="javascript:void(0);" (click)="Valuecharttype('radar')">Radar</a>
+                        
+                        
+                        
+                    </div>
+                </div>
+      
+                <div  dropdown class="dropdown float-end" tooltip="Chart type" [hidden]="currentTab !== 'Clicks'" style="padding-top: 5px; padding-right: 7px;">
+                  <a dropdownToggle class="text-reset dropdown-btn" href="javascript:void(0);">
+                      <span class="text-muted fs-lg"><i class="mdi mdi-dots-vertical align-middle"></i></span>
+                  </a>
+                  <div *dropdownMenu class="dropdown-menu dropdown-menu-end">
+                    <a class="dropdown-item" href="javascript:void(0);" (click)="Aggregatecharttype('area')">Area</a>  
+                    <a class="dropdown-item" href="javascript:void(0);" (click)="Aggregatecharttype('line')" >Line</a>
+                    <a class="dropdown-item" href="javascript:void(0);" (click)="Aggregatecharttype('bar')">Bar</a>
+                      <a class="dropdown-item" href="javascript:void(0);" (click)="Aggregatecharttype('scatter')">Scatter</a>
+                      <a class="dropdown-item" href="javascript:void(0);" (click)="Aggregatecharttype('radar')">Radar</a>
+                  </div>
+              </div>
+                </li>
+                <li>
+                       <div dropdown class="dropdown card-header-dropdown sortble-dropdown" style="padding-top: 9px;">
+                    <a dropdownToggle class="text-reset dropdown-btn" href="javascript:void(0);">
+                        <span class="text-uppercase fs-xs">Sort by:
+                        </span>
+                         <i class="mdi mdi-chevron-down ms-1"></i>
+                    </a>
+                    <div *bsDropdownMenu class="dropdown-menu  w-xs">
+                      
+                        <button class="dropdown-item sort" tooltip="Publisher Ascending" (click)="Publisherascending()"> <img _ngcontent-ng-c911456795="" class="rounded-circle header-profile-user" src="../../../assets/img/icons/icons8-microsoft-publisher-50.png" alt="Admin" style="width: 20px !important; height: 20px !important;"><i class="bi bi-arrow-up-circle-fill" style="padding-left: 15px;width: 20px !important; height: 20px !important;"></i></button>
+                        <button class="dropdown-item sort" tooltip="Publisher Descending" (click)="Publisherdescending()"><img _ngcontent-ng-c911456795="" class="rounded-circle header-profile-user" src="../../../assets/img/icons/icons8-microsoft-publisher-50.png" alt="Admin" style="width: 20px !important; height: 20px !important;"> <i class="bi bi-arrow-down-circle-fill" style="padding-left: 15px;width: 20px !important; height: 20px !important;"></i></button>
+                        <button class="dropdown-item sort" tooltip="Target Ascending" (click)="Targetascending()"> <img _ngcontent-ng-c911456795="" class="rounded-circle header-profile-user" src="../../../assets/img/icons/targeting.png" alt="Admin" style="width: 20px !important; height: 20px !important;"><i class="bi bi-arrow-up-circle-fill" style="padding-left: 15px;width: 20px !important; height: 20px !important;"></i></button>
+                        <button class="dropdown-item sort" tooltip="Target Descending" (click)="Targetdescending()"><img _ngcontent-ng-c911456795="" class="rounded-circle header-profile-user" src="../../../assets/img/icons/targeting.png" alt="Admin" style="width: 20px !important; height: 20px !important;"><i class="bi bi-arrow-down-circle-fill" style="padding-left: 15px;width: 20px !important; height: 20px !important;"></i></button>
+                        <button class="dropdown-item sort" tooltip="Actual Ascending" (click)="Actualascending()"> <img _ngcontent-ng-c911456795="" class="rounded-circle header-profile-user" src="../../../assets/img/icons/checked.png" alt="Admin" style="width: 20px !important; height: 20px !important;"><i class="bi bi-arrow-up-circle-fill" style="padding-left: 15px;width: 20px !important; height: 20px !important;"></i></button>
+                        <button class="dropdown-item sort" tooltip="Actual Descending" (click)="Actualdescending()"> <img _ngcontent-ng-c911456795="" class="rounded-circle header-profile-user" src="../../../assets/img/icons/checked.png" alt="Admin" style="width: 20px !important; height: 20px !important;"><i class="bi bi-arrow-down-circle-fill" style="padding-left: 15px;width: 20px !important; height: 20px !important;"></i></button>
+                    </div>
+                </div>
+
+                  <!-- <div dropdown class="dropdown card-header-dropdown" style="padding-top: 9px;">
+                    <a dropdownToggle class="text-reset dropdown-btn" href="javascript:void(0);">
+                        <span class="text-muted">Order By<i class="mdi mdi-chevron-down ms-1"></i></span>
+                    </a>
+                    <div *bsDropdownMenu class="dropdown-menu dropdown-menu-end">
+                      <a class="dropdown-item" href="javascript:void(0);" (click)="Publisherascending()" >Order by Publisher ascending</a>  
+                      <a class="dropdown-item" href="javascript:void(0);" (click)="Publisherdescending()" >Order by Publisher descending</a>
+                        <a class="dropdown-item" href="javascript:void(0);" >Order by Target ascending</a>
+                        <a class="dropdown-item" href="javascript:void(0);" >Order by Target descending</a>
+                    </div>
+                </div> -->
+
+                  <!-- <div  dropdown class="dropdown float-end" tooltip="Order by"  style="padding-top: 5px;">
+                    <a dropdownToggle class="text-reset dropdown-btn" href="javascript:void(0);">
+                        <span class="text-muted fs-lg"><i class="mdi mdi-dots-vertical align-middle"></i></span>
+                    </a>
+                    <div *dropdownMenu class="dropdown-menu dropdown-menu-end">
+                      <a class="dropdown-item" href="javascript:void(0);" >Order by Publisher ascending</a>  
+                      <a class="dropdown-item" href="javascript:void(0);" >Order by Publisher descending</a>
+                        <a class="dropdown-item" href="javascript:void(0);" >Order by Target ascending</a>
+                        <a class="dropdown-item" href="javascript:void(0);" >Order by Target descending</a>
+                    </div>
+                </div> -->
+                </li>
+                <!-- <li class="nav-item" role="presentation">
+                    <a class="nav-link" data-bs-toggle="tab" href="javascript:void(0);" [class.active]="currentTab === 'conversations'" (click)="changeTab('conversations','3')" role="tab" aria-selected="false" tabindex="-1">
+                        Conversations
+                    </a>
+                </li> -->
+            </ul>
+           
+        </div> <!--end card-header-->
+        <div class="card-body ps-0">
+            <div class="tab-content text-muted">
+                <div [hidden]="currentTab !== 'pageViews'" class="tab-pane active" style="height: 550px;" id="pageViews" role="tabpanel">
+                    <div id="pageviews_overview" class="apex-charts" dir="ltr">
+                    <div id="total_revenue" class="apex-charts effect-chart" dir="ltr">
+                      <!-- <apx-chart [series]="pageoverviewChart.series" [chart]="pageoverviewChart.chart" [stroke]="pageoverviewChart.stroke" [responsive]="pageoverviewChart.responsive" [xaxis]="pageoverviewChart.xaxis" [colors]="pageoverviewChart.colors" [legend]="pageoverviewChart.legend" [fill]="pageoverviewChart.fill" dir="ltr"></apx-chart> -->
+                      <apx-chart [series]="pageoverviewChart.series" [chart]="pageoverviewChart.chart" [plotOptions]="pageoverviewChart.plotOptions" [stroke]="pageoverviewChart.stroke" [fill]="pageoverviewChart.fill" [dataLabels]="pageoverviewChart.dataLabels" [colors]="pageoverviewChart.colors" [legend]="pageoverviewChart.legend" [xaxis]="pageoverviewChart.xaxis" [responsive]="pageoverviewChart.responsive" dir="ltr"></apx-chart>
+                   
+                    </div>
+                      
+                    </div>
+                </div>
+                <!--end tab-->
+                <div [hidden]="currentTab !== 'Clicks'" class="tab-pane active" role="tabpanel">
+                    <div id="clicks_Chart" class="apex-charts" dir="ltr">
+                      <div class="row">
+                        <!-- <button type="button"(click)="testall()" class="btn btn-subtle-secondary btn-sm me-1">
+                            ALL
+                        </button> -->
+                       
+                       
+
+                          <!-- <div class="col-lg-3">
+                            <div dropdown class="input-group">
+                            <select class="form-select btn btn-primary" id="inputGroupSelect02"  (change)="Valuechangechart($event)">
+                              <option value="line">Line</option>
+                              <option value="bar">Bar</option>
+                              <option value="area">Area</option>
+                              <option value="scatter">Scatter</option>
+                          </select>
+                          </div>
+                          </div> -->
+
+                          
+                         
+  
+                      </div>
+                    
+                    
+                    <div id="total_revenue" class="apex-charts effect-chart" dir="ltr">
+                      <apx-chart [series]="clicksChart.series" [chart]="clicksChart.chart" [plotOptions]="clicksChart.plotOptions" [stroke]="clicksChart.stroke" [fill]="clicksChart.fill" [dataLabels]="clicksChart.dataLabels" [colors]="clicksChart.colors" [legend]="clicksChart.legend" [xaxis]="clicksChart.xaxis" [responsive]="clicksChart.responsive" dir="ltr"></apx-chart>
+                      <!-- <apx-chart [series]="clicksChart.series" [chart]="clicksChart.chart" [stroke]="clicksChart.stroke" [responsive]="clicksChart.responsive" [xaxis]="clicksChart.xaxis" [colors]="clicksChart.colors" [legend]="clicksChart.legend" [fill]="clicksChart.fill" dir="ltr"></apx-chart> -->
+                    </div>
+
+                      
+                    </div>
+                </div>
+                <!--end tab-->
+                <div [hidden]="currentTab !== 'conversations'" class="tab-pane active" role="tabpanel">
+                    <div id="column_distributed" class="apex-charts" dir="ltr">
+                        <!-- <apx-chart [series]="columnChart.series" [chart]="columnChart.chart" [plotOptions]="columnChart.plotOptions" [dataLabels]="columnChart.dataLabels" [colors]="columnChart.colors" [legend]="columnChart.legend" [xaxis]="columnChart.xaxis" dir="ltr"></apx-chart> -->
+                    </div>
+                </div>
+                <!--end tab-->
+            </div>
+        </div>
+        <!--end card-header-->
+    </div>
+</div>
+
+</div>
+
+
+<div class="row">
+  <div class="col-xl-6">
+      <div class="card">
+          <div class="card-header">
+              <!-- <h4 class="card-title mb-0"></h4> -->
+
+              <div _ngcontent-ng-c1653861012="" class="row">
+                <div _ngcontent-ng-c1653861012="" class="col-sm-6"><div _ngcontent-ng-c1653861012="" class="page-title-box d-sm-flex align-items-center justify-content-between">
+                  <h6 _ngcontent-ng-c1653861012="" class="mb-sm-0 mb-0 flex-grow-1" style="padding-top: 6px;">UnderPerforming Services</h6>
+                  <div _ngcontent-ng-c1653861012="" class="page-title-right">
+                    <ol _ngcontent-ng-c1653861012="" class="breadcrumb m-0">
+                      <!-- <li _ngcontent-ng-c1653861012="" class="breadcrumb-item active ng-star-inserted" ng-reflect-ng-class="[object Object]">Operation</li> -->
+                      <!--ng-container-->
+                      <!-- <li _ngcontent-ng-c1653861012="" class="breadcrumb-item active ng-star-inserted" ng-reflect-ng-class="[object Object]">KPI </li> -->
+                      <!--ng-container--><!--bindings={
+                "ng-reflect-ng-for-of": "[object Object],[object Object"
+              }--></ol></div></div>
+            
+            
+            </div>
+            <div class="col-6">
+              <div class="toolbar d-flex align-items-start justify-content-center flex-wrap" style="padding-right: 0px; padding-top: 1px; gap: 0.1rem !important;">
+                <button type="button" [ngClass]="{ active: UnderperformingPublishersvaluemonthselection === 1 }" (click)="_UnderperformingServicescall(1)" class="btn btn-subtle-primary timeline-btn btn-sm" id="one_month">
+                    1M
+                </button>
+                <button type="button" [ngClass]="{ active: UnderperformingPublishersvaluemonthselection === 2 }" (click)="_UnderperformingServicescall(3)" class="btn btn-subtle-primary timeline-btn btn-sm" id="six_months">
+                  3M
+              </button>
+                <button type="button" [ngClass]="{ active: UnderperformingPublishersvaluemonthselection === 3 }" (click)="_UnderperformingServicescall(6)" class="btn btn-subtle-primary timeline-btn btn-sm" id="six_months">
+                    6M
+                </button>
+                <button type="button" [ngClass]="{ active: UnderperformingPublishersvaluemonthselection === 4 }" (click)="_UnderperformingServicescall(12)" class="btn btn-subtle-primary timeline-btn btn-sm" id="one_year">
+                    1Y
+                </button>
+                <button type="button" [ngClass]="{ active: UnderperformingPublishersvaluemonthselection === 5 }" (click)="_UnderperformingServicescall(13)" class="btn btn-subtle-primary timeline-btn btn-sm" id="all">
+                    ALL
+                </button>
+                <ul class="nav nav-pills flex-shrink-0" role="tablist" >
+                  <!-- <li class="nav-item" role="presentation">
+                      <a class="nav-link active" data-bs-toggle="tab" href="javascript:void(0);" [class.active]="currentTab === 'pageViews'" (click)="changeTab('pageViews','1')" role="tab" aria-selected="true" >
+                          Value
+                      </a>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                      <a class="nav-link" data-bs-toggle="tab" href="javascript:void(0);" [class.active]="currentTab === 'Clicks'" (click)="changeTab('Clicks','2')" role="tab" aria-selected="false" tabindex="-1" >
+                        Aggregate
+                      </a>
+                  </li> -->
+                  <!-- <li>
+                    <span class="badge">
+                      <input class="rounded-circle avatar-xxs" tooltip="Actual colour" [style.background]="color1" [(colorPicker)]="color1"   (cpInputChange)="onEventLog('cpInputChange', $event)" (cpSliderDragStart)="onEventLog('cpSliderDragStart', $event)" (cpSliderDragEnd)="onEventLog('cpSliderDragEnd', $event)"/>
+                    </span>
+                  </li>
+                  <li>
+                    <span class="badge">
+                      <input class="rounded-circle avatar-xxs" tooltip="Target colour" [style.background]="color2" [(colorPicker)]="color2"   (cpInputChange)="onEventLogTraget('cpInputChange', $event)" (cpSliderDragStart)="onEventLogTraget('cpSliderDragStart', $event)" (cpSliderDragEnd)="onEventLogTraget('cpSliderDragEnd', $event)"/>
+                    </span>
+                  </li> -->
+                  <li>
+                    <div  dropdown class="dropdown float-end" tooltip="Chart type"  style="padding-top: 0px; ">
+                      <a dropdownToggle class="text-reset dropdown-btn" href="javascript:void(0);">
+                          <span class="text-muted fs-lg"><i class="mdi mdi-dots-vertical align-middle"></i></span>
+                      </a>
+                      <div *dropdownMenu class="dropdown-menu dropdown-menu-end">
+                        <a class="dropdown-item" href="javascript:void(0);" (click)="UnderperformingServicescharttype('pie')">Pie</a>
+                        <a class="dropdown-item" href="javascript:void(0);" (click)="UnderperformingServicescharttype('area')">Area</a>  
+                        <a class="dropdown-item" href="javascript:void(0);" (click)="UnderperformingServicescharttype('line')" >Line</a>
+                        <a class="dropdown-item" href="javascript:void(0);" (click)="UnderperformingServicescharttype('bar')">Bar</a>
+                        <a class="dropdown-item" href="javascript:void(0);" (click)="UnderperformingServicescharttype('radar')">Radar</a>
+                        <a class="dropdown-item" href="javascript:void(0);" (click)="UnderperformingServicescharttype('polarArea')">PolarArea</a>
+                        
+                      </div>
+                  </div>
+        
+                  </li>
+                  <!-- <li>
+                         <div dropdown class="dropdown card-header-dropdown sortble-dropdown" style="padding-top: 2px;">
+                      <a dropdownToggle class="text-reset dropdown-btn" href="javascript:void(0);">
+                          <span class="text-uppercase fs-xs">Sort by:
+                          </span>
+                           <i class="mdi mdi-chevron-down ms-1"></i>
+                      </a>
+                      <div *bsDropdownMenu class="dropdown-menu  w-xs">
+                        
+                          <button class="dropdown-item sort" tooltip="Publisher Ascending" (click)="Publisherascending()"> <img _ngcontent-ng-c911456795="" class="rounded-circle header-profile-user" src="../../../assets/img/icons/icons8-microsoft-publisher-50.png" alt="Admin" style="width: 20px !important; height: 20px !important;"><i class="bi bi-arrow-up-circle-fill" style="padding-left: 15px;width: 20px !important; height: 20px !important;"></i></button>
+                          <button class="dropdown-item sort" tooltip="Publisher Descending" (click)="Publisherdescending()"><img _ngcontent-ng-c911456795="" class="rounded-circle header-profile-user" src="../../../assets/img/icons/icons8-microsoft-publisher-50.png" alt="Admin" style="width: 20px !important; height: 20px !important;"> <i class="bi bi-arrow-down-circle-fill" style="padding-left: 15px;width: 20px !important; height: 20px !important;"></i></button>
+                          <button class="dropdown-item sort" tooltip="Target Ascending" (click)="Targetascending()"> <img _ngcontent-ng-c911456795="" class="rounded-circle header-profile-user" src="../../../assets/img/icons/targeting.png" alt="Admin" style="width: 20px !important; height: 20px !important;"><i class="bi bi-arrow-up-circle-fill" style="padding-left: 15px;width: 20px !important; height: 20px !important;"></i></button>
+                          <button class="dropdown-item sort" tooltip="Target Descending" (click)="Targetdescending()"><img _ngcontent-ng-c911456795="" class="rounded-circle header-profile-user" src="../../../assets/img/icons/targeting.png" alt="Admin" style="width: 20px !important; height: 20px !important;"><i class="bi bi-arrow-down-circle-fill" style="padding-left: 15px;width: 20px !important; height: 20px !important;"></i></button>
+                          <button class="dropdown-item sort" tooltip="Actual Ascending" (click)="Actualascending()"> <img _ngcontent-ng-c911456795="" class="rounded-circle header-profile-user" src="../../../assets/img/icons/checked.png" alt="Admin" style="width: 20px !important; height: 20px !important;"><i class="bi bi-arrow-up-circle-fill" style="padding-left: 15px;width: 20px !important; height: 20px !important;"></i></button>
+                          <button class="dropdown-item sort" tooltip="Actual Descending" (click)="Actualdescending()"> <img _ngcontent-ng-c911456795="" class="rounded-circle header-profile-user" src="../../../assets/img/icons/checked.png" alt="Admin" style="width: 20px !important; height: 20px !important;"><i class="bi bi-arrow-down-circle-fill" style="padding-left: 15px;width: 20px !important; height: 20px !important;"></i></button>
+                      </div>
+                  </div>
+                 </li> -->
+                  <!-- <li class="nav-item" role="presentation">
+                      <a class="nav-link" data-bs-toggle="tab" href="javascript:void(0);" [class.active]="currentTab === 'conversations'" (click)="changeTab('conversations','3')" role="tab" aria-selected="false" tabindex="-1">
+                          Conversations
+                      </a>
+                  </li> -->
+              </ul>
+            </div>
+            
+            </div>
+          
+          </div>
+             
+           
+          </div>
+          <div class="card-body">
+              <apx-chart [series]="UnderPerformingServicesPieChart.series" [chart]="UnderPerformingServicesPieChart.chart"
+                  [labels]="UnderPerformingServicesPieChart.labels" [legend]="UnderPerformingServicesPieChart.legend"
+                  [dataLabels]="UnderPerformingServicesPieChart.dataLabels" [responsive]="UnderPerformingServicesPieChart.responsive"
+                  [colors]="UnderPerformingServicesPieChart.colors" dir="ltr"></apx-chart>
+          </div>
+      </div>
+  </div>
+  
+
+  <div class="col-xl-6">
+      <div class="card">
+          <div class="card-header">
+
+            <div _ngcontent-ng-c1653861012="" class="row">
+              <div _ngcontent-ng-c1653861012="" class="col-sm-6"><div _ngcontent-ng-c1653861012="" class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <h6 _ngcontent-ng-c1653861012="" class="mb-sm-0 mb-0 flex-grow-1" style="padding-top: 6px;">Underperforming Publishers</h6>
+                <div _ngcontent-ng-c1653861012="" class="page-title-right">
+                  <ol _ngcontent-ng-c1653861012="" class="breadcrumb m-0">
+                    <!-- <li _ngcontent-ng-c1653861012="" class="breadcrumb-item active ng-star-inserted" ng-reflect-ng-class="[object Object]">Operation</li> -->
+                    <!--ng-container-->
+                    <!-- <li _ngcontent-ng-c1653861012="" class="breadcrumb-item active ng-star-inserted" ng-reflect-ng-class="[object Object]">KPI </li> -->
+                    <!--ng-container--><!--bindings={
+              "ng-reflect-ng-for-of": "[object Object],[object Object"
+            }--></ol></div></div>
+          
+          
+          </div>
+          <div class="col-sm-6">
+            <div class="toolbar d-flex align-items-start justify-content-center flex-wrap" style="padding-right: 0px; padding-top: 1px; gap: 0.1rem !important;">
+              <button type="button" [ngClass]="{ active: UnderperformingServicesvaluemonthselection === 1 }" (click)="_UnderperformingPublisherscall(1)" class="btn btn-subtle-primary timeline-btn btn-sm" id="one_month">
+                  1M
+              </button>
+              <button type="button" [ngClass]="{ active: UnderperformingServicesvaluemonthselection === 2 }" (click)="_UnderperformingPublisherscall(3)" class="btn btn-subtle-primary timeline-btn btn-sm" id="six_months">
+                3M
+            </button>
+              <button type="button" [ngClass]="{ active: UnderperformingServicesvaluemonthselection === 3 }" (click)="_UnderperformingPublisherscall(6)" class="btn btn-subtle-primary timeline-btn btn-sm" id="six_months">
+                  6M
+              </button>
+              <button type="button" [ngClass]="{ active: UnderperformingServicesvaluemonthselection === 4 }"  (click)="_UnderperformingPublisherscall(12)" class="btn btn-subtle-primary timeline-btn btn-sm" id="one_year">
+                  1Y
+              </button>
+              <button type="button"  [ngClass]="{ active: UnderperformingServicesvaluemonthselection === 5 }" (click)="_UnderperformingPublisherscall(13)" class="btn btn-subtle-primary timeline-btn btn-sm" id="all">
+                  ALL
+              </button>
+              <ul class="nav nav-pills flex-shrink-0" role="tablist" >
+                <!-- <li class="nav-item" role="presentation">
+                    <a class="nav-link active" data-bs-toggle="tab" href="javascript:void(0);" [class.active]="currentTab === 'pageViews'" (click)="changeTab('pageViews','1')" role="tab" aria-selected="true" >
+                        Value
+                    </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" data-bs-toggle="tab" href="javascript:void(0);" [class.active]="currentTab === 'Clicks'" (click)="changeTab('Clicks','2')" role="tab" aria-selected="false" tabindex="-1" >
+                      Aggregate
+                    </a>
+                </li> -->
+                <!-- <li>
+                  <span class="badge">
+                    <input class="rounded-circle avatar-xxs" tooltip="Actual colour" [style.background]="color1" [(colorPicker)]="color1"   (cpInputChange)="onEventLog('cpInputChange', $event)" (cpSliderDragStart)="onEventLog('cpSliderDragStart', $event)" (cpSliderDragEnd)="onEventLog('cpSliderDragEnd', $event)"/>
+                  </span>
+                </li>
+                <li>
+                  <span class="badge">
+                    <input class="rounded-circle avatar-xxs" tooltip="Target colour" [style.background]="color2" [(colorPicker)]="color2"   (cpInputChange)="onEventLogTraget('cpInputChange', $event)" (cpSliderDragStart)="onEventLogTraget('cpSliderDragStart', $event)" (cpSliderDragEnd)="onEventLogTraget('cpSliderDragEnd', $event)"/>
+                  </span>
+                </li> -->
+                <li>
+                  <div  dropdown class="dropdown float-end" tooltip="Chart type"  >
+                    <a dropdownToggle class="text-reset dropdown-btn" href="javascript:void(0);">
+                        <span class="text-muted fs-lg"><i class="mdi mdi-dots-vertical align-middle"></i></span>
+                    </a>
+                    <div *dropdownMenu class="dropdown-menu dropdown-menu-end">
+                      <a class="dropdown-item" href="javascript:void(0);" (click)="UnderperformingPublisherscharttype('pie')">Pie</a>
+                      <a class="dropdown-item" href="javascript:void(0);" (click)="UnderperformingPublisherscharttype('area')">Area</a>  
+                      <a class="dropdown-item" href="javascript:void(0);" (click)="UnderperformingPublisherscharttype('line')" >Line</a>
+                      <a class="dropdown-item" href="javascript:void(0);" (click)="UnderperformingPublisherscharttype('bar')">Bar</a>
+                      <a class="dropdown-item" href="javascript:void(0);" (click)="UnderperformingPublisherscharttype('radar')">Radar</a>
+                      <a class="dropdown-item" href="javascript:void(0);" (click)="UnderperformingPublisherscharttype('polarArea')">PolarArea</a>
+                    </div>
+                </div>
+      
+                </li>
+                <!-- <li>
+                       <div dropdown class="dropdown card-header-dropdown sortble-dropdown" style="padding-top: 2px;">
+                    <a dropdownToggle class="text-reset dropdown-btn" href="javascript:void(0);">
+                        <span class="text-uppercase fs-xs">Sort by:
+                        </span>
+                         <i class="mdi mdi-chevron-down ms-1"></i>
+                    </a>
+                    <div *bsDropdownMenu class="dropdown-menu  w-xs">
+                      
+                        <button class="dropdown-item sort" tooltip="Publisher Ascending" (click)="Publisherascending()"> <img _ngcontent-ng-c911456795="" class="rounded-circle header-profile-user" src="../../../assets/img/icons/icons8-microsoft-publisher-50.png" alt="Admin" style="width: 20px !important; height: 20px !important;"><i class="bi bi-arrow-up-circle-fill" style="padding-left: 15px;width: 20px !important; height: 20px !important;"></i></button>
+                        <button class="dropdown-item sort" tooltip="Publisher Descending" (click)="Publisherdescending()"><img _ngcontent-ng-c911456795="" class="rounded-circle header-profile-user" src="../../../assets/img/icons/icons8-microsoft-publisher-50.png" alt="Admin" style="width: 20px !important; height: 20px !important;"> <i class="bi bi-arrow-down-circle-fill" style="padding-left: 15px;width: 20px !important; height: 20px !important;"></i></button>
+                        <button class="dropdown-item sort" tooltip="Target Ascending" (click)="Targetascending()"> <img _ngcontent-ng-c911456795="" class="rounded-circle header-profile-user" src="../../../assets/img/icons/targeting.png" alt="Admin" style="width: 20px !important; height: 20px !important;"><i class="bi bi-arrow-up-circle-fill" style="padding-left: 15px;width: 20px !important; height: 20px !important;"></i></button>
+                        <button class="dropdown-item sort" tooltip="Target Descending" (click)="Targetdescending()"><img _ngcontent-ng-c911456795="" class="rounded-circle header-profile-user" src="../../../assets/img/icons/targeting.png" alt="Admin" style="width: 20px !important; height: 20px !important;"><i class="bi bi-arrow-down-circle-fill" style="padding-left: 15px;width: 20px !important; height: 20px !important;"></i></button>
+                        <button class="dropdown-item sort" tooltip="Actual Ascending" (click)="Actualascending()"> <img _ngcontent-ng-c911456795="" class="rounded-circle header-profile-user" src="../../../assets/img/icons/checked.png" alt="Admin" style="width: 20px !important; height: 20px !important;"><i class="bi bi-arrow-up-circle-fill" style="padding-left: 15px;width: 20px !important; height: 20px !important;"></i></button>
+                        <button class="dropdown-item sort" tooltip="Actual Descending" (click)="Actualdescending()"> <img _ngcontent-ng-c911456795="" class="rounded-circle header-profile-user" src="../../../assets/img/icons/checked.png" alt="Admin" style="width: 20px !important; height: 20px !important;"><i class="bi bi-arrow-down-circle-fill" style="padding-left: 15px;width: 20px !important; height: 20px !important;"></i></button>
+                    </div>
+                </div>
+               </li> -->
+                <!-- <li class="nav-item" role="presentation">
+                    <a class="nav-link" data-bs-toggle="tab" href="javascript:void(0);" [class.active]="currentTab === 'conversations'" (click)="changeTab('conversations','3')" role="tab" aria-selected="false" tabindex="-1">
+                        Conversations
+                    </a>
+                </li> -->
+            </ul>
+          </div>
+          </div>
+        </div>
+          
+          </div>
+
+          <div class="card-body">
+              <apx-chart [series]="UnderperformingPublishersPieChart.series" [chart]="UnderperformingPublishersPieChart.chart"
+                  [labels]="UnderperformingPublishersPieChart.labels" [legend]="UnderperformingPublishersPieChart.legend"
+                  [dataLabels]="UnderperformingPublishersPieChart.dataLabels" [responsive]="UnderperformingPublishersPieChart.responsive"
+                  [colors]="UnderperformingPublishersPieChart.colors" dir="ltr"></apx-chart>
+          </div>
+      </div>
+  </div>
+ 
+</div> 
+
+<div class="row">
+  <div class="col-xl-6">
+      <div class="card">
+          <div class="card-header">
+            <div _ngcontent-ng-c1653861012="" class="row">
+              <div _ngcontent-ng-c1653861012="" class="col-sm-6"><div _ngcontent-ng-c1653861012="" class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <h6 _ngcontent-ng-c1653861012="" class="mb-sm-0 mb-0 flex-grow-1" style="padding-top: 6px;">Leading Publishers</h6>
+                <div _ngcontent-ng-c1653861012="" class="page-title-right">
+                  <ol _ngcontent-ng-c1653861012="" class="breadcrumb m-0">
+                    <!-- <li _ngcontent-ng-c1653861012="" class="breadcrumb-item active ng-star-inserted" ng-reflect-ng-class="[object Object]">Operation</li> -->
+                    <!--ng-container-->
+                    <!-- <li _ngcontent-ng-c1653861012="" class="breadcrumb-item active ng-star-inserted" ng-reflect-ng-class="[object Object]">KPI </li> -->
+                    <!--ng-container--><!--bindings={
+              "ng-reflect-ng-for-of": "[object Object],[object Object"
+            }--></ol></div></div>
+          
+          
+          </div>
+          <div class="col-sm-6">
+            <div class="toolbar d-flex align-items-start justify-content-center flex-wrap" style="padding-right: 0px; padding-top: 1px; gap: 0.1rem !important;">
+              <button type="button" [ngClass]="{ active: LeadingReliableContributorsmonthselection === 1 }" (click)="_LeadingReliableContributorscall(1)" class="btn btn-subtle-primary timeline-btn btn-sm" id="one_month">
+                  1M
+              </button>
+              <button type="button" [ngClass]="{ active: LeadingReliableContributorsmonthselection === 2 }" (click)="_LeadingReliableContributorscall(3)" class="btn btn-subtle-primary timeline-btn btn-sm" id="six_months">
+                3M
+            </button>
+              <button type="button" [ngClass]="{ active: LeadingReliableContributorsmonthselection === 3 }" (click)="_LeadingReliableContributorscall(6)" class="btn btn-subtle-primary timeline-btn btn-sm" id="six_months">
+                  6M
+              </button>
+              <button type="button" [ngClass]="{ active: LeadingReliableContributorsmonthselection === 4 }" (click)="_LeadingReliableContributorscall(12)" class="btn btn-subtle-primary timeline-btn btn-sm" id="one_year">
+                  1Y
+              </button>
+              <button type="button" [ngClass]="{ active: LeadingReliableContributorsmonthselection === 5 }" (click)="_LeadingReliableContributorscall(13)" class="btn btn-subtle-primary timeline-btn btn-sm" id="all">
+                  ALL
+              </button>
+              <ul class="nav nav-pills flex-shrink-0" role="tablist" >
+                <!-- <li class="nav-item" role="presentation">
+                    <a class="nav-link active" data-bs-toggle="tab" href="javascript:void(0);" [class.active]="currentTab === 'pageViews'" (click)="changeTab('pageViews','1')" role="tab" aria-selected="true" >
+                        Value
+                    </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" data-bs-toggle="tab" href="javascript:void(0);" [class.active]="currentTab === 'Clicks'" (click)="changeTab('Clicks','2')" role="tab" aria-selected="false" tabindex="-1" >
+                      Aggregate
+                    </a>
+                </li> -->
+                <!-- <li>
+                  <span class="badge">
+                    <input class="rounded-circle avatar-xxs" tooltip="Actual colour" [style.background]="color1" [(colorPicker)]="color1"   (cpInputChange)="onEventLog('cpInputChange', $event)" (cpSliderDragStart)="onEventLog('cpSliderDragStart', $event)" (cpSliderDragEnd)="onEventLog('cpSliderDragEnd', $event)"/>
+                  </span>
+                </li>
+                <li>
+                  <span class="badge">
+                    <input class="rounded-circle avatar-xxs" tooltip="Target colour" [style.background]="color2" [(colorPicker)]="color2"   (cpInputChange)="onEventLogTraget('cpInputChange', $event)" (cpSliderDragStart)="onEventLogTraget('cpSliderDragStart', $event)" (cpSliderDragEnd)="onEventLogTraget('cpSliderDragEnd', $event)"/>
+                  </span>
+                </li> -->
+                <li>
+                  <div  dropdown class="dropdown float-end" tooltip="Chart type"  style="padding-top: 0px; ">
+                    <a dropdownToggle class="text-reset dropdown-btn" href="javascript:void(0);">
+                        <span class="text-muted fs-lg"><i class="mdi mdi-dots-vertical align-middle"></i></span>
+                    </a>
+                    <div *dropdownMenu class="dropdown-menu dropdown-menu-end">
+                      <a class="dropdown-item" href="javascript:void(0);" (click)="_LeadingReliableContributorscharttype('pie')">Pie</a>
+                      <a class="dropdown-item" href="javascript:void(0);" (click)="_LeadingReliableContributorscharttype('area')">Area</a>  
+                      <a class="dropdown-item" href="javascript:void(0);" (click)="_LeadingReliableContributorscharttype('line')" >Line</a>
+                      <a class="dropdown-item" href="javascript:void(0);" (click)="_LeadingReliableContributorscharttype('bar')">Bar</a>
+                      <a class="dropdown-item" href="javascript:void(0);" (click)="_LeadingReliableContributorscharttype('radar')">Radar</a>
+                      <a class="dropdown-item" href="javascript:void(0);" (click)="_LeadingReliableContributorscharttype('polarArea')">PolarArea</a>
+                    </div>
+                </div>
+      
+                </li>
+                <!-- <li>
+                       <div dropdown class="dropdown card-header-dropdown sortble-dropdown" style="padding-top: 2px;">
+                    <a dropdownToggle class="text-reset dropdown-btn" href="javascript:void(0);">
+                        <span class="text-uppercase fs-xs">Sort by:
+                        </span>
+                         <i class="mdi mdi-chevron-down ms-1"></i>
+                    </a>
+                    <div *bsDropdownMenu class="dropdown-menu  w-xs">
+                      
+                        <button class="dropdown-item sort" tooltip="Publisher Ascending" (click)="Publisherascending()"> <img _ngcontent-ng-c911456795="" class="rounded-circle header-profile-user" src="../../../assets/img/icons/icons8-microsoft-publisher-50.png" alt="Admin" style="width: 20px !important; height: 20px !important;"><i class="bi bi-arrow-up-circle-fill" style="padding-left: 15px;width: 20px !important; height: 20px !important;"></i></button>
+                        <button class="dropdown-item sort" tooltip="Publisher Descending" (click)="Publisherdescending()"><img _ngcontent-ng-c911456795="" class="rounded-circle header-profile-user" src="../../../assets/img/icons/icons8-microsoft-publisher-50.png" alt="Admin" style="width: 20px !important; height: 20px !important;"> <i class="bi bi-arrow-down-circle-fill" style="padding-left: 15px;width: 20px !important; height: 20px !important;"></i></button>
+                        <button class="dropdown-item sort" tooltip="Target Ascending" (click)="Targetascending()"> <img _ngcontent-ng-c911456795="" class="rounded-circle header-profile-user" src="../../../assets/img/icons/targeting.png" alt="Admin" style="width: 20px !important; height: 20px !important;"><i class="bi bi-arrow-up-circle-fill" style="padding-left: 15px;width: 20px !important; height: 20px !important;"></i></button>
+                        <button class="dropdown-item sort" tooltip="Target Descending" (click)="Targetdescending()"><img _ngcontent-ng-c911456795="" class="rounded-circle header-profile-user" src="../../../assets/img/icons/targeting.png" alt="Admin" style="width: 20px !important; height: 20px !important;"><i class="bi bi-arrow-down-circle-fill" style="padding-left: 15px;width: 20px !important; height: 20px !important;"></i></button>
+                        <button class="dropdown-item sort" tooltip="Actual Ascending" (click)="Actualascending()"> <img _ngcontent-ng-c911456795="" class="rounded-circle header-profile-user" src="../../../assets/img/icons/checked.png" alt="Admin" style="width: 20px !important; height: 20px !important;"><i class="bi bi-arrow-up-circle-fill" style="padding-left: 15px;width: 20px !important; height: 20px !important;"></i></button>
+                        <button class="dropdown-item sort" tooltip="Actual Descending" (click)="Actualdescending()"> <img _ngcontent-ng-c911456795="" class="rounded-circle header-profile-user" src="../../../assets/img/icons/checked.png" alt="Admin" style="width: 20px !important; height: 20px !important;"><i class="bi bi-arrow-down-circle-fill" style="padding-left: 15px;width: 20px !important; height: 20px !important;"></i></button>
+                    </div>
+                </div>
+               </li> -->
+                <!-- <li class="nav-item" role="presentation">
+                    <a class="nav-link" data-bs-toggle="tab" href="javascript:void(0);" [class.active]="currentTab === 'conversations'" (click)="changeTab('conversations','3')" role="tab" aria-selected="false" tabindex="-1">
+                        Conversations
+                    </a>
+                </li> -->
+            </ul>
+          </div>
+          </div>    
+        </div>
+             
+
+             
+          </div>
+
+          <div class="card-body">
+
+            <apx-chart [series]="Pyramid.series" [chart]="Pyramid.chart"
+                  [labels]="Pyramid.labels" [legend]="Pyramid.legend"
+                  [dataLabels]="Pyramid.dataLabels" [responsive]="Pyramid.responsive"
+                  [colors]="Pyramid.colors" dir="ltr"></apx-chart>
+           
+                  <!-- <apx-chart [series]="Pyramid.series" [chart]="Pyramid.chart" [dataLabels]="Pyramid.dataLabels"
+            [plotOptions]="Pyramid.plotOptions" [xaxis]="Pyramid.xaxis" [colors]="Pyramid.colors"
+            [title]="Pyramid.title" [legend]="Pyramid.legend" class="apex-charts"></apx-chart> -->
+                  
+          </div>
+      </div>
+  </div>
+
+  <div class="col-xl-6">
+      <div class="card">
+          <div class="card-header">
+
+            <div _ngcontent-ng-c1653861012="" class="row">
+              <div _ngcontent-ng-c1653861012="" class="col-sm-6"><div _ngcontent-ng-c1653861012="" class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <h6 _ngcontent-ng-c1653861012="" class="mb-sm-0 mb-0 flex-grow-1" style="padding-top: 6px;">Consistently Performing</h6>
+                <div _ngcontent-ng-c1653861012="" class="page-title-right">
+                  <ol _ngcontent-ng-c1653861012="" class="breadcrumb m-0">
+                    <!-- <li _ngcontent-ng-c1653861012="" class="breadcrumb-item active ng-star-inserted" ng-reflect-ng-class="[object Object]">Operation</li> -->
+                    <!--ng-container-->
+                    <!-- <li _ngcontent-ng-c1653861012="" class="breadcrumb-item active ng-star-inserted" ng-reflect-ng-class="[object Object]">KPI </li> -->
+                    <!--ng-container--><!--bindings={
+              "ng-reflect-ng-for-of": "[object Object],[object Object"
+            }--></ol></div></div>
+          </div>
+          <div class="col-sm-6">
+                
+              <div class="toolbar d-flex align-items-start justify-content-center flex-wrap " style="padding-right: 0px; padding-top: 1px; gap: 0.1rem !important;">
+                <button type="button" [ngClass]="{ active: ConsistentlyPerformingmonthselection === 1 }" (click)="ConsistentlyPerformingcall(1)" class="btn btn-subtle-primary timeline-btn btn-sm" id="one_month">
+                    1M
+                </button>
+                <button type="button" [ngClass]="{ active: ConsistentlyPerformingmonthselection === 2 }" (click)="ConsistentlyPerformingcall(3)" class="btn btn-subtle-primary timeline-btn btn-sm" id="six_months">
+                  3M
+              </button>
+                <button type="button" [ngClass]="{ active: ConsistentlyPerformingmonthselection === 3 }" (click)="ConsistentlyPerformingcall(6)" class="btn btn-subtle-primary timeline-btn btn-sm" id="six_months">
+                    6M
+                </button>
+                <button type="button" [ngClass]="{ active: ConsistentlyPerformingmonthselection === 4 }"  (click)="ConsistentlyPerformingcall(12)" class="btn btn-subtle-primary timeline-btn btn-sm" id="one_year">
+                    1Y
+                </button>
+                <button type="button" [ngClass]="{ active: ConsistentlyPerformingmonthselection === 5 }"  (click)="ConsistentlyPerformingcall(13)" class="btn btn-subtle-primary timeline-btn btn-sm" id="all">
+                    ALL
+                </button>
+                <ul class="nav nav-pills flex-shrink-0" role="tablist" >
+                  <!-- <li class="nav-item" role="presentation">
+                      <a class="nav-link active" data-bs-toggle="tab" href="javascript:void(0);" [class.active]="currentTab === 'pageViews'" (click)="changeTab('pageViews','1')" role="tab" aria-selected="true" >
+                          Value
+                      </a>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                      <a class="nav-link" data-bs-toggle="tab" href="javascript:void(0);" [class.active]="currentTab === 'Clicks'" (click)="changeTab('Clicks','2')" role="tab" aria-selected="false" tabindex="-1" >
+                        Aggregate
+                      </a>
+                  </li> -->
+                  <!-- <li>
+                    <span class="badge">
+                      <input class="rounded-circle avatar-xxs" tooltip="Actual colour" [style.background]="color1" [(colorPicker)]="color1"   (cpInputChange)="onEventLog('cpInputChange', $event)" (cpSliderDragStart)="onEventLog('cpSliderDragStart', $event)" (cpSliderDragEnd)="onEventLog('cpSliderDragEnd', $event)"/>
+                    </span>
+                  </li>
+                  <li>
+                    <span class="badge">
+                      <input class="rounded-circle avatar-xxs" tooltip="Target colour" [style.background]="color2" [(colorPicker)]="color2"   (cpInputChange)="onEventLogTraget('cpInputChange', $event)" (cpSliderDragStart)="onEventLogTraget('cpSliderDragStart', $event)" (cpSliderDragEnd)="onEventLogTraget('cpSliderDragEnd', $event)"/>
+                    </span>
+                  </li> -->
+                  <li>
+                    <div  dropdown class="dropdown float-end" tooltip="Chart type"  style="padding-top: 0px; ">
+                      <a dropdownToggle class="text-reset dropdown-btn" href="javascript:void(0);">
+                          <span class="text-muted fs-lg"><i class="mdi mdi-dots-vertical align-middle"></i></span>
+                      </a>
+                      <div *dropdownMenu class="dropdown-menu dropdown-menu-end">
+                        <a class="dropdown-item" href="javascript:void(0);" (click)="_ConsistentlyPerformingcharttype('pie')">Pie</a>
+                        <a class="dropdown-item" href="javascript:void(0);" (click)="_ConsistentlyPerformingcharttype('area')">Area</a>  
+                        <a class="dropdown-item" href="javascript:void(0);" (click)="_ConsistentlyPerformingcharttype('line')" >Line</a>
+                        <a class="dropdown-item" href="javascript:void(0);" (click)="_ConsistentlyPerformingcharttype('bar')">Bar</a>
+                        <a class="dropdown-item" href="javascript:void(0);" (click)="_ConsistentlyPerformingcharttype('radar')">Radar</a>
+                        <a class="dropdown-item" href="javascript:void(0);" (click)="_ConsistentlyPerformingcharttype('polarArea')">PolarArea</a>
+                      </div>
+                  </div>
+        
+                  </li>
+                  <!-- <li>
+                         <div dropdown class="dropdown card-header-dropdown sortble-dropdown" style="padding-top: 2px;">
+                      <a dropdownToggle class="text-reset dropdown-btn" href="javascript:void(0);">
+                          <span class="text-uppercase fs-xs">Sort by:
+                          </span>
+                           <i class="mdi mdi-chevron-down ms-1"></i>
+                      </a>
+                      <div *bsDropdownMenu class="dropdown-menu  w-xs">
+                        
+                          <button class="dropdown-item sort" tooltip="Publisher Ascending" (click)="Publisherascending()"> <img _ngcontent-ng-c911456795="" class="rounded-circle header-profile-user" src="../../../assets/img/icons/icons8-microsoft-publisher-50.png" alt="Admin" style="width: 20px !important; height: 20px !important;"><i class="bi bi-arrow-up-circle-fill" style="padding-left: 15px;width: 20px !important; height: 20px !important;"></i></button>
+                          <button class="dropdown-item sort" tooltip="Publisher Descending" (click)="Publisherdescending()"><img _ngcontent-ng-c911456795="" class="rounded-circle header-profile-user" src="../../../assets/img/icons/icons8-microsoft-publisher-50.png" alt="Admin" style="width: 20px !important; height: 20px !important;"> <i class="bi bi-arrow-down-circle-fill" style="padding-left: 15px;width: 20px !important; height: 20px !important;"></i></button>
+                          <button class="dropdown-item sort" tooltip="Target Ascending" (click)="Targetascending()"> <img _ngcontent-ng-c911456795="" class="rounded-circle header-profile-user" src="../../../assets/img/icons/targeting.png" alt="Admin" style="width: 20px !important; height: 20px !important;"><i class="bi bi-arrow-up-circle-fill" style="padding-left: 15px;width: 20px !important; height: 20px !important;"></i></button>
+                          <button class="dropdown-item sort" tooltip="Target Descending" (click)="Targetdescending()"><img _ngcontent-ng-c911456795="" class="rounded-circle header-profile-user" src="../../../assets/img/icons/targeting.png" alt="Admin" style="width: 20px !important; height: 20px !important;"><i class="bi bi-arrow-down-circle-fill" style="padding-left: 15px;width: 20px !important; height: 20px !important;"></i></button>
+                          <button class="dropdown-item sort" tooltip="Actual Ascending" (click)="Actualascending()"> <img _ngcontent-ng-c911456795="" class="rounded-circle header-profile-user" src="../../../assets/img/icons/checked.png" alt="Admin" style="width: 20px !important; height: 20px !important;"><i class="bi bi-arrow-up-circle-fill" style="padding-left: 15px;width: 20px !important; height: 20px !important;"></i></button>
+                          <button class="dropdown-item sort" tooltip="Actual Descending" (click)="Actualdescending()"> <img _ngcontent-ng-c911456795="" class="rounded-circle header-profile-user" src="../../../assets/img/icons/checked.png" alt="Admin" style="width: 20px !important; height: 20px !important;"><i class="bi bi-arrow-down-circle-fill" style="padding-left: 15px;width: 20px !important; height: 20px !important;"></i></button>
+                      </div>
+                  </div>
+                 </li> -->
+                  <!-- <li class="nav-item" role="presentation">
+                      <a class="nav-link" data-bs-toggle="tab" href="javascript:void(0);" [class.active]="currentTab === 'conversations'" (click)="changeTab('conversations','3')" role="tab" aria-selected="false" tabindex="-1">
+                          Conversations
+                      </a>
+                  </li> -->
+              </ul>
+            </div>
+            </div>
+        </div>
+
+          </div>
+          <div class="card-body">
+              <div id="chart">
+                
+                
+            <apx-chart [series]="simpleDonutChart.series" [chart]="simpleDonutChart.chart"
+            [labels]="simpleDonutChart.labels" [legend]="simpleDonutChart.legend"
+            [dataLabels]="simpleDonutChart.dataLabels" [responsive]="simpleDonutChart.responsive"
+            [colors]="simpleDonutChart.colors" dir="ltr"></apx-chart>
+
+
+                <!-- <apx-chart [series]="simpleDonutChart.series" [chart]="simpleDonutChart.chart"
+                [labels]="simpleDonutChart.labels" [responsive]="simpleDonutChart.responsive"
+                [legend]="simpleDonutChart.legend" [dataLabels]="simpleDonutChart.dataLabels"
+                [colors]="simpleDonutChart.colors" dir="ltr"></apx-chart> -->
+              </div>
+          </div>
+      </div>
+  </div>
+</div> 
+
+
+<div class="modal " id="loaderAnimation">
+  <div class="modal-dialog" role="document" style=" display: flex; justify-content: center; align-items: center;">
+      <div class="modal-content card" style="background-color: transparent !important;">
+
+          <div class="h-100 p-4  d-flex justify-content-center align-items-center flex-column">
+
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                  style="margin: auto; background: rgba(255, 255, 255, 0); display: block;" width="203px"
+                  height="203px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                  <circle cx="50" cy="50" r="0" fill="none" stroke="#e90c59" stroke-width="4">
+                      <animate attributeName="r" repeatCount="indefinite" dur="3.571428571428571s" values="0;40"
+                          keyTimes="0;1" keySplines="0 0.2 0.8 1" calcMode="spline" begin="0s"></animate>
+                      <animate attributeName="opacity" repeatCount="indefinite" dur="3.571428571428571s" values="1;0"
+                          keyTimes="0;1" keySplines="0.2 0 0.8 1" calcMode="spline" begin="0s"></animate>
+                  </circle>
+                  <circle cx="50" cy="50" r="0" fill="none" stroke="#46dff0" stroke-width="4">
+                      <animate attributeName="r" repeatCount="indefinite" dur="3.571428571428571s" values="0;40"
+                          keyTimes="0;1" keySplines="0 0.2 0.8 1" calcMode="spline" begin="-1.7857142857142856s">
+                      </animate>
+                      <animate attributeName="opacity" repeatCount="indefinite" dur="3.571428571428571s" values="1;0"
+                          keyTimes="0;1" keySplines="0.2 0 0.8 1" calcMode="spline" begin="-1.7857142857142856s">
+                      </animate>
+                  </circle>
+              </svg>
+
+              <h3>Loading</h3>
+
+          </div>
+      </div>
+  </div>
+
+</div>
+
+
+<!-- <div class="row">
+  <div class="minus">
+    <input class="switch switch-small" [style.background]="color1" [(colorPicker)]="color1"   (cpInputChange)="onEventLog('cpInputChange', $event)" (cpSliderDragStart)="onEventLog('cpSliderDragStart', $event)" (cpSliderDragEnd)="onEventLog('cpSliderDragEnd', $event)"/>
+  </div>
+
+  <div class="col-md-5">
+    <input [style.background]="color2" [(colorPicker)]="color2" (colorPickerOpen)="onEventLogTraget('colorPickerOpen', $event)" (colorPickerClose)="onEventLogTraget('colorPickerClose', $event)" (cpInputChange)="onEventLogTraget('cpInputChange', $event)" (cpSliderDragStart)="onEventLogTraget('cpSliderDragStart', $event)" (cpSliderDragEnd)="onEventLogTraget('cpSliderDragEnd', $event)"/>
+  </div>
+  <div class="col-md-7">
+    <p>Usage:</p>
+    <pre>
+&lt;input [(colorPicker)]="color"
+     [style.background]="color"/&gt;
+    </pre>
+    <p>Or:</p>
+    <pre>
+&lt;input [style.background]="color"
+     [colorPicker]="color"
+     (colorPickerChange)="color=$event"/&gt;
+    </pre>
+  </div>
+</div> -->
+
+
+<script>
+  $(document).ready(function() {
+     $('#Last1M').click();
+  });
+  </script>
+
+

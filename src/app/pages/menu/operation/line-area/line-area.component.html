@@ -1,0 +1,98 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div>
+            <div class="col-sm-6">
+                <label class="form-label">Recent Month KPI Shortfalls(Jan 2024)</label>
+            </div>
+            <div id="chart1">
+                <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart"
+                    [plotOptions]="chartOptions.plotOptions" [dataLabels]="chartOptions.dataLabels"
+                    [stroke]="chartOptions.stroke" [xaxis]="chartOptions.xaxis"
+                    [yaxis]="chartOptions.yaxis"></apx-chart>
+            </div>
+        </div>
+        <div>
+            <div class="col-sm-6">
+                <label class="form-label">Ongoing KPI Failures: Last 2 Months(Dec 2023 - Jan 2024)</label>
+            </div>
+            <div id="chart2">
+                <apx-chart [series]="chartOptions1.series" [chart]="chartOptions1.chart"
+                    [plotOptions]="chartOptions1.plotOptions" [dataLabels]="chartOptions1.dataLabels"
+                    [stroke]="chartOptions1.stroke" [xaxis]="chartOptions1.xaxis"
+                    [yaxis]="chartOptions1.yaxis"></apx-chart>
+            </div>
+        </div>
+        <div>
+            <div class="col-sm-6">
+                <label class="form-label">Persistent KPI Challenges: Last 3 Months(Nov 2023 - Jan 2024)</label>
+            </div>
+            <div id="chart2">
+                <apx-chart [series]="chartOptions2.series" [chart]="chartOptions2.chart"
+                    [plotOptions]="chartOptions2.plotOptions" [dataLabels]="chartOptions2.dataLabels"
+                    [stroke]="chartOptions2.stroke" [xaxis]="chartOptions2.xaxis"
+                    [yaxis]="chartOptions2.yaxis"></apx-chart>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div>
+                    <label class="form-label">Publisher Snapshot</label>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <label class="form-label">Publisher</label>
+                        <select class="form-select" formControlName="budgeted" aria-label="Default select example" (change)="onPublisherChange($event)">
+                            <option *ngFor="let publisher of publishersSorted" [value]="publisher">{{ publisher }}</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="form-label">Month</label>
+                        <div class="input-group mb-3">
+                            <input type="text" autocomplete="off" class="form-control" bsDatepicker id="datetimepicker1"
+                                   formControlName="monthYear1" [bsConfig]="{ dateInputFormat: 'MMM YYYY' }"
+                                   (bsValueChange)="onDateSelected($event)" [bsValue]="currentDate">
+                            <span class="input-group-text" id="form_input_group"><i class="ri-calculator-line"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div id="chart3">
+                    <apx-chart [series]="stackedBarChart.series" [chart]="stackedBarChart.chart"
+                               [dataLabels]="stackedBarChart.dataLabels" [plotOptions]="stackedBarChart.plotOptions"
+                               [xaxis]="stackedBarChart.xaxis" [stroke]="stackedBarChart.stroke" [fill]="stackedBarChart.fill"
+                               [yaxis]="stackedBarChart.yaxis" [title]="stackedBarChart.title" [tooltip]="stackedBarChart.tooltip"
+                               [legend]="stackedBarChart.legend" [colors]="stackedBarChart.colors" dir="ltr"></apx-chart>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div>
+                    <label class="form-label">Service Snapshot</label>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <label class="form-label">Metrics</label>
+                        <select class="form-select" formControlName="Metrics" aria-label="Default select example" (change)="onMetricChange($event)">
+                            <option *ngFor="let Metrics of metricSorted" [value]="Metrics">{{ Metrics }}</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="form-label">Month</label>
+                        <div class="input-group mb-3">
+                            <input type="text" autocomplete="off" class="form-control" bsDatepicker id="datetimepicker1"
+                                   formControlName="monthYear1" [bsConfig]="{ dateInputFormat: 'MMM YYYY' }"
+                                   (bsValueChange)="onDateSelected1($event)" [bsValue]="currentDate">
+                            <span class="input-group-text" id="form_input_group"><i class="ri-calculator-line"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div id="chart3">
+                    <apx-chart [series]="stackedBarChart1.series" [chart]="stackedBarChart1.chart"
+                               [dataLabels]="stackedBarChart1.dataLabels" [plotOptions]="stackedBarChart1.plotOptions"
+                               [xaxis]="stackedBarChart1.xaxis" [stroke]="stackedBarChart1.stroke" [fill]="stackedBarChart1.fill"
+                               [yaxis]="stackedBarChart1.yaxis" [title]="stackedBarChart1.title" [tooltip]="stackedBarChart1.tooltip"
+                               [legend]="stackedBarChart1.legend" [colors]="stackedBarChart1.colors" dir="ltr"></apx-chart>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>

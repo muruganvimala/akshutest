@@ -1,0 +1,479 @@
+<!-- Start Breadcrumbs -->
+<app-breadcrumbs title="Role Master" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+<!-- End Breadcrumbs -->
+
+<div *ngIf="menucanview">
+
+    <div class="row" id="invoiceList">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row align-items-center g-2">
+                        <div class="col-lg-3 me-auto">
+                            <!-- <h6 class="card-title mb-0">Role Master</h6> -->
+                        </div><!--end col-->
+                        <div class="col-lg-3 me-auto">
+                            <!-- <h6 class="card-title mb-0">Publisher Master</h6> -->
+
+                        </div><!--end col-->
+                        <div class="col-xl-2 col-md-3">
+                            <div class="search-box">
+                                <input type="text" class="form-control search" [(ngModel)]="searchTerm"
+                                    (keyup)="onSearchKeyUp(searchTerm)" placeholder="Search for rolename">
+                                <i class="ri-search-line search-icon"></i>
+                            </div>
+                        </div><!--end col-->
+                        <div class="col-md-auto">
+                            <div class="hstack gap-2">
+                                <!-- <button class="btn btn-subtle-danger d-none" id="remove-actions"><i
+                                        class="ri-delete-bin-2-line"></i></button> -->
+                                <a [hidden]="!menucanadd" (click)="add()" class="btn btn-secondary"><i
+                                        class="bi bi-plus-circle align-baseline me-1"></i>Add New Role</a>
+                                <!-- <button type="button" class="btn btn-info me-1" (click)="openEnd()"><i
+                                        class="bi bi-funnel align-baseline me-1"></i> Filter</button> -->
+                                <div dropdown class="btn-group">
+                                    <button dropdownToggle class="btn btn-success me-1" type="button"
+                                        id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="ph-cloud-arrow-up align-middle me-1"></i>
+                                        Export
+                                    </button>
+                                    <ul *dropdownMenu class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start"
+                                        aria-labelledby="dropdownMenuButton">
+                                        <li>
+                                            <button class="dropdown-item btn-link" type="button"
+                                                (click)="exportExcel()">
+                                                <i class="bi bi-filetype-xls fs-4 me-1"></i>
+                                                <span>Excel</span>
+                                            </button>
+                                        </li>
+                                        <li class="mt-1">
+                                            <button class="dropdown-item btn-link" type="button" (click)="exportCsv()">
+                                                <i class="bi bi-filetype-csv fs-4 me-1"></i>
+                                                <span>CSV</span>
+                                            </button>
+                                        </li>
+                                        <li class="mt-1">
+                                            <button class="dropdown-item btn-link" type="button" (click)="exportPdf()">
+                                                <i class="bi bi-filetype-pdf fs-4 me-1"></i>
+                                                <span>PDF</span>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button class="dropdown-item btn-link" type="button"
+                                                (click)="exportAllExcel()">
+                                                <i class="bi bi-filetype-xls fs-4 me-1"></i>
+                                                <span>ExcelAll</span>
+                                            </button>
+                                        </li>
+                                        <li class="mt-1">
+                                            <button class="dropdown-item btn-link" type="button"
+                                                (click)="exportAllCsv()">
+                                                <i class="bi bi-filetype-csv fs-4 me-1"></i>
+                                                <span>CSVAll</span>
+                                            </button>
+                                        </li>
+                                        <li class="mt-1">
+                                            <button class="dropdown-item btn-link" type="button"
+                                                (click)="exportAllPdf()">
+                                                <i class="bi bi-filetype-pdf fs-4 me-1"></i>
+                                                <span>PDFAll</span>
+                                            </button>
+                                        </li>
+
+
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div><!--end col-->
+                    </div><!--end row-->
+                </div>
+                <div class="card-body mt-3">
+                    <div class="table-responsive table-card">
+                        <table class="table table-centered align-middle table-custom-effect table-nowrap mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th scope="col">
+                                        S.No</th>
+                                    <th scope="col" class="sort cursor-pointer" Ilistsortable="roleName"
+                                        (click)="sort('roleName')">Role Name</th>
+                                    <th scope="col" class="sort cursor-pointer" Ilistsortable="description"
+                                        (click)="sort('description')">Description</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="list form-check-all" id="invoice-list-data">
+                                <tr *ngFor="let user of filteredItems();let i=index">
+                                    <td>{{ ((currentPage - 1) * pageSize) + i + 1 }}</td>
+                                    <td class="email">{{user.roleMaster.roleName}}</td>
+                                    <td class="create_date">{{user.roleMaster.description}}</td>
+                                    <td>
+                                        <ul class="d-flex gap-2 list-unstyled mb-0">
+                                            <li> <a [hidden]="!menucanview" href="javascript:void(0);"
+                                                    (click)="viewItem(user.roleMaster.roleName)"
+                                                    class="btn btn-subtle-primary btn-icon btn-sm"
+                                                    data-view-id="24301901" tooltip="View"><i class="ph-eye"></i></a>
+                                            </li>
+                                            <li> <a [hidden]="!menucanupdate" href="javascript:void(0);"
+                                                    class="btn btn-subtle-secondary btn-icon btn-sm"
+                                                    (click)="edit(user.roleMaster.roleName)" data-edit-id="24301901"
+                                                    [class.disabled]="user.roleMaster.roleName.toLowerCase() === 'admin'"><i
+                                                        class="ph-pencil" tooltip="Edit"></i></a> </li>
+                                            <li> <a [hidden]="!menucandelete" href="javascript:void(0);"
+                                                    (click)="deleteItem(user.roleMaster.roleId)"
+                                                    class="btn btn-subtle-danger btn-icon btn-sm remove-item-btn"
+                                                    [class.disabled]="user.roleMaster.roleName.toLowerCase() === 'admin'"><i
+                                                        class="ph-trash" tooltip="Delete"></i></a> </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </tbody><!-- end tbody -->
+                        </table><!-- end table -->
+                        <div class="noresult" [ngClass]="(filteredItems().length != 0)?'d-none':''">
+                            <div class="text-center py-4">
+                                <i class="ph-magnifying-glass fs-1 text-primary"></i>
+                                <h5 class="mt-2">Sorry! No Result Found</h5>
+                                <p class="text-muted mb-0">We've searched in {{RoleList.length}} records.
+                                    We did not find any matching records for your search.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="height:5px; width:100%;"></div>
+                    <div id="pagination-element" class="row align-items-center mt-4 pt-2">
+                        <div class="col-sm-auto">
+                            <div class="text-muted text-center text-sm-start pe-auto">
+                                &nbsp; &nbsp; Per Page:
+                            </div>
+                        </div>
+                        <div class="col-sm-auto">
+                            <!-- <select id="perPage" (change)="onPageSizeChange()"
+                                class="form-select w-auto ng-untouched ng-pristine ng-valid">
+                                <option value="" disabled>Select</option>
+                                <option *ngFor="let size of pageSizeOptions" [value]="size">
+                                    {{ size === -1 ? 'All' : size }}
+                                </option>
+                            </select> -->
+                            <select id="perPage" (change)="onPageSizeChange()"
+                                class="form-select w-auto ng-untouched ng-pristine ng-valid" [(ngModel)]="pageSize">
+                                <option *ngFor="let size of pageSizeOptions" style="padding:0px;" [value]="size">
+                                    {{ size === -1 ? 'All' : size }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-sm">
+                            <div class="text-muted text-center text-sm-start"> Showing
+                                <span class="fw-semibold">{{startIndex}} - {{endIndex}}</span> of <span
+                                    class="fw-semibold">{{RoleList.length}}</span> Results
+                            </div>
+                        </div>
+                        <div class="col-sm-auto mt-3 mt-sm-0">
+                            <div name="currentPage"
+                                class="pagination-wrap hstack gap-2 justify-content-center ng-untouched ng-valid ng-dirty">
+                                <ul class="pagination pagination-wrap hstack gap-2 justify-content-center">
+                                    <li class="pagination-page page-item ng-star-inserted ">
+                                        <a id="firstPage" (click)="firstPage()" class="page-link">
+                                            First
+                                        </a>
+                                    </li>
+
+                                    <li class="pagination-page page-item ng-star-inserted ">
+                                        <a id="previousPage" (click)="previousPage()" class="page-link">
+                                            Previous
+                                        </a>
+                                    </li>
+
+                                    <li *ngFor="let page of pages" [class.active]="page === currentPage"
+                                        class="pagination-page page-item ng-star-inserted">
+                                        <a class="page-link" (click)="onPageChange(page)">
+                                            {{page}}
+                                        </a>
+                                    </li>
+
+                                    <li class="pagination-page page-item ng-star-inserted ">
+                                        <a id="nextPage" (click)="nextPage()" class="page-link">
+                                            Next
+                                        </a>
+                                    </li>
+
+                                    <li class="pagination-page page-item ng-star-inserted ">
+                                        <a id="lastPage" (click)="lastPage()" class="page-link">
+                                            Last
+                                        </a>
+                                    </li>
+                                    &nbsp;
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="height:5px; width:100%;"></div>
+                    <!--end row-->
+                </div>
+            </div>
+        </div>
+    </div><!--end col-->
+    <!--end row-->
+
+
+    <!-- deleteRecordModal -->
+    <div id="deleteRecordModal" class="modal fade zoomIn" tabindex="-1" aria-hidden="true" bsModal
+        #deleteRecordModal="bs-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" (click)="deleteRecordModal.hide()"></button>
+                </div>
+                <div class="modal-body p-md-5">
+                    <div class="text-center">
+                        <div class="text-danger">
+                            <i class="bi bi-trash display-5"></i>
+                        </div>
+                        <div class="mt-4">
+                            <h4 class="mb-2">Are you sure ?</h4>
+                            <p class="text-muted mx-3 mb-0">Are you sure you want to remove this record ?</p>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-2 justify-content-center mt-4 pt-2 mb-2">
+                        <button type="button" class="btn w-sm btn-light btn-hover"
+                            (click)="deleteRecordModal.hide()">Close</button>
+                        <button type="button" class="btn w-sm btn-danger btn-hover" id="delete-record"
+                            (click)="confirmDelete()">Yes, Delete It!</button>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /deleteRecordModal -->
+
+
+    <div class="modal fade" id="addUpdatePopUp" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog model-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-light p-3">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        <i class="fa fa-user-circle"></i>&nbsp;{{ !roleId ? 'Add Role Details' : 'Update Role Details'
+                        }}
+                    </h5>
+                    <button type="button" class="btn-close" (click)="closeForm()"></button>
+                </div>
+                <form (ngSubmit)="submitRoleData(roleId)" [formGroup]="roleForm" class="tablelist-form" novalidate
+                    autocomplete="off">
+                    <div class="modal-body">
+                        <!-- <div id="alert-error-msg" class="d-none alert alert-danger py-2"></div> -->
+                        <input type="hidden" formControlName="Id">
+                        <div class="row g-5">
+                            <div class="col-sm-6">
+                                <label for="roleName" class="form-label">Role Name</label>
+                                <input type="text" id="roleName" value="{{roleName}}" class="form-control"
+                                    formControlName="roleName" [class.is-invalid]="isInvalid('roleName')" required
+                                    (keyup)="ValidateControlData($event,'roleName',true,true,false,false)">
+                                <div *ngIf="isInvalid('roleName')" class="invalid-feedback">
+                                    <div *ngIf="roleForm.get('roleName')?.errors?.['required']">
+                                        Role Name is required.
+                                    </div>
+                                    <div *ngIf="roleForm.get('roleName')?.errors?.['duplicate']">
+                                        Role Name already exists.
+                                    </div>
+                                    <!-- <div *ngIf="roleForm.get('roleName')?.errors?.['invalidData']">
+                                        Special characters not allowed.
+                                    </div> -->
+                                    <div *ngIf="roleForm.get('roleName')?.errors?.['invalidNumber']">
+                                        Rolename should not contain only numbers.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="lastname" class="form-label">Description</label>
+                                <input type="text" id="description" class="form-control" value="{{description}}"
+                                    formControlName="description" [class.is-invalid]="isInvalid('description')" required
+                                    (keyup)="ValidateControlData($event,'description',false,false,true,false)">
+                                <div *ngIf="isInvalid('description')" class="invalid-feedback">
+                                    <div *ngIf="roleForm.get('description')?.errors?.['required']">
+                                        Description is required.
+                                    </div>
+                                    <!-- <div *ngIf="roleForm.get('description')?.errors?.['invalidData']">
+                                        Special characters not allowed.
+                                    </div> -->
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <table id="sortable-table-1" style="height: 60%; overflow: auto;"
+                                    class="table table-hover formtable compact-table table-bordered">
+                                    <thead class="table-header" style="background-color: rgb(222, 226, 226); ">
+                                        <tr class="theader">
+                                            <th class="text-center">Main Menu</th>
+                                            <th class="text-center">Sub Menu</th>
+                                            <th class=" text-center">
+                                                <div class="d-flex justify-content-center align-items-center">
+                                                    <input type="checkbox" id="viewall" (change)="toggleAll('View')">
+                                                    &nbsp;View
+                                                </div>
+                                            </th>
+
+                                            <th class=" text-center">
+                                                <div class="d-flex justify-content-center align-items-center">
+                                                    <input type="checkbox" id="addall" (change)="toggleAll('add')">
+                                                    &nbsp;Add
+                                                </div>
+                                            </th>
+                                            <th class="text-center">
+                                                <div class="d-flex justify-content-center align-items-center">
+                                                    <input type="checkbox" id="updateall"
+                                                        (change)="toggleAll('update')">
+                                                    &nbsp;Edit
+                                                </div>
+                                            </th>
+                                            <th class="text-center">
+                                                <div class="d-flex justify-content-center align-items-center">
+                                                    <input type="checkbox" id="deleteall"
+                                                        (change)="toggleAll('delete')">
+                                                   &nbsp;Delete
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let menu of menuList">
+                                            <td class="text-center">{{ menu.parentMenuName }}</td>
+                                            <td id="parentMenuId" hidden>{{ menu.parentMenuId }}</td>
+                                            <td class="text-center">{{ menu.childMenuName }}</td>
+                                            <td id="childMenuId" hidden>{{ menu.childMenuId }}</td>
+                                            <td class="text-center">
+                                                <input type="checkbox" [checked]="menu.canview"
+                                                    id="viewCheckbox-{{ menu.parentMenuId }}-{{ menu.childMenuId }}"
+                                                    class="chkviewAction">
+                                            </td>
+                                            <td class="text-center">
+                                                <input type="checkbox" [checked]="menu.caninsert"
+                                                    id="addCheckbox-{{ menu.parentMenuId }}-{{ menu.childMenuId }}"
+                                                    class="chkaddAction">
+                                            </td>
+                                            <td class="text-center">
+                                                <input type="checkbox" [checked]="menu.canupdate"
+                                                    id="updateCheckbox-{{ menu.parentMenuId }}-{{ menu.childMenuId }}"
+                                                    class="chkupdateAction">
+                                            </td>
+                                            <td class="text-center">
+                                                <input type="checkbox" [checked]="menu.candelete"
+                                                    id="deleteCheckbox-{{ menu.parentMenuId }}-{{ menu.childMenuId }}"
+                                                    class="chkdeleteAction">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="hstack gap-2 justify-content-end">
+                            <button type="button" class="btn btn-light" (click)="closeForm()">Close</button>
+                            <button type="submit" class="btn btn-success" id="add-btn">{{ !roleId ? 'Submit' : 'Update'
+                                }}</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="viewPopUp">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-light p-3">
+                    <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-user-circle"></i>&nbsp;Role Details
+                    </h5>
+                    <button type="button" class="btn-close" (click)="closeForm()"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- <div id="alert-error-msg" class="d-none alert alert-danger py-2"></div> -->
+                    <input type="hidden" formControlName="Id">
+                    <div class="row g-5">
+                        <div class="col-sm-6">
+                            <label for="roleName" class="form-label">Role Name</label>
+                            <input type="text" id="roleName" value="{{roleName}}" class="form-control"
+                                formControlName="roleName" [disabled]="true">
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="lastname" class="form-label">Description</label>
+                            <input type="text" id="description" class="form-control" value="{{description}}"
+                                formControlName="description" [disabled]="true">
+                        </div>
+                        <div class="col-sm-12">
+                            <table id="sortable-table-1" style="height: 60%; overflow: auto;"
+                                class="table table-hover formtable compact-table table-bordered">
+                                <thead class="table-header" style="background-color: rgb(222, 226, 226); ">
+                                    <tr class="theader">
+                                        <th>Main Menu</th>
+                                        <th>Sub Menu</th>
+                                        <th>View</th>
+                                        <th>Add</th>
+                                        <th>Update</th>
+                                        <th>Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let menu of menuList">
+                                        <td>{{ menu.parentMenuName }}</td>
+                                        <td>{{ menu.childMenuName }}</td>
+                                        <td><span *ngIf="menu.canview" class="mdi mdi-check-bold"></span>
+                                            <span *ngIf="!menu.canview" class="mdi mdi-close-circle-outline"
+                                                style="color: red;"></span>
+                                        </td>
+                                        <td> <span *ngIf="menu.caninsert" class="mdi mdi-check-bold"></span>
+                                            <span *ngIf="!menu.caninsert" class="mdi mdi-close-circle-outline"
+                                                style="color: red;"></span>
+                                        </td>
+                                        <td><span *ngIf="menu.canupdate" class="mdi mdi-check-bold"></span>
+                                            <span *ngIf="!menu.canupdate" class="mdi mdi-close-circle-outline"
+                                                style="color: red;"></span>
+                                        </td>
+                                        <td> <span *ngIf="menu.candelete" class="mdi mdi-check-bold"></span>
+                                            <span *ngIf="!menu.candelete" class="mdi mdi-close-circle-outline"
+                                                style="color: red;"></span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal " id="loaderAnimation">
+    <div class="modal-dialog" role="document" style=" display: flex; justify-content: center; align-items: center;">
+        <div class="modal-content card" style="background-color: transparent !important;">
+
+            <div class="h-100 p-4  d-flex justify-content-center align-items-center flex-column">
+
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    style="margin: auto; background: rgba(255, 255, 255, 0); display: block;" width="203px"
+                    height="203px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                    <circle cx="50" cy="50" r="0" fill="none" stroke="#e90c59" stroke-width="4">
+                        <animate attributeName="r" repeatCount="indefinite" dur="3.571428571428571s" values="0;40"
+                            keyTimes="0;1" keySplines="0 0.2 0.8 1" calcMode="spline" begin="0s"></animate>
+                        <animate attributeName="opacity" repeatCount="indefinite" dur="3.571428571428571s" values="1;0"
+                            keyTimes="0;1" keySplines="0.2 0 0.8 1" calcMode="spline" begin="0s"></animate>
+                    </circle>
+                    <circle cx="50" cy="50" r="0" fill="none" stroke="#46dff0" stroke-width="4">
+                        <animate attributeName="r" repeatCount="indefinite" dur="3.571428571428571s" values="0;40"
+                            keyTimes="0;1" keySplines="0 0.2 0.8 1" calcMode="spline" begin="-1.7857142857142856s">
+                        </animate>
+                        <animate attributeName="opacity" repeatCount="indefinite" dur="3.571428571428571s" values="1;0"
+                            keyTimes="0;1" keySplines="0.2 0 0.8 1" calcMode="spline" begin="-1.7857142857142856s">
+                        </animate>
+                    </circle>
+                </svg>
+
+                <h3>Loading</h3>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <div class="loading"  *ngIf="!isprogressLoading" >
+    <div class="spinner"></div>
+    <p>Loading...</p>
+</div> -->
+<!-- <app-no-access *ngIf="!menucanview" ></app-no-access> -->

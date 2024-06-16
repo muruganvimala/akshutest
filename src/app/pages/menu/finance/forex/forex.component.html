@@ -1,0 +1,665 @@
+<!-- Start Breadcrumbs -->
+<app-breadcrumbs title="Forex" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+<!-- End Breadcrumbs -->
+
+<div>
+
+     <div class="row" id="invoiceList">
+          <div class="col-lg-12">
+               <div class="card">
+                    <div class="card-header">
+                         <div class="row align-items-center g-2">
+                              <div class="col-lg-3 me-auto">
+                                   <div class="d-flex align-items-center">
+                                   </div>
+                              </div>
+
+
+                              <div class="col-md-auto">
+                                   <div class="hstack gap-2">
+                                        <a class="btn btn-success" (click)="ShowFilter()" tooltip="refresh">
+                                             <i class="bi bi-funnel align-baseline me-1"></i>
+                                             Filter
+                                        </a>
+                                   </div>
+                              </div>
+
+
+                              <div class="col-md-auto">
+                                   <div class="hstack gap-2">
+                                        <a [hidden]="!menuAccess.canAdd" (click)="add(null)" class="btn btn-secondary">
+                                             <i class="bi bi-plus-circle align-baseline me-1"></i> Add New Forex Data
+                                        </a>
+                                   </div>
+                              </div><!--end col-->
+                              <div class="col-md-auto">
+                                   <div class="hstack gap-2">
+                                        <div dropdown class="btn-group">
+                                             <button dropdownToggle class="btn btn-success me-1" type="button"
+                                                  id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                                  aria-expanded="false">
+                                                  <i class="ph-cloud-arrow-up align-middle me-1"></i>
+                                                  Export
+                                             </button>
+                                             <ul *dropdownMenu
+                                                  class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start"
+                                                  aria-labelledby="dropdownMenuButton">
+                                                  <li>
+                                                       <button class="dropdown-item btn-link" type="button"
+                                                            (click)="exportExcel()">
+                                                            <i class="bi bi-filetype-xls fs-4 me-1"></i>
+                                                            <span>Excel</span>
+                                                       </button>
+                                                  </li>
+                                                  <li class="mt-1">
+                                                       <button class="dropdown-item btn-link" type="button"
+                                                            (click)="exportCsv()">
+                                                            <i class="bi bi-filetype-csv fs-4 me-1"></i>
+                                                            <span>CSV</span>
+                                                       </button>
+                                                  </li>
+                                                  <li class="mt-1">
+                                                       <button class="dropdown-item btn-link" type="button"
+                                                            (click)="exportPdf()">
+                                                            <i class="bi bi-filetype-pdf fs-4 me-1"></i>
+                                                            <span>PDF</span>
+                                                       </button>
+                                                  </li>
+                                                  <li>
+                                                       <button class="dropdown-item btn-link" type="button"
+                                                            (click)="exportAllExcel()">
+                                                            <i class="bi bi-filetype-xls fs-4 me-1"></i>
+                                                            <span>ExcelAll</span>
+                                                       </button>
+                                                  </li>
+                                                  <li class="mt-1">
+                                                       <button class="dropdown-item btn-link" type="button"
+                                                            (click)="exportAllCsv()">
+                                                            <i class="bi bi-filetype-csv fs-4 me-1"></i>
+                                                            <span>CSVAll</span>
+                                                       </button>
+                                                  </li>
+                                                  <li class="mt-1">
+                                                       <button class="dropdown-item btn-link" type="button"
+                                                            (click)="exportAllPdf()">
+                                                            <i class="bi bi-filetype-pdf fs-4 me-1"></i>
+                                                            <span>PDFAll</span>
+                                                       </button>
+                                                  </li>
+
+
+
+                                             </ul>
+                                        </div>
+                                   </div>
+                              </div>
+
+                         </div><!--end row-->
+
+                    </div>
+                    <div class="card-body mt-3">
+                         <div class="table-responsive table-card">
+                              <table class="table table-centered align-middle table-custom-effect table-nowrap mb-0">
+                                   <thead class="table-light">
+                                        <tr>
+
+                                             <th scope="col">S.No</th>
+
+                                             <th scope="col" (click)="sort('date')" class="sort cursor-pointer">
+                                                  Date
+                                             </th>
+                                             <th scope="col" (click)="sort('usdInr')" class="sort cursor-pointer">
+                                                  USD/INR
+                                             </th>
+                                             <th scope="col" (click)="sort('gbpInr')" class="sort cursor-pointer">
+                                                  GBP/INR
+                                             </th>
+                                             <th scope="col" (click)="sort('phpInr')" class="sort cursor-pointer">
+                                                  PHP/INR
+                                             </th>
+                                             <th scope="col" (click)="sort('usdGbp')" class="sort cursor-pointer">
+                                                  USD/GBP
+                                             </th>
+
+
+                                             <th scope="col">Action</th>
+                                        </tr>
+                                   </thead>
+                                   <tbody class="list form-check-all" id="invoice-list-data">
+                                        <tr *ngFor="let forex of filteredItems();let i=index">
+
+                                             <td class="invoice_id">
+                                                  {{ ((currentPage - 1) * pageSize) + i + 1 }}
+                                             </td>
+
+                                             <td>{{forex.date}}</td>
+                                             <td>{{forex.usdInr}}</td>
+                                             <td>{{forex.gbpInr}}</td>
+                                             <td>{{forex.phpInr}}</td>
+                                             <td>{{forex.usdGbp}}</td>
+
+                                             <td>
+                                                  <ul class="d-flex gap-2 list-unstyled mb-0">
+                                                       <li> <a href="javascript:void(0);" tooltip="View"
+                                                                 class="btn btn-subtle-primary btn-icon btn-sm"
+                                                                 data-view-id="24301901" (click)="viewItem(forex.id)" [hidden]="!menuAccess.canView" ><i
+                                                                      class="ph-eye"></i></a> </li>
+                                                       <li> <a href="javascript:void(0);" tooltip="Edit" [hidden]="!menuAccess.canUpdate"
+                                                                 class="btn btn-subtle-secondary btn-icon btn-sm"
+                                                                 data-edit-id="24301901" (click)="edit(forex.id)" ><i
+                                                                      class="ph-pencil"></i></a> </li>
+                                                       <li> <a href="javascript:void(0);" tooltip="Delete" [hidden]="!menuAccess.canDelete"
+                                                                 class="btn btn-subtle-danger btn-icon btn-sm remove-item-btn"
+                                                                 (click)="deleteItem(forex.id)"><i
+                                                                      class="ph-trash"></i></a> </li>
+                                                  </ul>
+                                             </td>
+                                        </tr>
+                                   </tbody><!-- end tbody -->
+                              </table><!-- end table -->
+                              <div class="noresult" [ngClass]="(filteredItems().length != 0)?'d-none':''">
+                                   <div class="text-center py-4">
+                                        <i class="ph-magnifying-glass fs-1 text-primary"></i>
+                                        <h5 class="mt-2">Sorry! No Result Found</h5>
+                                        <p class="text-muted mb-0">We've searched in {{forexList.length}} records.
+                                             We did not find any matching records for your search.</p>
+                                   </div>
+                              </div>
+
+                         </div>
+
+
+
+                         <div id="pagination-element" class="row align-items-center mt-4 pt-2">
+                              <div class="col-sm-auto">
+                                   <div class="text-muted text-center text-sm-start pe-auto">
+                                        &nbsp; &nbsp; Per Page:
+                                   </div>
+                              </div>
+                              <div class="col-sm-auto">
+                                   <select id="perPage" (change)="onPageSizeChange()"
+                                        class="form-select w-auto ng-untouched ng-pristine ng-valid"
+                                        [(ngModel)]="pageSize">
+                                        <option *ngFor="let size of pageSizeOptions" style="padding:0px;"
+                                             [value]="size">
+                                             {{ size === -1 ? 'All' : size }}
+                                        </option>
+                                   </select>
+                              </div>
+                              <div class="col-sm">
+                                   <div class="text-muted text-center text-sm-start"> Showing
+                                        <span class="fw-semibold">{{startIndex}} - {{endIndex}}</span> of <span
+                                             class="fw-semibold">{{forexList.length}}</span> Results
+                                   </div>
+                              </div>
+                              <div class="col-sm-auto mt-3 mt-sm-0">
+                                   <div name="currentPage"
+                                        class="pagination-wrap hstack gap-2 justify-content-center ng-untouched ng-valid ng-dirty">
+                                        <ul class="pagination pagination-wrap hstack gap-2 justify-content-center">
+                                             <li class="pagination-page page-item ng-star-inserted ">
+                                                  <a id="firstPage" (click)="firstPage()" class="page-link">
+                                                       First
+                                                  </a>
+                                             </li>
+
+                                             <li class="pagination-page page-item ng-star-inserted ">
+                                                  <a id="previousPage" (click)="previousPage()" class="page-link">
+                                                       Previous
+                                                  </a>
+                                             </li>
+
+                                             <li *ngFor="let page of pages" [class.active]="page === currentPage"
+                                                  class="pagination-page page-item ng-star-inserted">
+                                                  <a class="page-link" (click)="onPageChange(page)">
+                                                       {{page}}
+                                                  </a>
+                                             </li>
+
+                                             <li class="pagination-page page-item ng-star-inserted ">
+                                                  <a id="nextPage" (click)="nextPage()" class="page-link">
+                                                       Next
+                                                  </a>
+                                             </li>
+
+                                             <li class="pagination-page page-item ng-star-inserted ">
+                                                  <a id="lastPage" (click)="lastPage()" class="page-link">
+                                                       Last
+                                                  </a>
+                                             </li>
+                                             &nbsp;
+                                        </ul>
+                                   </div>
+                              </div>
+                         </div>
+                         <div style="height:5px; width:100%;"></div>
+
+                    </div>
+               </div>
+          </div>
+     </div>
+
+
+
+     <!-- showModal -->
+     <div class="modal fade" id="addUpdatePopUp">
+          <div class="modal-dialog modal-dialog-centered">
+               <div class="modal-content">
+                    <div class="modal-header bg-light p-3 d-flex justify-content-between align-items-center">
+                         <h5 class="modal-title" id="exampleModalLabel">
+                              <i class="fa fa-user-circle"></i> &nbsp; Forex Form
+                              &nbsp; &nbsp;
+                              <button type="button" (click)="showImportExcel()" [hidden]="Id" class="btn btn-success">
+                                   <i class="ph-cloud-arrow-down align-middle me-1"></i> Import as Excel
+                              </button>
+                         </h5>
+
+
+                         <button type="button" class="btn-close" (click)="closeForm()"></button>
+                    </div>
+
+                    <form (ngSubmit)="submitForexData(Id)" [formGroup]="forexForm" class="tablelist-form" novalidate
+                         autocomplete="off">
+                         <div class="modal-body">
+                              <div id="alert-error-msg" class="d-none alert alert-danger py-2"></div>
+                              <!-- Input field for ID -->
+                              <input type="hidden" formControlName="id">
+                              <div class="row g-3">
+
+                                   <div class="col-sm-6">
+                                        <label for="date" class="form-label">Date</label>
+                                        <input type="date" id="date" class="form-control" formControlName="date"
+                                             (change)="checkDuplicate($event)" [class.is-invalid]="isInvalid('date')"
+                                             required>
+                                        <div *ngIf="isInvalid('date')" class="invalid-feedback">
+                                             <div *ngIf="forexForm.get('date')?.errors?.['required']">
+                                                  Date is required.
+                                             </div>
+                                        </div>
+                                        <div *ngIf="isDuplicateDate" class="text-danger"> Date already exists.</div>
+                                   </div>
+
+
+                                   <div class="col-sm-6">
+                                        <label for="usdInr" class="form-label">
+                                             USD / INR <span class="text-danger">*</span>
+                                        </label>
+                                        <input type="number" id="usdInr" class="form-control" formControlName="usdInr"
+                                             [class.is-invalid]="isInvalid('usdInr')" required>
+
+                                        <div *ngIf="isInvalid('usdInr')" class="invalid-feedback">
+                                             <div *ngIf="forexForm.get('usdInr')?.errors?.['required']">
+                                                  USD / INR is required.
+                                             </div>
+                                        </div>
+                                   </div>
+
+                                   <div class="col-sm-6">
+                                        <label for="gbpInr" class="form-label">
+                                             GBP / INR <span class="text-danger">*</span>
+                                        </label>
+                                        <input type="number" id="gbpInr" class="form-control" formControlName="gbpInr"
+                                             [class.is-invalid]="isInvalid('gbpInr')" required>
+
+                                        <div *ngIf="isInvalid('gbpInr')" class="invalid-feedback">
+                                             <div *ngIf="forexForm.get('gbpInr')?.errors?.['required']">
+                                                  GBP / INR is required.
+                                             </div>
+                                        </div>
+                                   </div>
+
+                                   <div class="col-sm-6">
+                                        <label for="phpInr" class="form-label">
+                                             PHP / INR <span class="text-danger">*</span>
+                                        </label>
+                                        <input type="number" id="phpInr" class="form-control" formControlName="phpInr"
+                                             [class.is-invalid]="isInvalid('phpInr')" required>
+
+                                        <div *ngIf="isInvalid('phpInr')" class="invalid-feedback">
+                                             <div *ngIf="forexForm.get('phpInr')?.errors?.['required']">
+                                                  PHP / INR is required.
+                                             </div>
+                                        </div>
+                                   </div>
+                                   <div class="col-sm-6">
+                                        <label for="usdGbp" class="form-label">
+                                             USD / GBP <span class="text-danger">*</span>
+                                        </label>
+                                        <input type="number" id="usdGbp" class="form-control" formControlName="usdGbp"
+                                             [class.is-invalid]="isInvalid('usdGbp')" required>
+
+                                        <div *ngIf="isInvalid('usdGbp')" class="invalid-feedback">
+                                             <div *ngIf="forexForm.get('usdGbp')?.errors?.['required']">
+                                                  USD / GBP is required.
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
+                         </div>
+                         <div class="modal-footer">
+                              <div class="hstack gap-2 justify-content-end">
+                                   <button type="button" class="btn btn-light" (click)="closeForm()">Close</button>
+                                   <button type="submit" class="btn btn-success" id="add-btn">
+                                        {{ !Id ? 'Submit' : 'Update'}}
+                                   </button>
+                              </div>
+                         </div>
+                    </form>
+
+               </div>
+          </div>
+     </div>
+     <!-- end showModal -->
+
+     <!-- deleteRecordModal -->
+     <div id="deletePopUp" class="modal fade zoomIn" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+               <div class="modal-content">
+                    <div class="modal-header">
+                         <button type="button" class="btn-close" (click)="closeDeletePopUp()"></button>
+                    </div>
+                    <div class="modal-body p-md-5">
+                         <div class="text-center">
+                              <div class="text-danger">
+                                   <i class="bi bi-trash display-5"></i>
+                              </div>
+                              <div class="mt-4">
+                                   <h4 class="mb-2">Are you sure ?</h4>
+                                   <p class="text-muted mx-3 mb-0">Are you sure you want to remove this record ?</p>
+                              </div>
+                         </div>
+                         <div class="d-flex gap-2 justify-content-center mt-4 pt-2 mb-2">
+                              <button type="button" class="btn w-sm btn-light btn-hover"
+                                   (click)="closeDeletePopUp()">Close</button>
+                              <button type="button" class="btn w-sm btn-danger btn-hover" (click)="deleteForexData(Id)"
+                                   id="delete-record">
+                                   Yes, Delete It!
+                              </button>
+                         </div>
+                    </div>
+               </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+     </div><!-- /deleteRecordModal -->
+
+     <!-- view popup -->
+     <div class="modal fade" id="viewPopUp">
+          <div class="modal-dialog modal-dialog-centered">
+               <div class="modal-content">
+                    <div class="modal-header bg-light p-3">
+                         <h5 class="modal-title">
+                              <i class="fa fa-user-circle"></i>&nbsp; Forex Details
+                         </h5>
+                         <button type="button" class="btn-close" (click)="closeForm()"></button>
+                    </div>
+                    <form [formGroup]="forexForm" class="tablelist-form" novalidate autocomplete="off">
+                         <table id="sortable-table-1" class="table table-hover table-bordered viewTable ">
+                              <thead class="table-header" style="background-color: rgb(222, 226, 226); ">
+                                   <tr class="theader">
+                                        <th>Title</th>
+                                        <th>Value</th>
+                                   </tr>
+                              </thead>
+                              <tbody>
+                                   <!-- 
+                                        <tr>
+                                            <td>Forex Id</td>
+                                            <td>{{forexData.Id}}</td>
+                                        </tr> 
+                                   -->
+                                   <tr>
+                                        <td>Forex Date</td>
+                                        <td>{{forexData.date | date:'dd-MM-yyyy'}}</td>
+                                   </tr>
+                                   <tr>
+                                        <td>USD/INR</td>
+                                        <td>{{forexData.usdInr}}</td>
+                                   </tr>
+                                   <tr>
+                                        <td>GBP/INR</td>
+                                        <td>{{forexData.gbpInr}}</td>
+                                   </tr>
+                                   <tr>
+                                        <td>PHP/INR</td>
+                                        <td>{{forexData.phpInr}}</td>
+                                   </tr>
+                                   <tr>
+                                        <td>USD/GBP</td>
+                                        <td>{{forexData.usdGbp}}</td>
+                                   </tr>
+                              </tbody>
+                         </table>
+                    </form>
+               </div>
+          </div>
+     </div>
+
+     <!-- /Import excel modal -->
+     <div class="modal fade bd-example-modal-xl" id="ImportExcelPopUp">
+          <div class="modal-dialog modal-xl modal-dialog-centered">
+               <div class="modal-content">
+                    <div class="modal-header bg-light p-2">
+                         <h5 class="modal-title" id="exampleModalLabel">
+                              <i class="fa fa-user-circle"></i> &nbsp; Import Excel
+                         </h5>
+                         <button type="button" class="btn-close" (click)="hideImportExcel()"></button>
+                    </div>
+                    <form (ngSubmit)="ImportExcelData()" [formGroup]="forexForm" class="tablelist-form" novalidate
+                         autocomplete="off">
+                         <div class="modal-body">
+                              <div id="alert-error-msg" class="d-none alert alert-danger py-2"></div>
+                              <div class="row g-3">
+
+                                   <div class="col-sm-6">
+                                        <input type="file" id="fileInput" (change)="onFileChange($event)"
+                                             class="form-control">
+                                   </div>
+
+
+                                   <div class="col-sm-6">
+                                        <input id="uploadBtn" type="button" value="Upload" (click)="validateExcel()"
+                                             class=" btn btn-subtle-primary">&nbsp; &nbsp;
+                                        <input type="button" value="Sample" (click)="getSampleExcelMsg()"
+                                             class=" btn btn-subtle-success"> &nbsp; &nbsp;
+                                        <input type="button" value="Template" (click)="getSampleTemplate()"
+                                             class=" btn btn-subtle-secondary">
+                                   </div>
+
+                              </div>
+                         </div>
+                         <div id="sampleImportMsg" role="alert" class="alert alert-success ng-star-inserted">
+                              <strong> Correct Format to Import Excel Sample Is Given Below </strong>
+                         </div>
+                         <div id="excelErrMsg" role="alert" class="alert alert-danger ng-star-inserted">
+                              <strong> Something is wrong with uploaded Excel File! </strong> please
+                              <b>check below mentioned</b> rows in excel file
+                         </div>
+
+                         <div class="table-responsive p-1" id="sampleExcelData">
+                              <table class="table table-centered align-middle mb-0">
+                                   <thead class="table-light">
+                                        <tr>
+                                             <th scope="col" class="">
+                                                  S.No
+                                             </th>
+                                             <th scope="col" class="">
+                                                  Date
+                                             </th>
+                                             <th scope="col" class="">
+                                                  USD/INR
+                                             </th>
+                                             <th scope="col" class="">
+                                                  GBP/INR
+                                             </th>
+                                             <th scope="col" class="">
+                                                  PHP/INR
+                                             </th>
+                                             <th scope="col" class="">
+                                                  USD/GBP
+                                             </th>
+                                             <th scope="col" class="">
+                                                  Action
+                                             </th>
+                                        </tr>
+                                   </thead>
+                                   <tbody class="list form-check-all" id="invoice-list-data">
+                                        <tr>
+                                             <td>1</td>
+                                             <td>11-03-2024</td>
+                                             <td>0.4</td>
+                                             <td>0.4</td>
+                                             <td>0.4</td>
+                                             <td>0.4</td>
+                                             <td>
+                                                  <i class="bi bi-check-circle-fill"
+                                                       style="color: rgb(121, 206, 121); font-size:15px"></i>
+                                             </td>
+                                        </tr>
+
+                                   </tbody><!-- end tbody -->
+                              </table><!-- end table -->
+
+
+                         </div>
+
+                         <div class="table-responsive p-1" id="excelData">
+                              <table class="table table-centered align-middle mb-0">
+                                   <thead class="table-light">
+                                        <tr>
+                                             <th scope="col" class="">
+                                                  S.No
+                                             </th>
+                                             <th scope="col" class="">
+                                                  Date
+                                             </th>
+                                             <th scope="col" class="">
+                                                  USD/INR
+                                             </th>
+                                             <th scope="col" class="">
+                                                  GBP/INR
+                                             </th>
+                                             <th scope="col" class="">
+                                                  PHP/INR
+                                             </th>
+                                             <th scope="col" class="">
+                                                  USD/GBP
+                                             </th>
+                                             <th scope="col" class="">
+                                                  Action
+                                             </th>
+                                        </tr>
+                                   </thead>
+                                   <tbody class="list form-check-all" id="invoice-list-data">
+                                        <tr *ngFor="let forex of forexValidationList; let i=index">
+                                             <td>{{i+1}}</td>
+                                             <td>{{forex.Date}}</td>
+                                             <td>{{forex.UsdInr}}</td>
+                                             <td>{{forex.GbpInr}}</td>
+                                             <td>{{forex.PhpInr}}</td>
+                                             <td>{{forex.UsdGbp}}</td>
+                                             <td>
+                                                  <i *ngIf="forex.action" class="bi bi-check-circle-fill"
+                                                       style="color: rgb(121, 206, 121); font-size:15px"></i>
+
+                                                  <i *ngIf="!forex.action" class="bi bi-x-circle-fill"
+                                                       style="color: rgb(215, 104, 104); font-size: 15px;"></i>
+                                             </td>
+                                        </tr>
+
+                                   </tbody><!-- end tbody -->
+                              </table><!-- end table -->
+
+
+                         </div>
+
+                         <div class="modal-footer">
+                              <div class="hstack gap-2 justify-content-end">
+                                   <button type="button" class="btn btn-light"
+                                        (click)="hideImportExcel()">Close</button>
+                                   <button id="importBtn" class="btn btn-success" (click)="importExceltoDb()">
+                                        Import
+                                   </button>
+                              </div>
+                         </div>
+                    </form>
+
+               </div>
+          </div>
+     </div>
+     <!-- /Import excel modal -->
+
+</div>
+
+<div class="modal " id="loaderAnimation">
+     <div class="modal-dialog" role="document" style=" display: flex; justify-content: center; align-items: center;">
+          <div class="modal-content card" style="background-color: transparent !important;">
+
+               <div class="h-100 p-4  d-flex justify-content-center align-items-center flex-column">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                         style="margin: auto; background: rgba(255, 255, 255, 0); display: block;" width="203px"
+                         height="203px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                         <circle cx="50" cy="50" r="0" fill="none" stroke="#e90c59" stroke-width="4">
+                              <animate attributeName="r" repeatCount="indefinite" dur="3.571428571428571s" values="0;40"
+                                   keyTimes="0;1" keySplines="0 0.2 0.8 1" calcMode="spline" begin="0s"></animate>
+                              <animate attributeName="opacity" repeatCount="indefinite" dur="3.571428571428571s"
+                                   values="1;0" keyTimes="0;1" keySplines="0.2 0 0.8 1" calcMode="spline" begin="0s">
+                              </animate>
+                         </circle>
+                         <circle cx="50" cy="50" r="0" fill="none" stroke="#46dff0" stroke-width="4">
+                              <animate attributeName="r" repeatCount="indefinite" dur="3.571428571428571s" values="0;40"
+                                   keyTimes="0;1" keySplines="0 0.2 0.8 1" calcMode="spline"
+                                   begin="-1.7857142857142856s">
+                              </animate>
+                              <animate attributeName="opacity" repeatCount="indefinite" dur="3.571428571428571s"
+                                   values="1;0" keyTimes="0;1" keySplines="0.2 0 0.8 1" calcMode="spline"
+                                   begin="-1.7857142857142856s">
+                              </animate>
+                         </circle>
+                    </svg>
+
+                    <h3>Loading</h3>
+
+               </div>
+          </div>
+     </div>
+</div>
+
+<div class="custom-offcanvas" id="filterForm">
+     <div class="offcanvas-header border-bottom p-3 d-flex justify-content-between align-items-center ">
+          <h5 class="offcanvas-title" id="courseFiltersLabel">Forex Filters</h5>
+          <button type="button" class="btn-close" (click)="HideFilter()"></button>
+     </div>
+     <div class="offcanvas-body">
+          <form action="#!">
+               <div class="row">
+                    <div class="col-lg-12">
+                         <div class="mb-3">
+                              <label class="select-category-filter form-label fs-md mb-3 text-decoration-underline">
+                                   Start Date</label>
+                              <div class="formCost d-flex gap-2 align-items-center">
+                                   <input type="date" id="startDate" class="form-control" placeholder="Invoice No">
+                              </div>
+                         </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                         <div class="mb-3">
+                              <label class="select-category-filter form-label fs-md mb-3 text-decoration-underline">
+                                   End Date</label>
+                              <div class="formCost d-flex gap-2 align-items-center">
+                                   <input type="date" id="endDate" class="form-control">
+                              </div>
+                         </div>
+                    </div>
+
+               </div>
+          </form>
+     </div>
+     <div class="offcanvas-header htsack gap-2 border-top p-3">
+          <button class="btn btn-subtle-danger w-100" (click)="resetFilters()"><i
+                    class="bi bi-x-lg align-baseline me-1"></i>
+               Reset</button>
+          <button class="btn btn-secondary w-100" (click)="submitRange()">
+               <i class="bi bi-funnel align-baseline me-1"></i>
+               Filters</button>
+     </div>
+</div>

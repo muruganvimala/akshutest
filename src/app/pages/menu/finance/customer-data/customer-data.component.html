@@ -1,0 +1,1451 @@
+<!-- Start Breadcrumbs -->
+<app-breadcrumbs title="Customer Data" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+<!-- End Breadcrumbs -->
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card" id="customerDataList">
+            <div class="card-body">
+                <div class="row align-items-center g-2">
+                    <div class="col-lg-3 me-auto">
+                        <div class="d-flex align-items-center">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-auto">
+                        <div class="hstack flex-wrap gap-1">
+                            <!-- <button class="btn btn-subtle-danger d-none" id="remove-actions"><i class="ri-delete-bin-2-line"></i></button> -->
+
+                            <div class="">
+                                <div class="search-box">
+                                    <input type="text" placeholder="Search for U / A"
+                                        class="form-control search ng-pristine ng-valid ng-touched"
+                                        [(ngModel)]="searchTerm" (change)="onSearchKeyUp(searchTerm)">
+                                    <i class="ri-search-line search-icon"></i>
+                                </div>
+                            </div>
+
+                            <button type="button" class="btn btn-primary add-btn" (click)="openModal()"><i
+                                    class="bi bi-plus-circle align-baseline me-1"></i> Add Customer Data </button>
+                            <button type="button" class="btn btn-info me-1" (click)="openEnd()"><i
+                                    class="bi bi-funnel align-baseline me-1"></i> Filter</button>
+                            <div>
+                                <div dropdown class="btn-group">
+                                    <button dropdownToggle class="btn btn-success me-1" type="button"
+                                        id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="ph-cloud-arrow-up align-middle me-1"></i>
+                                        Export
+                                    </button>
+                                    <ul *dropdownMenu class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start"
+                                        aria-labelledby="dropdownMenuButton">
+                                        <li>
+                                            <button class="dropdown-item btn-link" type="button"
+                                                (click)="exportToExcel()">
+                                                <i class="bi bi-filetype-xls fs-4 me-1"></i>
+                                                <span>Excel</span>
+                                            </button>
+                                        </li>
+                                        <li class="mt-1">
+                                            <button class="dropdown-item btn-link" type="button"
+                                                (click)="exportToCsv()">
+                                                <i class="bi bi-filetype-csv fs-4 me-1"></i>
+                                                <span>CSV</span>
+                                            </button>
+                                        </li>
+                                        <li class="mt-1">
+                                            <button class="dropdown-item btn-link" type="button"
+                                                (click)="exportToPDF()">
+                                                <i class="bi bi-filetype-pdf fs-4 me-1"></i>
+                                                <span>PDF</span>
+                                            </button>
+                                        </li>
+                                        <li class="mt-1">
+                                            <button class="dropdown-item btn-link" type="button"
+                                                (click)="exportToExcelAll()">
+                                                <i class="bi bi-filetype-pdf fs-4 me-1"></i>
+                                                <span>Excel All</span>
+                                            </button>
+                                        </li>
+                                        <li class="mt-1">
+                                            <button class="dropdown-item btn-link" type="button"
+                                                (click)="exportToCsvAll()">
+                                                <i class="bi bi-filetype-pdf fs-4 me-1"></i>
+                                                <span>Csv All</span>
+                                            </button>
+                                        </li>
+                                        <li class="mt-1">
+                                            <button class="dropdown-item btn-link" type="button"
+                                                (click)="exportToPDFAll()">
+                                                <i class="bi bi-filetype-pdf fs-4 me-1"></i>
+                                                <span>PDF All</span>
+                                            </button>
+                                        </li>
+
+                                    </ul>
+                                </div>
+
+                                <div dropdown class="btn-group" [hidden]="!menucanupdate && !menucandelete">
+
+
+                                    <button dropdownToggle class="btn btn-primary me-1" type="button"
+                                        id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"
+                                        [class.disabled]="!areMultipleRowsSelected()">
+                                        <i class="bi bi-three-dots-vertical"></i>
+                                    </button>
+                                    <ul *dropdownMenu class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                                        <li [hidden]="!menucanupdate" class="mt-1">
+                                            <button class="dropdown-item btn-link" type="button" (click)="editList()"
+                                                [disabled]="!isSingleRowSelected()">
+                                                <i class="bi bi-pencil-square"></i> Edit
+                                            </button>
+                                        </li>
+                                        <li [hidden]="!menucandelete" class="mt-1">
+                                            <button class="dropdown-item btn-link" type="button"
+                                                (click)="deleteRecordModal.show()" [disabled]="!isSingleRowSelected()">
+                                                <i class="bi bi-trash"></i> Delete
+                                            </button>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                                <div dropdown class="btn-group me-1" (click)="onDropdownClick($event)">
+                                    <button dropdownToggle type="button" class="btn btn-subtle-danger"
+                                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="mdi mdi-cog-outline text-muted fs-lg align-middle me-1"></i>
+                                    </button>
+                                    <div *dropdownMenu
+                                        class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start p-2"
+                                        (click)="onDropdownMenuClick($event)">
+                                        <label *ngFor="let item of columnDefinitions" class="dropdown-item">
+                                            <input type="checkbox" [(ngModel)]="item.visible"
+                                                (click)="onColumnToggleChange(item)" [disabled]="item.disableHide" />
+                                            {{ item.label }}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive table-card table-container">
+                    <table class="table table-centered align-middle table-custom-effect table-nowrap mb-0">
+                        <thead class="text-muted">
+                            <tr>
+                                <th>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" [(ngModel)]="masterSelected"
+                                            (change)="checkUncheckAll($event)" />
+                                        <label class="form-check-label"></label>
+                                    </div>
+                                </th>
+                                <ng-container *ngFor="let column of columnDefinitions">
+                                    <th class="sort cursor-pointer"
+                                        [ngClass]="{ 'sort cursor-pointer': column.sortable }" *ngIf="column.visible"
+                                        (click)="sort(column.def)">
+
+                                        <span class="col-sm-auto"> {{ column.label }} </span>
+
+                                        <span *ngIf="column.sortable"> </span>
+                                        <div class="input-group input-group-sm" style="width: 100px"
+                                            *ngIf="column.filterable">
+                                        </div>
+                                    </th>
+                                </ng-container>
+                            </tr>
+                        </thead>
+                        <tbody class="list form-check-all">
+                            <tr *ngFor="let row of filteredItems()" [class.selected-row]="row.isSelected"
+                                (click)="handleRowClick($event, row)">
+                                <td>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" [checked]="row.isSelected"
+                                            (change)="onCheckboxChange($event, row)" />
+                                        <label class="form-check-label"></label>
+                                    </div>
+                                </td>
+                                <ng-container *ngFor="let column of columnDefinitions">
+                                    <td *ngIf="column.isLink && column.visible">
+                                        <a class="fw-medium link-primary"
+                                            [routerLink]="['/purchase/consignment/edit/', row[column?.id]]">{{row[column.def]}}</a>
+                                    </td>
+                                    <!-- For non-link columns -->
+                                    <td *ngIf="!column.isLink && column.visible">{{ row[column.def] }}</td>
+                                </ng-container>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="noresult" [ngClass]="filteredItems()?.length != 0 ? 'd-none' : ''">
+                        <div class="text-center py-4">
+                            <i class="ph-magnifying-glass fs-1 text-primary"></i>
+                            <h5 class="mt-2">Sorry! No Result Found</h5>
+                            <p class="text-muted mb-0">
+                                We've searched more than {{ customers?.length }}+ Records, We
+                                did not find any Records for you search.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div id="elmLoader" *ngIf="isLoading">
+                      <div class="spinner-border text-primary avatar-sm" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                      </div>
+                    </div> -->
+                <div [ngClass]="filteredItems()?.length === 0 ? 'd-none' : ''" class="row align-items-center mt-4 pt-2"
+                    id="pagination-element">
+                    <div class="col-sm-auto" style="padding-bottom: 13px;">
+                        <div class="text-muted text-center text-sm-start pe-auto">
+                            Per Page:
+                        </div>
+                    </div>
+                    <div class="col-sm-auto" style="padding-bottom: 13px;">
+                        <select class="form-select w-auto" id="perPage" [(ngModel)]="itemsPerPage"
+                            (change)="onPerPageChange()">
+                            <option *ngFor="let option of perPageOptions" [value]="option">
+                                {{ option }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-sm" style="padding-bottom: 13px;">
+                        <div class="text-muted text-center text-sm-start">
+                            Showing <span class="fw-semibold">{{ filteredItems().length }}</span> of
+                            <span class="fw-semibold">{{ totalRecords }}</span> Results
+                        </div>
+                    </div>
+                    <div class="col-sm-auto mt-3 mt-sm-0">
+                        <pagination class="pagination-wrap hstack gap-2 justify-content-center"
+                            [totalItems]="totalRecords" [itemsPerPage]="itemsPerPage" [boundaryLinks]="true"
+                            [directionLinks]="true" [maxSize]="5" [(ngModel)]="currentPage" name="currentPage"
+                            (pageChanged)="onPageChange(currentPage)"></pagination>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="addUpdatePopUp" bsModal #showModal="bs-modal">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <form (ngSubmit)="submitData(id)" [formGroup]="customerDataForm" class="row g-3 needs-validation" novalidate
+                autocomplete="off">
+                <div class="modal-header px-4 pt-4">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        Customer Data Form
+                    </h5>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button type="button" class="btn btn-success" (click)="showImportExcel()">
+                        <i class="ph-cloud-arrow-down align-middle me-1"></i> Import
+                    </button>
+                    <button type="button" class="btn-close" (click)="closemodal()"></button>
+                </div>
+
+                <div class="modal-body p-4">
+
+                    <div id="alert-error-msg" class="d-none alert alert-danger py-2"></div>
+                    <input type="hidden" formControlName="id">
+                    <div class="row" style="height: 75vh; overflow: auto;">
+
+                        <div class="mb-3 col-xl-3 col-sm-12">
+                            <div>
+                                <label class="form-label">U / A <span class="text-danger">*</span></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" formControlName="UA" class="form-control" value="0"
+                                        placeholder="U / A" aria-label="U / A" aria-describedby="form_input_group"
+                                        [class.is-invalid]="isInvalid('UA')" required
+                                        (keyup)="restrictInput($event, alphabetsRegex)">
+
+                                    <div *ngIf="isInvalid('UA')" class="invalid-feedback">
+                                        <div *ngIf="customerDataForm.get('UA')?.errors?.['required']">
+                                            U/A is required.
+                                        </div>
+                                        <!-- <div *ngIf="customerDataForm.get('Year')?.errors?.['invalidData']">
+                                                Special characters not allowed.Alpha numeric are allowed
+                                            </div> -->
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- <div class="mb-3 col-xl-3 col-sm-12">
+                            <label class="form-label">Select Month & Year <span class="text-danger">*</span></label>
+                            <div class="input-group mb-3">
+                                <input type="text" autocomplete="off" class="form-control" bsDatepicker
+                                    [bsConfig]="{ containerClass :colorTheme }" id="datetimepicker2"
+                                    formControlName="Year" [bsConfig]="{dateInputFormat: 'MMM YYYY'}"
+                                    (onShown)="onOpenCalendar($event)" [class.is-invalid]="isInvalid('Year')" required>
+
+                                <span class="input-group-text" id="form_input_group"><i
+                                        class="ri-calculator-line"></i></span>
+
+                                <div *ngIf="isInvalid('Year')" class="invalid-feedback">
+                                    <div *ngIf="customerDataForm.get('Year')?.errors?.['required']">
+                                        Year is required.
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div> -->
+
+                        <div class="mb-3 col-xl-3 col-sm-12">
+                            <label class="form-label">Select Month & Year <span class="text-danger">*</span> </label>
+                            <div class="input-group mb-3">
+                                <input type="text" autocomplete="off" class="form-control" bsDatepicker
+                                    [bsConfig]="{ containerClass :colorTheme }" id="datetimepicker2"
+                                    formControlName="Year" [bsConfig]="{dateInputFormat: 'MMM YYYY'}"
+                                    placeholder="Select Month & Year" (onShown)="onOpenCalendar($event)"
+                                    [class.is-invalid]="isInvalid('Year')" required>
+                                <span class="input-group-text" id="form_input_group"><i
+                                        class="bi bi-calendar3"></i></span>
+                                <div *ngIf="isInvalid('Year')" class="invalid-feedback">
+                                    <div *ngIf="customerDataForm.get('Year')?.errors?.['required']">
+                                        Please choose Month&Year
+                                    </div>
+                                    <!-- 
+                                        <div *ngIf="customerDataForm.get('Year')?.errors?.['invalidNumber']">
+                                        Firstname should not conatain only numbers.
+                                    </div>
+                                 -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- <div class="mb-3 col-xl-3 col-sm-12">
+                            <div>
+                                <label class="form-label">Year <span class="text-danger">*</span></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" formControlName="Year" class="form-control" placeholder="Year"
+                                        aria-label="Year" aria-describedby="form_input_group" [class.is-invalid]="isInvalid('Year')" required >
+                                        <div *ngIf="isInvalid('Year')" class="invalid-feedback">
+                                            <div *ngIf="customerDataForm.get('Year')?.errors?.['required']">
+                                                Year is required.
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+
+                        </div> -->
+
+                        <div class="mb-3 col-xl-3 col-sm-12">
+                            <div>
+                                <label class="form-label">Invoice No <span class="text-danger">*</span></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" formControlName="InvoiceNo" class="form-control" value="0"
+                                        placeholder="Invoice No" aria-label="Invoice No"
+                                        aria-describedby="form_input_group" [class.is-invalid]="isInvalid('InvoiceNo')"
+                                        required (keyup)="restrictInput($event, alphanumericRegex)">
+
+                                    <div *ngIf="isInvalid('InvoiceNo')" class="invalid-feedback">
+                                        <div *ngIf="customerDataForm.get('InvoiceNo')?.errors?.['required']">
+                                            Invoice No is required.
+                                        </div>
+                                        <!-- <div *ngIf="customerDataForm.get('Year')?.errors?.['invalidData']">
+                                                Special characters not allowed.Alpha numeric are allowed
+                                            </div> -->
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="mb-3 col-xl-3 col-sm-12">
+                            <div>
+                                <label class="form-label">Invoice Date</label>
+                                <div class="input-group mb-3">
+                                    <input type="date" formControlName="InvoiceDate" class="form-control"
+               aria-label="Invoice No" aria-describedby="form_input_group"
+               (change)="changemonth($event)">
+
+                                    <!-- <div *ngIf="formsubmit && form['InvoiceDate'].errors" class="invalid-feedback">
+                        Please Select InvoiceDate
+                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3 col-xl-3 col-sm-12">
+                            <div>
+                                <label class="form-label">Customer Name<span class="text-danger">*</span></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" formControlName="CustomerName" class="form-control"
+                                        placeholder="Customer Name" aria-label="Customer Name"
+                                        aria-describedby="form_input_group"
+                                        [class.is-invalid]="isInvalid('CustomerName')"
+                                        (keyup)="restrictInput($event, alphabetsSpecialRegex)" required>
+                                    <div *ngIf="isInvalid('CustomerName')" class="invalid-feedback">
+                                        <div *ngIf="customerDataForm.get('CustomerName')?.errors?.['required']">
+                                            Customer Name is required.
+                                        </div>
+                                        <!-- <div *ngIf="customerDataForm.get('Year')?.errors?.['invalidData']">
+                                                Special characters not allowed.Alpha numeric are allowed
+                                            </div> -->
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="mb-3 col-xl-3 col-sm-12">
+                            <div>
+                                <label class="form-label">Customer Acronym <span class="text-danger">*</span></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" formControlName="CustomerAcronym" class="form-control"
+                                        placeholder="Customer Acronym" aria-label="Customer Acronym"
+                                        aria-describedby="form_input_group"
+                                        [class.is-invalid]="isInvalid('CustomerAcronym')" required
+                                        (keyup)="restrictInput($event, alphabetsSpecialRegex)">
+                                    <div *ngIf="isInvalid('CustomerAcronym')" class="invalid-feedback">
+                                        <div *ngIf="customerDataForm.get('CustomerAcronym')?.errors?.['required']">
+                                            Customer Acronym is required.
+                                        </div>
+                                        <!-- <div *ngIf="customerDataForm.get('Year')?.errors?.['invalidData']">
+                                                Special characters not allowed.Alpha numeric are allowed
+                                            </div> -->
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="mb-3 col-xl-3 col-sm-12">
+                            <div>
+                                <label class="form-label">TS Page <span class="text-danger">*</span> </label>
+                                <div class="input-group mb-3">
+                                    <input type="number" formControlName="TSPage" class="form-control"
+                                        placeholder="TS Page" aria-label="TS Page" aria-describedby="form_input_group"
+                                        [class.is-invalid]="isInvalid('TSPage')" required
+                                        (keyup)="restrictInput($event, decimalRegex)">
+                                    <div *ngIf="isInvalid('TSPage')" class="invalid-feedback">
+                                        <div *ngIf="customerDataForm.get('TSPage')?.errors?.['required']">
+                                            TS Page is required.
+                                        </div>
+                                        <div *ngIf="customerDataForm.get('TSPage')?.errors?.['invalidData']">
+                                            Special characters not allowed and Alphabets are allowed
+                                        </div>
+                                        <div *ngIf="customerDataForm.get('TSPage')?.errors?.['nonNumeric']"
+                                            class="text-danger">
+                                            Only numeric values are allowed.
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="mb-3 col-xl-3 col-sm-12">
+                            <div>
+                                <label class="form-label">CCY Type <span class="text-danger">*</span> </label>
+                                <div class="input-group mb-3">
+                                    <input type="text" formControlName="CCYType" class="form-control"
+                                        placeholder="CCY Type" aria-label="CCY Type" aria-describedby="form_input_group"
+                                        [class.is-invalid]="isInvalid('CCYType')" required
+                                        (keyup)="restrictInput($event, alphabetsRegex)">
+                                    <div *ngIf="isInvalid('CCYType')" class="invalid-feedback">
+                                        <div *ngIf="customerDataForm.get('CCYType')?.errors?.['required']">
+                                            CCY Type is required.
+                                        </div>
+                                        <!-- <div *ngIf="customerDataForm.get('Year')?.errors?.['invalidData']">
+                                                Special characters not allowed.Alpha numeric are allowed
+                                            </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="mb-3 col-xl-3 col-sm-12">
+                            <div>
+                                <label class="form-label">
+                                    Major Head (Service Line)
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <select formControlName="MajorHeadServiceLine" class="form-select"
+                                    [class.is-invalid]="isInvalid('MajorHeadServiceLine')" required>
+                                    <option selected disabled value="">Select</option>
+                                    <option value="Content Composition">Content Composition</option>
+                                    <option value="Editorial Solutions">Editorial Solutions</option>
+                                    <option value="Multimedia Solutions">Multimedia Solutions</option>
+                                    <option value="Digital Transformation">Digital Transformation</option>
+                                    <option value="Project Management">Project Management</option>
+                                </select>
+                                <div *ngIf="isInvalid('MajorHeadServiceLine')" class="invalid-feedback">
+                                    <div *ngIf="customerDataForm.get('MajorHeadServiceLine')?.errors?.['required']">
+                                        Major Head Service Line is required.
+                                    </div>
+                                    <!-- <div *ngIf="customerDataForm.get('Year')?.errors?.['invalidData']">
+                                                    Special characters not allowed.Alpha numeric are allowed
+                                                </div> -->
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="mb-3 col-xl-3 col-sm-12">
+                            <div>
+                                <label class="form-label">Minor Head <span class="text-danger">*</span></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" formControlName="MinorHead" class="form-control"
+                                        placeholder="Minor Head" aria-label="MinorHead"
+                                        aria-describedby="form_input_group" [class.is-invalid]="isInvalid('MinorHead')"
+                                        required (keyup)="restrictInput($event, alphabetsRegex)">
+                                    <div *ngIf="isInvalid('MinorHead')" class="invalid-feedback">
+                                        <div *ngIf="customerDataForm.get('MinorHead')?.errors?.['required']">
+                                            Minor Head is required.
+                                        </div>
+                                        <!-- <div *ngIf="customerDataForm.get('Year')?.errors?.['invalidData']">
+                                                Special characters not allowed.Alpha numeric are allowed
+                                            </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 col-xl-3 col-sm-12">
+                            <div>
+                                <label class="form-label">Quantity <span class="text-danger">*</span></label>
+                                <div class="input-group mb-3">
+                                    <input type="number" formControlName="Quantity" class="form-control"
+                                        placeholder="Quantity" aria-label="Quantity" aria-describedby="form_input_group"
+                                        [class.is-invalid]="isInvalid('Quantity')" required
+                                        (keyup)="restrictInput($event, decimalRegex)" (keyup)="updateGrossValue()">
+                                    <div *ngIf="isInvalid('Quantity')" class="invalid-feedback">
+                                        <div *ngIf="customerDataForm.get('Quantity')?.errors?.['required']">
+                                            Quantity is required.
+                                        </div>
+                                        <!-- <div *ngIf="customerDataForm.get('Year')?.errors?.['invalidData']">
+                                                Special characters not allowed.Alpha numeric are allowed
+                                            </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3 col-xl-3 col-sm-12">
+                            <div>
+                                <label class="form-label">UOM <span class="text-danger">*</span></label>
+                                <select class="form-select" formControlName="UOM" aria-label="Default select example"
+                                    [class.is-invalid]="isInvalid('UOM')" required>
+                                    <option selected disabled value="">Select</option>
+                                    <option value="PP">PP</option>
+                                    <option value="MSP">MSP</option>
+                                    <option value="Articles">Articles</option>
+                                    <option value="Hours">Hours</option>
+                                    <option value="Numbers">Numbers</option>
+                                    <option value="Words">Words</option>
+                                    <option value="Tables">Tables</option>
+                                    <option value="Figures">Figures</option>
+                                    <option value="Fixed Rate">Fixed Rate</option>
+                                    <option value="Count">Count</option>
+                                </select>
+                                <div *ngIf="isInvalid('UOM')" class="invalid-feedback">
+                                    <div *ngIf="customerDataForm.get('UOM')?.errors?.['required']">
+                                        UOM is required.
+                                    </div>
+                                    <!-- <div *ngIf="customerDataForm.get('Year')?.errors?.['invalidData']">
+                                        Special characters not allowed.Alpha numeric are allowed
+                                    </div> -->
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="mb-3 col-xl-3 col-sm-12">
+                            <div>
+                                <label class="form-label">Rate <span class="text-danger">*</span></label>
+                                <div class="input-group mb-3">
+                                    <input type="number" formControlName="Rate" class="form-control" placeholder="Rate"
+                                        aria-label="Rate" aria-describedby="form_input_group"
+                                        [class.is-invalid]="isInvalid('Rate')" required
+                                        (keyup)="restrictInput($event, decimalRegex)" (keyup)="updateGrossValue()">
+                                    <div *ngIf="isInvalid('Rate')" class="invalid-feedback">
+                                        <div *ngIf="customerDataForm.get('Rate')?.errors?.['required']">
+                                            Rate is required.
+                                        </div>
+                                        <!-- <div *ngIf="customerDataForm.get('Year')?.errors?.['invalidData']">
+                                                Special characters not allowed.Alpha numeric are allowed
+                                            </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3 col-xl-3 col-sm-12">
+                            <div>
+                                <label class="form-label">Gross Value Fc</label>
+                                <div class="input-group mb-3">
+                                    <input type="number" formControlName="GrowssValueFc" class="form-control"
+                                        placeholder="Gross Value FC" aria-label="Gross Value FC"
+                                        aria-describedby="form_input_group"
+                                        [class.is-invalid]="isInvalid('GrowssValueFc')" readonly>
+                                    <div *ngIf="isInvalid('GrowssValueFc')" class="invalid-feedback">
+                                        <!-- <div *ngIf="customerDataForm.get('GrowssValueFc')?.errors?.['required']">
+                                            Gross Value FC is required.
+                                        </div> -->
+                                        <!-- <div *ngIf="customerDataForm.get('Year')?.errors?.['invalidData']">
+                                                Special characters not allowed.Alpha numeric are allowed
+                                            </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3 col-xl-3 col-sm-12">
+                            <div>
+                                <label class="form-label">Collection Date <span class="text-danger">*</span></label>
+                                <div class="input-group mb-3">
+                                    <input type="date" formControlName="CollectionDate" class="form-control"
+                                        aria-label="CollectionDate" aria-describedby="form_input_group"
+                                        [class.is-invalid]="isInvalid('CollectionDate')" required>
+                                    <div *ngIf="isInvalid('CollectionDate')" class="invalid-feedback">
+                                        <div *ngIf="customerDataForm.get('CollectionDate')?.errors?.['required']">
+                                            Collection Date is required.
+                                        </div>
+                                        <!-- <div *ngIf="customerDataForm.get('Year')?.errors?.['invalidData']">
+                                                    Special characters not allowed.Alpha numeric are allowed
+                                                </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3 col-xl-3 col-sm-12">
+                            <div>
+                                <label class="form-label">Collection Value FC</label>
+                                <div class="input-group mb-3">
+                                    <input type="number" formControlName="CollectionValueFC" class="form-control"
+                                        placeholder="Collection Value FC" aria-label="Collection Value FC"
+                                        aria-describedby="form_input_group"
+                                        [class.is-invalid]="isInvalid('CollectionValueFC')" readonly>
+                                    <div *ngIf="isInvalid('CollectionValueFC')" class="invalid-feedback">
+                                        <div *ngIf="customerDataForm.get('CollectionValueFC')?.errors?.['required']">
+                                            Collection Value FC is required.
+                                        </div>
+                                        <!-- <div *ngIf="customerDataForm.get('Year')?.errors?.['invalidData']">
+                                                Special characters not allowed.Alpha numeric are allowed
+                                            </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 col-xl-3 col-sm-12">
+                            <div>
+                                <label class="form-label">FX Rate</label>
+                                <div class="input-group mb-3">
+                                    <input type="number" formControlName="FXRate" class="form-control"
+                                        placeholder="FX Rate" aria-label="FX Rate" aria-describedby="form_input_group"
+                                        (keyup)="restrictInput($event, decimalRegex)" (keyup)="CalculateCollectionValue()">
+                                    <!-- <div *ngIf="formsubmit && form['FXRate'].errors" class="invalid-feedback">
+                        Please enter FX Rate
+                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 col-xl-3 col-sm-12">
+                            <div>
+                                <label class="form-label">Collection Value INR <span
+                                        class="text-danger">*</span></label>
+                                <div class="input-group mb-3">
+                                    <input type="number" formControlName="CollectionValueINR" class="form-control"
+                                        placeholder="Collection Value INR" aria-label="Collection Value INR"
+                                        aria-describedby="form_input_group"
+                                        [class.is-invalid]="isInvalid('CollectionValueINR')" required
+                                        (keyup)="restrictInput($event, decimalRegex)">
+                                    <div *ngIf="isInvalid('CollectionValueINR')" class="invalid-feedback">
+                                        <div *ngIf="customerDataForm.get('CollectionValueINR')?.errors?.['required']">
+                                            Collection Value INR is required.
+                                        </div>
+                                        <!-- <div *ngIf="customerDataForm.get('Year')?.errors?.['invalidData']">
+                                                Special characters not allowed.Alpha numeric are allowed
+                                            </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 col-xl-3 col-sm-12">
+                            <div>
+                                <label class="form-label">Forex Gain Loss</label>
+                                <div class="input-group mb-3">
+                                    <input type="number" formControlName="ForexGainLoss" class="form-control"
+                                        placeholder="ForexGainLoss" aria-label="Collection Value INR"
+                                        aria-describedby="form_input_group"
+                                        (keyup)="restrictInput($event, decimalRegex)">
+                                    <!-- <div *ngIf="formsubmit && form['ForexGainLoss'].errors" class="invalid-feedback">
+                        Please enter Forex Gain Loss
+                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 col-xl-3 col-sm-12">
+                            <div>
+                                <label class="form-label">IRM <span class="text-danger">*</span></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" formControlName="IRM" class="form-control" placeholder="IRM"
+                                        aria-label="IRM" aria-describedby="form_input_group"
+                                        [class.is-invalid]="isInvalid('IRM')" required
+                                        (keyup)="restrictInput($event, alphanumericRegex)">
+                                    <div *ngIf="isInvalid('IRM')" class="invalid-feedback">
+                                        <div *ngIf="customerDataForm.get('IRM')?.errors?.['required']">
+                                            IRM is required.
+                                        </div>
+                                        <!-- <div *ngIf="customerDataForm.get('Year')?.errors?.['invalidData']">
+                                                Special characters not allowed.Alpha numeric are allowed
+                                            </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 col-xl-3 col-sm-12">
+                            <div>
+                                <label class="form-label">STPI Submission Date <span
+                                        class="text-danger">*</span></label>
+                                <div class="input-group mb-3">
+                                    <input type="date" formControlName="STPISubmissionDate" class="form-control"
+                                        placeholder="IRM" aria-label="STPISubmissionDate"
+                                        aria-describedby="form_input_group"
+                                        [class.is-invalid]="isInvalid('STPISubmissionDate')" required>
+                                    <div *ngIf="isInvalid('STPISubmissionDate')" class="invalid-feedback">
+                                        <div *ngIf="customerDataForm.get('STPISubmissionDate')?.errors?.['required']">
+                                            STPI Submission Date is required.
+                                        </div>
+                                        <!-- <div *ngIf="customerDataForm.get('Year')?.errors?.['invalidData']">
+                                                Special characters not allowed.Alpha numeric are allowed
+                                            </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 col-xl-3 col-sm-12">
+                            <div>
+                                <label class="form-label">Softex No <span class="text-danger">*</span></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" formControlName="SoftexNo" class="form-control"
+                                        placeholder="Softex No" aria-label="Softex No"
+                                        aria-describedby="form_input_group" [class.is-invalid]="isInvalid('SoftexNo')"
+                                        required (keyup)="restrictInput($event, alphanumericRegex)">
+                                    <div *ngIf="isInvalid('SoftexNo')" class="invalid-feedback">
+                                        <div *ngIf="customerDataForm.get('SoftexNo')?.errors?.['required']">
+                                            Softex No is required.
+                                        </div>
+                                        <!-- <div *ngIf="customerDataForm.get('Year')?.errors?.['invalidData']">
+                                                Special characters not allowed.Alpha numeric are allowed
+                                            </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 col-xl-3 col-sm-12">
+                            <div>
+                                <label class="form-label"> Upload Date <span class="text-danger">*</span></label>
+                                <div class="input-group mb-3">
+                                    <input type="date" formControlName="EDPMSUploadDate" class="form-control"
+                                        placeholder="Softex No" aria-label="Softex No"
+                                        aria-describedby="form_input_group"
+                                        [class.is-invalid]="isInvalid('EDPMSUploadDate')" required>
+                                    <div *ngIf="isInvalid('EDPMSUploadDate')" class="invalid-feedback">
+                                        <div *ngIf="customerDataForm.get('EDPMSUploadDate')?.errors?.['required']">
+                                            EDPMS Upload Date is required.
+                                        </div>
+                                        <!-- <div *ngIf="customerDataForm.get('Year')?.errors?.['invalidData']">
+                                                Special characters not allowed.Alpha numeric are allowed
+                                            </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 col-xl-3 col-sm-12">
+                            <div>
+                                <label class="form-label">EDPMS Ref No <span class="text-danger">*</span></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" formControlName="EDPMSRefNo" class="form-control"
+                                        placeholder="Softex No" aria-label="Softex No"
+                                        aria-describedby="form_input_group" [class.is-invalid]="isInvalid('EDPMSRefNo')"
+                                        required (keyup)="restrictInput($event, alphanumericRegex)">
+                                    <div *ngIf="isInvalid('EDPMSRefNo')" class="invalid-feedback">
+                                        <div *ngIf="customerDataForm.get('EDPMSRefNo')?.errors?.['required']">
+                                            EDPMS Ref No is required.
+                                        </div>
+                                        <!-- <div *ngIf="customerDataForm.get('Year')?.errors?.['invalidData']">
+                                                Special characters not allowed.Alpha numeric are allowed
+                                            </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 col-xl-3 col-sm-12">
+                            <div>
+                                <label class="form-label">EDPMS Closure <span class="text-danger">*</span></label>
+                                <select class="form-select" formControlName="EDPMSClosureYnp"
+                                    aria-label="Default select example" [class.is-invalid]="isInvalid('EBRCNo')"
+                                    required>
+                                    <option selected disabled value="">Select</option>
+                                    <option value="Open">Open</option>
+                                    <option value="Closed">Closed</option>
+                                    <option value="Partial Closed">Partial Closed</option>
+                                </select>
+
+                                <div *ngIf="isInvalid('EDPMSClosureYnp')" class="invalid-feedback">
+                                    <div *ngIf="customerDataForm.get('EDPMSClosureYnp')?.errors?.['required']">
+                                        EDPMS Closure is required.
+                                    </div>
+                                    <!-- <div *ngIf="customerDataForm.get('Year')?.errors?.['invalidData']">
+                                        Special characters not allowed.Alpha numeric are allowed
+                                    </div> -->
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="mb-3 col-xl-3 col-sm-12">
+                            <div>
+                                <label class="form-label">EBRC No <span class="text-danger">*</span></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" formControlName="EBRCNo" class="form-control"
+                                        placeholder="EBRC No" aria-label="EBRC No" aria-describedby="form_input_group"
+                                        [class.is-invalid]="isInvalid('EBRCNo')" required
+                                        (keyup)="restrictInput($event, alphanumericRegex)">
+                                    <div *ngIf="isInvalid('EBRCNo')" class="invalid-feedback">
+                                        <div *ngIf="customerDataForm.get('EBRCNo')?.errors?.['required']">
+                                            EBRC No is required.
+                                        </div>
+                                        <!-- <div *ngIf="customerDataForm.get('Year')?.errors?.['invalidData']">
+                                                Special characters not allowed.Alpha numeric are allowed
+                                            </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 col-xl-3 col-sm-12">
+                            <div>
+                                <label class="form-label">EBRC Date <span class="text-danger">*</span></label>
+                                <div class="input-group mb-3">
+                                    <input type="date" formControlName="EBRCDate" class="form-control"
+                                        placeholder="EBRC Date" aria-label="EBRC Date"
+                                        aria-describedby="form_input_group" [class.is-invalid]="isInvalid('EBRCDate')"
+                                        required>
+                                    <div *ngIf="isInvalid('EBRCDate')" class="invalid-feedback">
+                                        <div *ngIf="customerDataForm.get('EBRCDate')?.errors?.['required']">
+                                            EBRC Date No is required.
+                                        </div>
+                                        <!-- <div *ngIf="customerDataForm.get('Year')?.errors?.['invalidData']">
+                                                Special characters not allowed.Alpha numeric are allowed
+                                            </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 col-xl-3 col-sm-12">
+                            <div>
+                                <label class="form-label">AD Bank <span class="text-danger">*</span></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" formControlName="ADBank" class="form-control"
+                                        placeholder="AD Bank" aria-label="ADBank" aria-describedby="form_input_group"
+                                        [class.is-invalid]="isInvalid('ADBank')" required
+                                        (keyup)="restrictInput($event, alphabetsRegex)">
+                                    <div *ngIf="isInvalid('ADBank')" class="invalid-feedback">
+                                        <div *ngIf="customerDataForm.get('ADBank')?.errors?.['required']">
+                                            AD Bank is required.
+                                        </div>
+                                        <!-- <div *ngIf="customerDataForm.get('Year')?.errors?.['invalidData']">
+                                                Special characters not allowed.Alpha numeric are allowed
+                                            </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 col-xl-3 col-sm-12">
+                            <label class="form-label">New Business
+                                <span class="text-danger">*</span>
+                            </label>
+                            <select class="form-select" formControlName="NewBusiness"
+                                aria-label="Default select example" id="newBusinessddl"
+                                [class.is-invalid]="isInvalid('NewBusiness')" required>
+                                <option selected disabled value="">Select</option>
+                                <option value="y">Yes</option>
+                                <option value="n">No</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3 col-xl-3 col-sm-12">
+                            <div>
+                                <label class="form-label">Aged Days <span class="text-danger">*</span></label>
+                                <div class="input-group mb-3">
+                                    <input type="number" formControlName="AgedDays" class="form-control"
+                                        placeholder="Aged Days" aria-label="Aged Days"
+                                        aria-describedby="form_input_group" [class.is-invalid]="isInvalid('AgedDays')"
+                                        required (keyup)="restrictInput($event, numbersRegex)">
+                                    <div *ngIf="isInvalid('AgedDays')" class="invalid-feedback">
+                                        <div *ngIf="customerDataForm.get('AgedDays')?.errors?.['required']">
+                                            Aged Days is required.
+                                        </div>
+                                        <!-- <div *ngIf="customerDataForm.get('Year')?.errors?.['invalidData']">
+                                                Special characters not allowed.Alpha numeric are allowed
+                                            </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <div class="hstack gap-2 justify-content-end">
+                        <button type="button" class="btn btn-ghost-danger" (click)="closemodal()"><i
+                                class="bi bi-x-lg align-baseline me-1"></i> Close</button>
+                        <button type="submit" class="btn btn-success" id="add-btn">{{ !id ? 'Submit' : 'Update'
+                            }}</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- modal-content -->
+    </div>
+</div>
+<!-- modal-dialog -->
+
+<!-- deleteRecordModal -->
+<div bsModal #deleteRecordModal="bs-modal" id="deleteRecordModal" class="modal fade zoom" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" id="deleteRecord-close"
+                    (click)="deleteRecordModal.hide()"></button>
+            </div>
+            <div class="modal-body p-md-5">
+                <div class="text-center">
+                    <div class="text-danger">
+                        <i class="bi bi-trash display-4"></i>
+                    </div>
+                    <div class="mt-4">
+                        <h3 class="mb-2">Are you sure ?</h3>
+                        <p class="text-muted fs-lg mx-3 mb-0">Are you sure you want to remove this record ?</p>
+                    </div>
+                </div>
+                <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
+                    <button type="button" class="btn w-sm btn-light btn-hover"
+                        (click)="deleteRecordModal.hide()">Close</button>
+                    <button type="button" class="btn w-sm btn-danger btn-hover" id="delete-record"
+                        (click)="confirmDelete()">Yes,
+                        Delete It!</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /deleteRecordModal -->
+
+<!--Filters-->
+<div class="custom-offcanvas" id="courseFilters">
+    <div class="offcanvas-header border-bottom p-3 d-flex justify-content-between align-items-center ">
+        <h5 class="offcanvas-title" id="courseFiltersLabel">Customer Data Filters</h5>
+        <button type="button" class="btn-close" (click)="closeoffcanvas()"></button>
+    </div>
+    <div class="offcanvas-body">
+        <form action="#!">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="mb-3">
+                        <label class="select-category-filter form-label fs-md mb-3 text-decoration-underline">
+                            Invoice No</label>
+                        <div class="formCost d-flex gap-2 align-items-center">
+                            <input type="text" id="invoiceNo" class="form-control" placeholder="Invoice No">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="mb-3">
+                        <label class="select-category-filter form-label fs-md mb-3 text-decoration-underline">
+                            Invoice Date</label>
+                        <div class="formCost d-flex gap-2 align-items-center">
+                            <input type="date" id="invoiceDate" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="mb-3">
+                        <label class="select-category-filter form-label fs-md mb-3 text-decoration-underline">
+                            Customer Name</label>
+                        <div class="formCost d-flex gap-2 align-items-center">
+                            <input type="text" id="customerName" class="form-control" placeholder="customer Name">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="mb-3">
+                        <label class="select-category-filter form-label fs-md mb-3 text-decoration-underline">
+                            Customer Acronym</label>
+                        <div class="formCost d-flex gap-2 align-items-center">
+                            <input type="text" id="customerAcronym" class="form-control" placeholder="customer Acronym">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="mb-3">
+                        <label class="select-category-filter form-label fs-md mb-3 text-decoration-underline">
+                            CCY Type</label>
+                        <div class="formCost d-flex gap-2 align-items-center">
+                            <input type="text" id="ccyType" class="form-control" placeholder="CCY Type">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12">
+                    <div class="mb-3">
+                        <label class="select-category-filter form-label fs-md mb-3 text-decoration-underline">
+                            Major Head Service Line</label>
+                        <div class="formCost d-flex gap-2 align-items-center">
+                            <select class="form-select" id="majorHeadServiceLine">
+                                <option value="" disabled selected>Select</option>
+                                <option value="Content Composition">Content Composition</option>
+                                <option value="Editorial Solutions">Editorial Solutions</option>
+                                <option value="Multimedia Solutions">Multimedia Solutions</option>
+                                <option value="Digital Transformation">Digital Transformation</option>
+                                <option value="Project Management">Project Management</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </form>
+    </div>
+    <div class="offcanvas-header htsack gap-2 border-top p-3">
+        <button class="btn btn-subtle-danger w-100" (click)="resetFilter()"><i
+                class="bi bi-x-lg align-baseline me-1"></i>
+            Reset</button>
+        <button class="btn btn-secondary w-100" (click)="submitFilter()">
+            <i class="bi bi-funnel align-baseline me-1"></i>
+            Filters</button>
+    </div>
+</div>
+
+<div class="modal " id="loaderAnimation">
+    <div class="modal-dialog" role="document" style=" display: flex; justify-content: center; align-items: center;">
+        <div class="modal-content card" style="background-color: transparent !important;">
+
+            <div class="h-100 p-4  d-flex justify-content-center align-items-center flex-column">
+
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    style="margin: auto; background: rgba(255, 255, 255, 0); display: block;" width="203px"
+                    height="203px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                    <circle cx="50" cy="50" r="0" fill="none" stroke="#e90c59" stroke-width="4">
+                        <animate attributeName="r" repeatCount="indefinite" dur="3.571428571428571s" values="0;40"
+                            keyTimes="0;1" keySplines="0 0.2 0.8 1" calcMode="spline" begin="0s"></animate>
+                        <animate attributeName="opacity" repeatCount="indefinite" dur="3.571428571428571s" values="1;0"
+                            keyTimes="0;1" keySplines="0.2 0 0.8 1" calcMode="spline" begin="0s">
+                        </animate>
+                    </circle>
+                    <circle cx="50" cy="50" r="0" fill="none" stroke="#46dff0" stroke-width="4">
+                        <animate attributeName="r" repeatCount="indefinite" dur="3.571428571428571s" values="0;40"
+                            keyTimes="0;1" keySplines="0 0.2 0.8 1" calcMode="spline" begin="-1.7857142857142856s">
+                        </animate>
+                        <animate attributeName="opacity" repeatCount="indefinite" dur="3.571428571428571s" values="1;0"
+                            keyTimes="0;1" keySplines="0.2 0 0.8 1" calcMode="spline" begin="-1.7857142857142856s">
+                        </animate>
+                    </circle>
+                </svg>
+
+                <h3>Loading</h3>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- /Import excel modal -->
+<div class="modal fade bd-example-modal-xl" id="ImportExcelPopUp">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-1">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    <i class="fa fa-user-circle"></i> &nbsp; Import Excel
+                </h5>
+                <button type="button" class="btn-close" (click)="hideImportExcel()"></button>
+            </div>
+            <form (ngSubmit)="ImportExcelData()" class="tablelist-form" novalidate autocomplete="off">
+                <div class="modal-body">
+                    <div id="alert-error-msg" class="d-none alert alert-danger py-2"></div>
+                    <!-- Input field for ID -->
+                    <div class="row g-3">
+
+                        <div class="col-sm-6">
+                            <!-- 
+                                       <label for="date" class="form-label"> Excel</label>
+                                   -->
+                            <input type="file" (change)="onFileChange($event)" class="form-control">
+
+                        </div>
+
+
+                        <div class="col-sm-6">
+
+                            <input type="button" value="Upload" id="uploadBtn" (click)="validateExcel()"
+                                class=" btn btn-subtle-primary"> &nbsp; &nbsp;
+                            <input type="button" value="Sample" (click)="getSampleExcelMsg()"
+                                class=" btn btn-subtle-success"> &nbsp; &nbsp;
+                            <input type="button" value="Template" (click)="getSampleTemplate()"
+                                class=" btn btn-subtle-secondary">
+
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div id="sampleImportMsg" role="alert" class="alert alert-success ng-star-inserted">
+                    <strong> Correct Format to Import Excel Sample Is Given Below </strong>
+                </div>
+                <div id="excelErrMsg" role="alert" class="alert alert-danger ng-star-inserted">
+                    <strong> Something is wrong with uploaded Excel File! </strong> please
+                    <b>check below mentioned</b> rows in excel file
+                </div>
+
+                <div class="table-responsive p-1" id="sampleExcelData">
+                    <table class="table table-centered align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th scope="col">
+                                    U / A
+                                </th>
+                                <th scope="col">
+                                    Year
+                                </th>
+                                <th scope="col">
+                                    Invoice No
+                                </th>
+                                <th scope="col">
+                                    Invoice Date
+                                </th>
+                                <th scope="col">
+                                    Customer Name
+                                </th>
+                                <th scope="col">
+                                    Customer Acronym
+                                </th>
+                                <th scope="col">
+                                    TS Page
+                                </th>
+                                <th scope="col">
+                                    CCY Type
+                                </th>
+                                <th scope="col">
+                                    Major Head Service Line
+                                </th>
+                                <th scope="col">
+                                    Minor Head
+                                </th>
+                                <th scope="col">
+                                    Quantity
+                                </th>
+                                <th scope="col">
+                                    UOM
+                                </th>
+                                <th scope="col">
+                                    Rate
+                                </th>
+                                <th scope="col">
+                                    Gross Value FC
+                                </th>
+                                <th scope="col">
+                                    Collection Date
+                                </th>
+                                <th scope="col">
+                                    Collection Value FC
+                                </th>
+                                <th scope="col">
+                                    FX Rate
+                                </th>
+                                <th scope="col">
+                                    Collection Value INR
+                                </th>
+                                <th scope="col">
+                                    Forex Gain / Loss
+                                </th>
+                                <th scope="col">
+                                    IRM
+                                </th>
+                                <th scope="col">
+                                    STPI Submission Date
+                                </th>
+                                <th scope="col">
+                                    Softex No
+                                </th>
+                                <th scope="col">
+                                    EDPMS Upload Date
+                                </th>
+                                <th scope="col">
+                                    EDPMS Ref No
+                                </th>
+                                <th scope="col">
+                                    EDPMS Closure Y/N/P
+                                </th>
+                                <th scope="col">
+                                    EBRC No
+                                </th>
+                                <th scope="col">
+                                    EBRC Date
+                                </th>
+                                <th scope="col">
+                                    AD Bank
+                                </th>
+                                <th scope="col">
+                                    New Business
+                                </th>
+                                <th scope="col">
+                                    Aged Days
+                                </th>
+                                <th scope="col">
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+
+                                <td>
+                                    Add
+                                </td>
+                                <td>
+                                    Jan 2024
+                                </td>
+                                <td>
+                                    78932
+                                </td>
+                                <td>
+                                    20-03-2024
+                                </td>
+                                <td>
+                                    Taylor & Francis Group
+                                </td>
+                                <td>
+                                    TnF
+                                </td>
+                                <td>663</td>
+                                <td>GBP</td>
+                                <td>Editorial Solutions</td>
+                                <td>Copy Editing</td>
+                                <td>663</td>
+                                <td>PP</td>
+                                <td>4.5</td>
+                                <td>2983.5</td>
+                                <td>23-04-2024</td>
+                                <td>2983.5</td>
+                                <td>104.63</td>
+                                <td>312163.61</td>
+                                <td>45.12</td>
+                                <td>IRM20242304242</td>
+                                <td>29-05-2024</td>
+                                <td>SOFT7781278</td>
+                                <td>01-06-2024</td>
+                                <td>EDPM77812705</td>
+                                <td>Open</td>
+                                <td>EBR96321727</td>
+                                <td>05-06-2024</td>
+                                <td>HDFC Bank Ltd</td>
+                                <td>No</td>
+                                <td>0</td>
+                                <td>
+                                    <i class="bi bi-check-circle-fill"
+                                        style="color: rgb(121, 206, 121); font-size:15px"></i>
+                                </td>
+                            </tr>
+
+                        </tbody><!-- end tbody -->
+                    </table><!-- end table -->
+
+
+                </div>
+                <div class="table-responsive p-1" id="excelData">
+                    <table class="table table-centered align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th scope="col">
+                                    S.No
+                                </th>
+                                <th scope="col">
+                                    U / A
+                                </th>
+                                <th scope="col">
+                                    Year
+                                </th>
+                                <th scope="col">
+                                    Invoice No
+                                </th>
+                                <th scope="col">
+                                    Invoice Date
+                                </th>
+                                <th scope="col">
+                                    Customer Name
+                                </th>
+                                <th scope="col">
+                                    Customer Acronym
+                                </th>
+                                <th scope="col">
+                                    TS Page
+                                </th>
+                                <th scope="col">
+                                    CCY Type
+                                </th>
+                                <th scope="col">
+                                    Major Head Service Line
+                                </th>
+                                <th scope="col">
+                                    Minor Head
+                                </th>
+                                <th scope="col">
+                                    Quantity
+                                </th>
+                                <th scope="col">
+                                    UOM
+                                </th>
+                                <th scope="col">
+                                    Rate
+                                </th>
+                                <th scope="col">
+                                    Gross Value FC
+                                </th>
+                                <th scope="col">
+                                    Collection Date
+                                </th>
+                                <th scope="col">
+                                    Collection Value FC
+                                </th>
+                                <th scope="col">
+                                    FX Rate
+                                </th>
+                                <th scope="col">
+                                    Collection Value INR
+                                </th>
+                                <th scope="col">
+                                    Forex Gain / Loss
+                                </th>
+                                <th scope="col">
+                                    IRM
+                                </th>
+                                <th scope="col">
+                                    STPI Submission Date
+                                </th>
+                                <th scope="col">
+                                    Softex No
+                                </th>
+                                <th scope="col">
+                                    EDPMS Upload Date
+                                </th>
+                                <th scope="col">
+                                    EDPMS Ref No
+                                </th>
+                                <th scope="col">
+                                    EDPMS Closure Y/N/P
+                                </th>
+                                <th scope="col">
+                                    EBRC No
+                                </th>
+                                <th scope="col">
+                                    EBRC Date
+                                </th>
+                                <th scope="col">
+                                    AD Bank
+                                </th>
+                                <th scope="col">
+                                    New Business
+                                </th>
+                                <th scope="col">
+                                    Aged Days
+                                </th>
+                                <th scope="col">
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let cusData of CustomerDataValidatedList; let i=index;">
+                                <td>{{i+1}}</td>
+                                <td>
+                                    {{cusData.ua}}
+                                </td>
+                                <td>
+                                    {{cusData.year}}
+                                </td>
+                                <td>
+                                    {{cusData.invoiceNo}}
+                                </td>
+                                <td>
+                                    {{cusData.invoiceDate}}
+                                </td>
+                                <td>
+                                    {{cusData.customerName}}
+                                </td>
+                                <td>
+                                    {{cusData.customerAcronym}}
+                                </td>
+                                <td>{{cusData.tspage}}</td>
+                                <td>{{cusData.ccytype}}</td>
+                                <td>{{cusData.majorHeadServiceLine}}</td>
+                                <td>{{cusData.minorHead}}</td>
+                                <td>{{cusData.quantity}}</td>
+                                <td>{{cusData.uom}}</td>
+                                <td>{{cusData.rate}}</td>
+                                <td>{{cusData.growssValueFc}}</td>
+                                <td>{{cusData.collectionDate}}</td>
+                                <td>{{cusData.collectionValueFc}}</td>
+                                <td>{{cusData.fxrate}}</td>
+                                <td>{{cusData.collectionValueInr}}</td>
+                                <td>{{cusData.forexGainLoss}}</td>
+                                <td>{{cusData.irm}}</td>
+                                <td>{{cusData.stpiSubmissionDate}}</td>
+                                <td>{{cusData.softexNo}}</td>
+                                <td>{{cusData.edpmsUploadDate}}</td>
+                                <td>{{cusData.edpmsRefNo}}</td>
+                                <td>{{cusData.edpmsClosureYnp}}</td>
+                                <td>{{cusData.ebrcNo}}</td>
+                                <td>{{cusData.ebrcDate}}</td>
+                                <td>{{cusData.adBank}}</td>
+                                <td>{{cusData.newBusiness}}</td>
+                                <td>{{cusData.agedDays}}</td>
+                                <td>
+                                    <i *ngIf="cusData.action" class="bi bi-check-circle-fill"
+                                        style="color: rgb(121, 206, 121); font-size:15px"></i>
+
+                                    <i *ngIf="!cusData.action" class="bi bi-x-circle-fill"
+                                        style="color: rgb(215, 104, 104); font-size: 15px;"></i>
+                                </td>
+                            </tr>
+
+                        </tbody><!-- end tbody -->
+                    </table><!-- end table -->
+
+
+                </div>
+                <div class="modal-footer">
+                    <div class="hstack gap-2 justify-content-end">
+                        <button type="button" class="btn btn-light" (click)="hideImportExcel()">Close</button>
+                        <button type="submit" class="btn btn-success" (click)="importExceltoDb()" id="importBtn">
+                            Submit
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+<!-- /Import excel modal -->

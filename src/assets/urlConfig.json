@@ -1,0 +1,7 @@
+{
+    "APIs": {
+        "kpiAPI": "https://apidevnsight.novatechset.com/",
+        "test": "http://localhost:5273/",
+        "test1": "https://apidevnsight.novatechset.com/"
+    }
+}
